@@ -1,0 +1,14 @@
+package asgn2Vehicles;
+
+import asgn2Exceptions.VehicleException;
+
+public abstract class Vehicle {
+
+	// Constructor -- VehicleException - if arrivalTime is <= 0
+	public Vehicle(java.lang.String vehID, int arrivalTime)
+			throws VehicleException {
+	}
+	
+	
+
+}

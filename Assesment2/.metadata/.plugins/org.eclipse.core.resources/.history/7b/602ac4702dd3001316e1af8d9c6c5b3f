@@ -1,0 +1,5 @@
+package asgn2Vehicles;
+
+public abstract class Vehicle {
+public Vechicle (java.lang.String vehID, int arrivalTime);
+}

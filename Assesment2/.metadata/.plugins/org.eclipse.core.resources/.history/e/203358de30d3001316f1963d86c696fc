@@ -1,0 +1,74 @@
+package asgn2Vehicles;
+
+import asgn2Exceptions.VehicleException;
+
+public abstract class Vehicle {
+
+	// Vehicle Constructor
+	public Vehicle(java.lang.String vehID, int arrivalTime)
+			throws VehicleException {
+		// VehicleException - if arrivalTime is <= 0
+
+	}
+
+	// Transition vehicle to parked state
+	public void enterParkedState(int parkingTime, int intendedDuration)
+			throws VehicleException {
+		// VehicleException - if the vehicle is already in a parked or queued
+		// state, if parkingTime < 0, or if intendedDuration is less than the
+		// minimum prescribed in asgnSimulators.Constraints
+
+	}
+
+	// Transition vehicle to queued state
+	public void enterQueuedState() throws VehicleException {
+		// VehicleException - if the vehicle is already in a queued or parked
+		// state
+
+	}
+
+	// Transition vehicle from parked state
+	public void exitParkedState(int departureTime) throws VehicleException {
+		// VehicleException - if the vehicle is not in a parked state, is in a
+		// queued state or if the revised departureTime < parkingTime
+
+	}
+
+	// Transition vehicle from queued state
+	public void exitQueuedState(int exitTime) throws VehicleException {
+		// VehicleException - if the vehicle is in a parked state or not in a
+		// queued state, or if exitTime is not later than arrivalTime for this
+		// vehicle
+
+	}
+
+	// Simple getter for the arrival time
+	public int getArrivalTime() {
+		int arrivalTime = 0; // Temp value
+		return arrivalTime;
+	}
+
+	// Simple getter for the departure time from the car park
+	public int getDepartureTime() {
+		int departureTime = 0; // Temp value
+		return departureTime;
+	}
+
+	// Simple getter for the parking time
+	public int getParkingTime() {
+		int parkingTime = 0; // Temp value
+		return parkingTime;
+	}
+
+	// Simple getter for the vehicle ID
+	public java.lang.String getVehID() {
+		java.lang.String vehID = " "; // Temp value
+		return vehID;
+	}
+
+	// Boolean status indicating whether vehicle is currently parked
+	public boolean isParked(){
+		boolean parked = false;
+		return parked;
+	}
+}

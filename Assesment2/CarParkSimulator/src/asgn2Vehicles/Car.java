@@ -14,14 +14,14 @@ public class Car extends Vehicle {
 
 	// Boolean status indicating whether car is small enough for small car
 	// parking spaces
-	public boolean isSmall(){
+	public boolean isSmall() {
 		boolean mini = false; // Temp value
 		return mini;
 	}
-	
+
 	// Overrides toString in class Vehicle
 	@Override
-	public String toString(){
+	public String toString() {
 		return " ";
 	}
 

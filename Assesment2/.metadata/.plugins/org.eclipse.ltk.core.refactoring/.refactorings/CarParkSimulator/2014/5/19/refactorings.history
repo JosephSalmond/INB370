@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;asgn2Vehicles.Vehicles&apos; to &apos;Vehicle&apos;&#x0D;&#x0A;- Original project: &apos;CarParkSimulator&apos;&#x0D;&#x0A;- Original element: &apos;asgn2Vehicles.Vehicles&apos;&#x0D;&#x0A;- Renamed element: &apos;asgn2Vehicles.Vehicle&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Vehicles&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;asgn2Vehicles{Vehicles.java[Vehicles" matchStrategy="1" name="Vehicle" qualified="false" references="true" similarDeclarations="false" stamp="1399167669983" textual="false" version="1.0"/>
+</session>

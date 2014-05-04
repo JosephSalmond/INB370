@@ -28,12 +28,12 @@ import asgn2Vehicles.Vehicle;
 
 /** @author Joseph Salmond 8823928 */
 public class CarPark {
-	
+
 	private int maxCarSpaces;
 	private int maxSmallCarSpaces;
 	private int maxMotorCycleSpaces;
 	private int maxQueueSize;
-	
+
 	private int count;
 	private int numCars;
 	private int numMotorCycles;
@@ -44,7 +44,6 @@ public class CarPark {
 	private ArrayDeque<Vehicle> queue;
 	private Vector<Vehicle> past;
 
-	
 	// CarPark constructor sets the basic size parameters.
 	public CarPark() {
 		this.maxCarSpaces = Constants.DEFAULT_MAX_CAR_SPACES;
@@ -230,14 +229,14 @@ public class CarPark {
 		// attempted
 		// VehicleException - if vehicle creation violates constraints
 	}
-	
-	//Method to remove vehicle from the carpark.
-	public void unparkVehicle(Vehicle v,
-            int departureTime)
-              throws VehicleException,
-                     SimulationException{
-//		VehicleException - if Vehicle is not parked, is in a queue, or violates timing constraints
-//		SimulationException - if vehicle is not in car park or in incorrect state or violates timing constraints
+
+	// Method to remove vehicle from the carpark.
+	public void unparkVehicle(Vehicle v, int departureTime)
+			throws VehicleException, SimulationException {
+		// VehicleException - if Vehicle is not parked, is in a queue, or
+		// violates timing constraints
+		// SimulationException - if vehicle is not in car park or in incorrect
+		// state or violates timing constraints
 	}
 
 }
