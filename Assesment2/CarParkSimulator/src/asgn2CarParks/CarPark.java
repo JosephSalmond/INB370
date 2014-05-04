@@ -15,6 +15,8 @@
 	 * 262::276::P:91::C:84::S:14::M:7::D:48::A:176::Q:9CCCCCCCCC|C:P>A||C:Q>P||S:N>P|
 	 * @return String containing current state 
 	 */
+public class CarPark {
+
 	public String getStatus(int time) {
 		String str = time +"::"
 		+ this.count + "::" 
@@ -53,5 +55,5 @@
 				+ " maxMotorCycleSpaces: " + this.maxMotorCycleSpaces 
 				+ " maxQueueSize: " + this.maxQueueSize + "]";
 	}
-
+}
 	

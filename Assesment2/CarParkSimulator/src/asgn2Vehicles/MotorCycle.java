@@ -1,5 +1,13 @@
 package asgn2Vehicles;
 
-public class MotorCycle {
+import asgn2Exceptions.VehicleException;
+
+/** @author Joseph Salmond 8823928 */
+public class MotorCycle extends Vehicle {
+
+	public MotorCycle(String vehID, int arrivalTime) throws VehicleException {
+		super(vehID, arrivalTime);
+		// TODO Auto-generated constructor stub
+	}
 
 }
