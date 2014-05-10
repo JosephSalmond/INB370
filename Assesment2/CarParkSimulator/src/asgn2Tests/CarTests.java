@@ -16,8 +16,8 @@ public class CarTests {
 	private int testConstructorArrivalTime = 1;
 	private int testArrivalTimeIsZero = 0;
 	private int testArrivalTimeIsNegative = -1;
-	private int testCarNotSmall = false;
-	private int testCarSmall = true;
+	private boolean testCarNotSmall = false;
+	private boolean testCarSmall = true;
 	
 	
 	@Before
