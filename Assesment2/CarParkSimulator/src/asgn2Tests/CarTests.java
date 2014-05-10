@@ -7,6 +7,12 @@ import org.junit.Test;
 
 import asgn2Exceptions.VehicleException;
 import asgn2Vehicles.Car;
+import asgn2Vehicles.Vehicle;
+import asgn2Simulators.Constants;
+
+
+/** @author Pearl Gariano 8318522 */
+
 
 public class CarTests {
 	
@@ -14,8 +20,10 @@ public class CarTests {
 	
 	private String testConstructorVehID = "123ABC";
 	private int testConstructorArrivalTime = 1;
-	private int testArrivalTimeIsZero = 0;
-	private int testArrivalTimeIsNegative = -1;
+	
+	private int testValueZero = 0;
+	private int testValueNegative = -1;
+	
 	private boolean testCarNotSmall = false;
 	private boolean testCarSmall = true;
 	
@@ -27,13 +35,13 @@ public class CarTests {
 	
 	
 	@Test(timeout=1000, expected = VehicleException.class)
-	public void testConstructorArrivalTimeIsZero() throws VehicleException{
-		new Car(testConstructorVehID, testArrivalTimeIsZero, testCarNotSmall);
+	public void testConstructorArrivalTimeZero() throws VehicleException{
+		new Car(testConstructorVehID, testValueZero, testCarNotSmall);
 	}
 	
 	@Test(timeout=1000, expected = VehicleException.class)
-	public void testArrivalTimeIsNegative() throws VehicleException{
-		new Car(testConstructorVehID, testArrivalTimeIsNegative, testCarNotSmall);
+	public void testArrivalTimeNegative() throws VehicleException{
+		new Car(testConstructorVehID, testValueNegative, testCarNotSmall);
 	}
 	
 	@Test(timeout = 1000)
@@ -53,5 +61,11 @@ public class CarTests {
 		assertEquals(true, testCar.isSmall());
 	}
 	
+	@Test
+	public void testToString() {
+		fail("Not yet implemented"); // TODO
+	}
+
+		
 	
 }
