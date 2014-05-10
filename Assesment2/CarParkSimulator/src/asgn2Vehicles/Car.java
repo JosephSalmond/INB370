@@ -5,7 +5,7 @@ import asgn2Exceptions.VehicleException;
 /** @author Joseph Salmond 8823928 */
 public class Car extends Vehicle {
 
-	public Car(String vehID, int arrivalTime) throws VehicleException {
+	public Car(String vehID, int arrivalTime, boolean small) throws VehicleException {
 		super(vehID, arrivalTime);
 		// TODO Auto-generated constructor stub
 		// small = indicator whether car is regarded as small or not
