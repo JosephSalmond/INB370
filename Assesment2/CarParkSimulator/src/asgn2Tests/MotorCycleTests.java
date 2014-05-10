@@ -57,5 +57,99 @@ public class MotorCycleTests {
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterParkedState(testParkingTime, (Constants.MINIMUM_STAY-1));		
 	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testParkedStateAlreadyParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertTrue(testMotorCycle.isParked());	
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testParkedStateAlreadyQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertTrue(testMotorCycle.isQueued());	
+	}
+	
+	@Test(timeout = 1000)
+	public void testParkedStateNotParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isParked());	
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testParkedStateNotQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isQueued());	
+	}
+	
+	//write tests for working enterParkedState method
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testQueuedStateAlreadyParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertTrue(testMotorCycle.isParked());	
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testQueuedStateAlreadyQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertTrue(testMotorCycle.isQueued());	
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testQueuedStateNotParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isParked());	
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testQueuedStateNotQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isQueued());	
+	}
+	
+	//write tests for working enterQueuedState
+	
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testExitParkedStateNotParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isParked());
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testExitParkedStateIsQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isQueued());
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testExitParkedStateDepartureLessThanParkingTime() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		//assert revised departureTime < parkingTime
+	}
+	
+	//write tests for working exitParkedState
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testExitQueuedStateIsParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isParked());
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testExitQueuedStateNotQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isQueued());
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testExitQueuedStateExitNotLaterThanArrivalTime() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		//assert exitTime is not later than arrivalTime for this vehicle
+	}
+	
+	//write tests for working exitQueuedState
+	
 
 }
