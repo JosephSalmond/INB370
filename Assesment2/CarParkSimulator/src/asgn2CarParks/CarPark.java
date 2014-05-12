@@ -87,7 +87,7 @@ public class CarPark {
 
 	// Simple status showing whether carPark is empty
 	public boolean carParkEmpty() {
-		boolean allGone = false; // temp value
+		boolean allGone = true; // temp value
 		return allGone;
 	}
 

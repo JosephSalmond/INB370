@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import asgn2CarParks.CarPark;
+
 /** @author Pearl Gariano 8318522 */
 
 public class CarParkTests {
@@ -15,7 +17,8 @@ public class CarParkTests {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		CarPark parkCar = new CarPark();
+		assertTrue(parkCar.carParkEmpty());
 	}
 
 }
