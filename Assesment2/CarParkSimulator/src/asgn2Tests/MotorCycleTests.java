@@ -253,6 +253,8 @@ public class MotorCycleTests {
 	
 	//write test for satisfied is true
 	
+	//do we need tests for the to string method here? 
+	
 	/* TESTS FOR WAS PARKED METHOD */
 	
 	@Test(timeout = 1000)
