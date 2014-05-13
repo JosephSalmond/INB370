@@ -25,11 +25,15 @@ public class MotorCycleTests {
 	
 	private int testIntendedDuration = 60;
 	private int testParkingTime = 30;
+	
+	private int testQueueExitTime = 25;
 
 	@Before
 	public void setUp() throws Exception {
 		new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 	}
+	
+	/* TESTS FOR CONSTRUCTOR VALUES */
 	
 	@Test(timeout=1000, expected = VehicleException.class)
 	public void testConstructorArrivalTimeIsZero() throws VehicleException{
@@ -46,107 +50,112 @@ public class MotorCycleTests {
 		new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 	}
 	
+	
+	/* TESTS FOR ENTER PARKED STATE METHOD */
+	
 	@Test(timeout = 1000, expected = VehicleException.class)
-	public void testParkedStateParkingTimeNeg() throws VehicleException{
+	public void testEnterParkedStateParkingTimeNeg() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterParkedState(testValueNegative, testIntendedDuration);
 	}
 	
 	@Test(timeout = 1000, expected = VehicleException.class)
-	public void testParkedStateIntendedDurationLessThanMin() throws VehicleException{
+	public void testEnterParkedStateIntendedDurationLessThanMin() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterParkedState(testParkingTime, (Constants.MINIMUM_STAY-1));		
 	}
 	
 	@Test(timeout = 1000, expected = VehicleException.class)
-	public void testParkedStateAlreadyParked() throws VehicleException{
+	public void testEnterParkedStateAlreadyParked() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
 		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);	
 	}
 	
 	@Test(timeout = 1000, expected = VehicleException.class)
-	public void testParkedStateAlreadyQueued() throws VehicleException{
+	public void testEnterParkedStateAlreadyQueued() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterQueuedState();
-		testMotorCycle.enterQueuedState();
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
 	}
 	
 	@Test(timeout = 1000)
-	public void testParkedStateNotParked() throws VehicleException{
-		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isParked());	
-	}
-	
-	@Test(timeout = 1000)
-	public void testParkedStateNotQueued() throws VehicleException{
-		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isQueued());	
-	}
-	
-	//write tests for working enterParkedState method
-	
-	@Test(timeout = 1000)
-	public void testQueuedStateEnterPark() throws VehicleException{
+	public void testEnterParkedStateEnterPark() throws VehicleException {
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
-		assertTrue(testMotorCycle.isParked());	
+		assertTrue(testMotorCycle.isParked());
+	}
+	
+	
+	/* TESTS FOR ENTER QUEUED STATE METHOD */
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testEnterQueuedStateAlreadyParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		testMotorCycle.enterQueuedState();
+	}
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
+	public void testEnterQueuedAlreadyQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterQueuedState();
+		testMotorCycle.enterQueuedState();
 	}
 	
 	@Test(timeout = 1000)
-	public void testQueuedStateEnterQueue() throws VehicleException{
+	public void testEnterQueuedStateEnterQueue() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterQueuedState();
 		assertTrue(testMotorCycle.isQueued());	
 	}
 	
-	@Test(timeout = 1000)
-	public void testQueuedStateNotParked() throws VehicleException{
-		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isParked());	
-	}
 	
-	@Test(timeout = 1000)
-	public void testQueuedStateNotQueued() throws VehicleException{
-		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isQueued());	
-	}
+	/* TESTS FOR EXIT PARKED STATE METHOD */
 	
-	//write tests for working enterQueuedState
-	
-	
-	@Test(timeout = 1000)
+	@Test(timeout = 1000, expected = VehicleException.class)
 	public void testExitParkedStateNotParked() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isParked());
+		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
 	}
 	
-	@Test(timeout = 1000)
+	@Test(timeout = 1000, expected = VehicleException.class)
 	public void testExitParkedStateIsQueued() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isQueued());
+		testMotorCycle.enterQueuedState();
+		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
 	}
 	
-	@Test(timeout = 1000)
+	
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
 	public void testExitParkedStateDepartureLessThanParkingTime() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
-		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
-		assertEquals(false, (testMotorCycle.getDepartureTime() < testMotorCycle.getParkingTime()));
+		testMotorCycle.exitParkedState(testParkingTime-1);
+		assertTrue(testMotorCycle.getDepartureTime() < testMotorCycle.getParkingTime());
 	}
 	
-	//write tests for working exitParkedState
+	public void testExitParkedStateDurationGreaterThanParkingTime() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
+		assertFalse(testMotorCycle.getDepartureTime() < testMotorCycle.getParkingTime());
+	}
 	
-	@Test(timeout = 1000)
+	/* TESTS FOR EXIT QUEUED STATE METHOD */
+	
+	@Test(timeout = 1000, expected = VehicleException.class)
 	public void testExitQueuedStateIsParked() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isParked());
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		testMotorCycle.exitQueuedState(testQueueExitTime);
 	}
 	
-	@Test(timeout = 1000)
+	@Test(timeout = 1000, expected = VehicleException.class)
 	public void testExitQueuedStateNotQueued() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertFalse(testMotorCycle.isQueued());
+		testMotorCycle.exitQueuedState(testQueueExitTime);
 	}
 	
 	@Test(timeout = 1000, expected = VehicleException.class)
@@ -156,7 +165,138 @@ public class MotorCycleTests {
 		testMotorCycle.exitQueuedState(testConstructorArrivalTime - 1);
 	}
 	
-	//write tests for working exitQueuedState
+	@Test(timeout = 1000)
+	public void testExitQueuedStateExitQueue() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterQueuedState();
+		testMotorCycle.exitQueuedState(testQueueExitTime);		
+	}
 	
-
+	/* TEST FOR GET ARRIVAL TIME METHOD */
+	
+	@Test(timeout = 1000)
+	public void testGetArrivalTime() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertEquals(testConstructorArrivalTime, testMotorCycle.getArrivalTime());
+	}
+	
+	/* TEST FOR GET DEPARTURE TIME METHOD */
+	
+	@Test(timeout = 1000)
+	public void testGetDepartureTime() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		assertEquals((testParkingTime + testIntendedDuration), testMotorCycle.getDepartureTime());
+	}
+	
+	/* TEST FOR GET PARKING TIME METHOD */
+	
+	@Test(timeout = 1000)
+	public void testGetParkingTime() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		assertEquals(testParkingTime, testMotorCycle.getParkingTime());
+	}
+	
+	/* TEST FOR GET VEHICLE ID METHOD */
+	
+	@Test(timeout = 1000)
+	public void testGetVehID() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertEquals(testConstructorVehID, testMotorCycle.getVehID());
+	}
+	
+	/* TESTS FOR IS PARKED METHOD */
+	
+	@Test(timeout = 1000)
+	public void testIsParkedTrue() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		assertTrue(testMotorCycle.isParked());
+	}
+	
+	@Test(timeout = 1000)
+	public void testIsParkedFalse() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isParked());
+	}
+	
+	/* TESTS FOR IS QUEUED METHOD */
+	
+	@Test(timeout = 1000)
+	public void testIsQueuedTrue() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterQueuedState();
+		assertTrue(testMotorCycle.isQueued());
+	}
+	
+	@Test(timeout = 1000)
+	public void testIsQueuedFalse() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isQueued());
+	}
+	
+	/* TESTS FOR IS SATISFIED METHOD */
+	@Test(timeout = 1000)
+	public void testIsSatisfiedFalseNeverParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.isSatisfied());
+	}
+	
+	@Test(timeout = 1000)
+	public void testIsSatisfiedFalseQueueTooLong() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterQueuedState();
+		testMotorCycle.exitQueuedState(Constants.MAXIMUM_QUEUE_TIME+1);
+		assertFalse(testMotorCycle.isSatisfied());
+	}
+	
+	//write test for satisfied is true
+	
+	/* TESTS FOR WAS PARKED METHOD */
+	
+	@Test(timeout = 1000)
+	public void testWasParkedTrueWasParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
+		assertTrue(testMotorCycle.wasParked());
+	}
+	
+	@Test(timeout = 1000)
+	public void testWasParkedTrueIsParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		assertTrue(testMotorCycle.wasParked());
+	}
+	
+	@Test(timeout = 1000)
+	public void testWasParkedFalse() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertFalse(testMotorCycle.wasParked());
+	}
+	
+	/* TESTS FOR WAS QUEUED METHOD */
+	
+	@Test(timeout = 1000)
+	public void testWasQueuedTrueWasQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterQueuedState();
+		testMotorCycle.exitQueuedState(testQueueExitTime);
+		assertTrue(testMotorCycle.wasQueued());
+	}
+	
+	@Test(timeout = 1000)
+	public void testWasQueuedTrueIsQueued() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterQueuedState();
+		assertTrue(testMotorCycle.wasQueued());
+	}
+	
+	@Test(timeout = 1000)
+	public void testWasQueuedFalse() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		assertTrue(testMotorCycle.wasQueued());
+	}
+	
 }
