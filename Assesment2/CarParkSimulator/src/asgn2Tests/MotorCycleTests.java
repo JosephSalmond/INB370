@@ -263,13 +263,15 @@ public class MotorCycleTests {
 		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
 		assertTrue(testMotorCycle.wasParked());
 	}
-//  What is this ment to test?	
-//	@Test(timeout = 1000)
-//	public void testWasParkedTrueIsParked() throws VehicleException{
-//		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-//		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
-//		assertTrue(testMotorCycle.wasParked());
-//	}
+	
+//  What is this meant to test?	
+// this tests that was parked method returns true if vehicle is currently parked
+	@Test(timeout = 1000)
+	public void testWasParkedTrueIsParked() throws VehicleException{
+		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+		assertTrue(testMotorCycle.wasParked());
+	}
 	
 	@Test(timeout = 1000)
 	public void testWasParkedFalse() throws VehicleException{
@@ -291,7 +293,7 @@ public class MotorCycleTests {
 	public void testWasQueuedTrueIsQueued() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterQueuedState();
-		assertFalse(testMotorCycle.wasQueued());
+		assertTrue(testMotorCycle.wasQueued());
 	}
 	
 	@Test(timeout = 1000)
