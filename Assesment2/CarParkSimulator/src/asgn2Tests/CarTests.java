@@ -287,7 +287,7 @@ public class CarTests {
 	public void testWasParkedTrueIsParked() throws VehicleException{
 		testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
 		testCar.enterParkedState(testParkingTime, testIntendedDuration);
-		assertFalse(testCar.wasParked());
+		assertTrue(testCar.wasParked());
 	}
 	
 	@Test(timeout = 1000)
@@ -310,7 +310,7 @@ public class CarTests {
 	public void testWasQueuedTrueIsQueued() throws VehicleException{
 		testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
 		testCar.enterQueuedState();
-		assertFalse(testCar.wasQueued());
+		assertTrue(testCar.wasQueued());
 	}
 	
 	@Test(timeout = 1000)
