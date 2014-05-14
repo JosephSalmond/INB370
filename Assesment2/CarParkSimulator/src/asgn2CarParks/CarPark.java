@@ -8,6 +8,7 @@ import asgn2Exceptions.SimulationException;
 import asgn2Simulators.Constants;
 import asgn2Simulators.Simulator;
 import asgn2Vehicles.Car;
+import asgn2Vehicles.MotorCycle;
 import asgn2Vehicles.Vehicle;
 
 /**
@@ -39,6 +40,7 @@ public class CarPark {
 	private int numMotorCycles;
 	private int numSmallCars;
 	private int numDissatisfied;
+
 	private String status;
 	private Vector<Vehicle> spaces;
 	private ArrayDeque<Vehicle> queue;
@@ -118,24 +120,21 @@ public class CarPark {
 	// State dump intended for use in logging the final state of the carpark
 	public String finalState() {
 
-		return "finalState";
+		return "finalState: Finish HIM";
 	}
 
 	// Simple getter for number of cars in the car park
 	public int getNumCars() {
-		int cars = 0; // Temp value
-		return cars;
+		return numCars;
 	}
 
 	// Simple getter for number of motorcycles in the car park
 	public int getNumMotorCycles() {
-		int cycles = 0;// Temp value
-		return cycles;
+		return numMotorCycles;
 	}
 
 	public int getNumSmallCars() {
-		int minis = 0;// Temp value
-		return minis;
+		return numSmallCars;
 	}
 
 	// Method used to provide the current status of the car park.
@@ -176,13 +175,16 @@ public class CarPark {
 
 	// Simple status showing number of vehicles in the queue
 	public int numVehiclesInQueue() {
-		int queuedVehicle = 0;// Temp value
-		return queuedVehicle;
+		return this.queue.size();
 	}
 
 	// Method to add vehicle successfully to the car park store
 	public void parkVehicle(Vehicle v, int time, int intendedDuration)
 			throws SimulationException, VehicleException {
+
+		v.enterParkedState(time, intendedDuration);
+		// add v to carpark
+
 		// SimulationException - if no suitable spaces are available for parking
 		// VehicleException - if vehicle not in the correct state
 	}
@@ -198,22 +200,42 @@ public class CarPark {
 
 	// Simple status showing whether queue is empty
 	public boolean queueEmpty() {
-		boolean empty = false;// Temp value
-		return empty;
+		return this.queue.isEmpty();
 	}
 
 	// Simple status showing whether queue is full
 	public boolean queueFull() {
-		boolean full = false;// Temp value
-		return full;
+		return (this.queue.size() == maxQueueSize);
 	}
 
 	// Method determines, given a vehicle of a particular type, whether there
 	// are spaces available for that type in the car park under the parking
 	// policy in the class header.
 	public boolean spacesAvailable(Vehicle v) {
-		boolean spaceAvalible = true;// Temp value
-		return spaceAvalible;
+		boolean spaces = false;
+		if (v.getClass() == MotorCycle.class) {
+			if (numMotorCycles < maxMotorCycleSpaces) {
+				spaces = true;
+			} else if (numSmallCars < maxSmallCarSpaces) {
+				spaces = true;
+			} else if (numCars < maxCarSpaces) {
+				spaces = true;
+			}
+		} else if (v.getClass() == Car.class) {
+			if (((Car) v).isSmall()) {
+				if (numSmallCars < maxSmallCarSpaces) {
+					spaces = true;
+				} else if (numCars < maxCarSpaces) {
+					spaces = true;
+				}
+
+			} else {
+				spaces = (numCars < maxCarSpaces);
+
+			}
+		}
+
+		return spaces;
 	}
 
 	// Overrides toString in class java.lang.Object
@@ -233,6 +255,18 @@ public class CarPark {
 	// Method to remove vehicle from the carpark.
 	public void unparkVehicle(Vehicle v, int departureTime)
 			throws VehicleException, SimulationException {
+		if (!v.isParked()) {
+			throw new VehicleException(
+					"unparkVehicle: cant leave the carpark when not parked");
+		} else if (v.isQueued()) {
+			throw new VehicleException("unparkVehicle: Error Queued");
+		} else {
+			// Violates timing constraints
+		}
+
+		v.exitParkedState(departureTime);
+		// remove v from cp
+
 		// VehicleException - if Vehicle is not parked, is in a queue, or
 		// violates timing constraints
 		// SimulationException - if vehicle is not in car park or in incorrect

@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import asgn2Exceptions.VehicleException;
 import asgn2Vehicles.Car;
-import asgn2Vehicles.MotorCycle;
-import asgn2Vehicles.Vehicle;
 import asgn2Simulators.Constants;
 
 
@@ -289,7 +287,7 @@ public class CarTests {
 	public void testWasParkedTrueIsParked() throws VehicleException{
 		testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
 		testCar.enterParkedState(testParkingTime, testIntendedDuration);
-		assertTrue(testCar.wasParked());
+		assertFalse(testCar.wasParked());
 	}
 	
 	@Test(timeout = 1000)
@@ -312,13 +310,13 @@ public class CarTests {
 	public void testWasQueuedTrueIsQueued() throws VehicleException{
 		testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
 		testCar.enterQueuedState();
-		assertTrue(testCar.wasQueued());
+		assertFalse(testCar.wasQueued());
 	}
 	
 	@Test(timeout = 1000)
 	public void testWasQueuedFalse() throws VehicleException{
 		testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
-		assertTrue(testCar.wasQueued());
+		assertFalse(testCar.wasQueued());
 	}
 	
 }

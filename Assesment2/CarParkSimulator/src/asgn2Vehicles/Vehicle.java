@@ -28,6 +28,7 @@ public abstract class Vehicle {
 		this.vehID = vehID;
 		this.arrivalTime = arrivalTime;
 		this.departureTime = 0;
+		this.satisfied = false;
 
 		// VehicleException - if arrivalTime is <= 0
 	}
@@ -78,6 +79,7 @@ public abstract class Vehicle {
 		
 		parked = false;
 		wasParked = true;
+		satisfied = true;
 		// VehicleException - if the vehicle is not in a parked state, is in a
 		// queued state or if the revised departureTime < parkingTime
 
@@ -133,7 +135,6 @@ public abstract class Vehicle {
 	// Boolean status indicating whether customer is satisfied or not Satisfied
 	// if they park
 	public boolean isSatisfied() {
-		satisfied = true; // Temp value, Oh Yeahhhh
 		return satisfied;
 	}
 

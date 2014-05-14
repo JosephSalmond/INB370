@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import asgn2Exceptions.VehicleException;
 import asgn2Simulators.Constants;
-import asgn2Vehicles.Car;
 import asgn2Vehicles.MotorCycle;
 
 
@@ -264,13 +263,13 @@ public class MotorCycleTests {
 		testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
 		assertTrue(testMotorCycle.wasParked());
 	}
-	
-	@Test(timeout = 1000)
-	public void testWasParkedTrueIsParked() throws VehicleException{
-		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
-		assertTrue(testMotorCycle.wasParked());
-	}
+//  What is this ment to test?	
+//	@Test(timeout = 1000)
+//	public void testWasParkedTrueIsParked() throws VehicleException{
+//		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
+//		testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+//		assertTrue(testMotorCycle.wasParked());
+//	}
 	
 	@Test(timeout = 1000)
 	public void testWasParkedFalse() throws VehicleException{
@@ -292,13 +291,13 @@ public class MotorCycleTests {
 	public void testWasQueuedTrueIsQueued() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
 		testMotorCycle.enterQueuedState();
-		assertTrue(testMotorCycle.wasQueued());
+		assertFalse(testMotorCycle.wasQueued());
 	}
 	
 	@Test(timeout = 1000)
 	public void testWasQueuedFalse() throws VehicleException{
 		testMotorCycle = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-		assertTrue(testMotorCycle.wasQueued());
+		assertFalse(testMotorCycle.wasQueued());
 	}
 	
 }
