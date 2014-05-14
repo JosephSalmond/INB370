@@ -49,6 +49,7 @@ public abstract class Vehicle {
 		this.intendedDuration = intendedDuration;
 		this.departureTime = parkingTime + intendedDuration;
 		parked = true;
+		wasParked = true;
 
 		// VehicleException - if the vehicle is already in a parked or queued
 		// state, if parkingTime < 0, or if intendedDuration is less than the
@@ -64,6 +65,7 @@ public abstract class Vehicle {
 		}
 		
 		queued = true;
+		wasQueued = true;
 		
 		// VehicleException - if the vehicle is already in a queued or parked
 		// state
