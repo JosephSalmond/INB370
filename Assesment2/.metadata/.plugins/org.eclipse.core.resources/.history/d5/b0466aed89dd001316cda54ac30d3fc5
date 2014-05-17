@@ -48,11 +48,11 @@ public class CarPark {
     private int numDissatisfied;
 
     private String status;
-    private Vector<Vehicle> carSpaces = new Vector<Vehicle>();
-    private Vector<Vehicle> smallCarSpaces = new Vector<Vehicle>();
-    private Vector<Vehicle> motorCycleSpaces = new Vector<Vehicle>();
-    private ArrayDeque<Vehicle> queue = new ArrayDeque<Vehicle>();
-    private Vector<Vehicle> past = new Vector<Vehicle>();
+    private Vector<Vehicle> carSpaces;
+    private Vector<Vehicle> smallCarSpaces;
+    private Vector<Vehicle> motorCycleSpaces;
+    private ArrayDeque<Vehicle> queue;
+    private Vector<Vehicle> past;
 
     // CarPark constructor sets the basic size parameters.
     public CarPark() {
