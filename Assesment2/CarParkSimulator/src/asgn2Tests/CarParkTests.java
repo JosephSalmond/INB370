@@ -11,14 +11,14 @@ import asgn2CarParks.CarPark;
 
 public class CarParkTests {
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@Test
-	public void test() {
-		CarPark parkCar = new CarPark();
-		assertTrue(parkCar.carParkEmpty());
-	}
+    @Test
+    public void test() {
+	CarPark parkCar = new CarPark();
+	assertTrue(parkCar.carParkEmpty());
+    }
 
 }

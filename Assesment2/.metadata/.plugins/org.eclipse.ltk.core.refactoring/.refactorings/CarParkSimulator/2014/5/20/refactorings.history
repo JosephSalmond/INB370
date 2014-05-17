@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;spaces&apos; in &apos;asgn2CarParks.CarPark&apos; to &apos;carSpaces&apos;&#x0D;&#x0A;- Original project: &apos;CarParkSimulator&apos;&#x0D;&#x0A;- Original element: &apos;asgn2CarParks.CarPark.spaces&apos;&#x0D;&#x0A;- Renamed element: &apos;asgn2CarParks.CarPark.carSpaces&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;spaces&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;asgn2CarParks{CarPark.java[CarPark^spaces" name="carSpaces" references="true" setter="false" stamp="1400303605844" textual="false" version="1.0"/>
+</session>

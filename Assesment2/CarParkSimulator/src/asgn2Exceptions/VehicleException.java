@@ -11,18 +11,23 @@
 package asgn2Exceptions;
 
 /**
- * This class represents exceptions associated with the misuse of the Vehicle hierarchy. 
- * @author hogan 
+ * This class represents exceptions associated with the misuse of the Vehicle
+ * hierarchy.
+ * 
+ * @author hogan
  */
-@SuppressWarnings("serial") // We're not interested in binary i/o here
+@SuppressWarnings("serial")
+// We're not interested in binary i/o here
 public class VehicleException extends Exception {
 
-	/**
-	 * Creates a new instance of VehicleException.
-	 * 
-	 * @param message String holding an informative message about the problem encountered
-	 */
-	public VehicleException(String message) {
-		super("Vehicle Exception: " + message);
-	}
+    /**
+     * Creates a new instance of VehicleException.
+     * 
+     * @param message
+     *            String holding an informative message about the problem
+     *            encountered
+     */
+    public VehicleException(String message) {
+	super("Vehicle Exception: " + message);
+    }
 }
