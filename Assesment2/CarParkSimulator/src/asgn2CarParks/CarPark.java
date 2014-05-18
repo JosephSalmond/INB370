@@ -1,6 +1,7 @@
 package asgn2CarParks;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Vector;
 
 import asgn2Exceptions.VehicleException;
@@ -76,6 +77,76 @@ public class CarPark {
     // Archives vehicles exiting the car park after a successful st
     public void archiveDepartingVehicles(int time, boolean force)
 	    throws VehicleException, SimulationException {
+	Iterator<Vehicle> iter;
+	if (force) {
+
+	    iter = carSpaces.iterator();
+	    while (iter.hasNext()) {
+		Vehicle v = iter.next();
+		if (v.getDepartureTime() == time) {
+		    this.unparkVehicle(v, time);
+		    past.add(v);
+		    iter.remove();
+		}
+	    }
+
+	    iter = smallCarSpaces.iterator();
+	    while (iter.hasNext()) {
+		Vehicle v = iter.next();
+		if (v.getDepartureTime() == time) {
+		    this.unparkVehicle(v, time);
+		    past.add(v);
+		    iter.remove();
+		}
+	    }
+
+	    iter = motorCycleSpaces.iterator();
+	    while (iter.hasNext()) {
+		Vehicle v = iter.next();
+		if (v.getDepartureTime() == time) {
+		    this.unparkVehicle(v, time);
+		    past.add(v);
+		    iter.remove();
+		}
+	    }
+
+	} else {
+	    if (!carSpaces.isEmpty()) {
+		iter = carSpaces.iterator();
+		while (iter.hasNext()) {
+		    Vehicle v = iter.next();
+		    if (v.getDepartureTime() == time) {
+			this.unparkVehicle(v, time);
+			past.add(v);
+			iter.remove();
+		    }
+		}
+	    }
+	    if (!smallCarSpaces.isEmpty()) {
+		iter = smallCarSpaces.iterator();
+		while (iter.hasNext()) {
+		    Vehicle v = iter.next();
+		    if (v.getDepartureTime() == time) {
+			this.unparkVehicle(v, time);
+			past.add(v);
+			iter.remove();
+		    }
+		}
+	    }
+	    if (!motorCycleSpaces.isEmpty()) {
+		iter = motorCycleSpaces.iterator();
+		while (iter.hasNext()) {
+		    Vehicle v = iter.next();
+		    if (v.getDepartureTime() == time) {
+			this.unparkVehicle(v, time);
+			past.add(v);
+			iter.remove();
+		    }
+		}
+	    }
+
+	}
+
 	// VehicleException - if vehicle to be archived is not in the correct
 	// state
 	// SimulationException - if one or more departing vehicles are not in
@@ -221,10 +292,13 @@ public class CarPark {
 
 	if (!this.spacesAvailable(v)) {
 	    throw new SimulationException("parkVehicle: ");
-	} else if (!v.isParked()) { // or timing constraints are violated
+	} else if (v.isParked()) { // or timing constraints are violated
 	    throw new VehicleException("parkVehicle: ");
 	}
 
+	if (intendedDuration < Constants.DEFAULT_INTENDED_STAY_SD) {
+	    intendedDuration = (int) Constants.DEFAULT_INTENDED_STAY_SD + 1;
+	}
 	v.enterParkedState(time, intendedDuration);
 	this.spacesAvailable(v);
 
@@ -246,6 +320,22 @@ public class CarPark {
     // Silently process elements in the queue
     public void processQueue(int time, Simulator sim) throws VehicleException,
 	    SimulationException {
+
+	if (!this.queueEmpty()) {
+	    Vehicle v = queue.peekFirst();
+
+	    if (this.spacesAvailable(v)) {
+		v.exitQueuedState(time);
+		this.parkVehicle(v, time, sim.setDuration());
+		queue.pop();
+	    }
+
+	}
+	for (Vehicle v : queue) {
+	    if (v.getArrivalTime() - time == Constants.MAXIMUM_QUEUE_TIME) {
+		v.exitQueuedState(time);
+	    }
+	}
 	// SimulationException - if no suitable spaces available when parking
 	// attempted
 	// VehicleException - if state is incorrect, or times violate
@@ -324,9 +414,9 @@ public class CarPark {
 	}
 	if (newVehicle != null && this.spacesAvailable(newVehicle)) {
 	    this.parkVehicle(newVehicle, time, sim.setDuration());
-	} else if (!this.queueFull()) {
+	} else if (newVehicle != null && !this.queueFull()) {
 	    this.enterQueue(newVehicle);
-	} else {
+	} else if (newVehicle != null) {
 	    this.archiveNewVehicle(newVehicle);
 	}
     }
@@ -346,13 +436,13 @@ public class CarPark {
 	v.exitParkedState(departureTime);
 	if (motorCycleSpaces.contains(v)) {
 	    numMotorCycles--;
-	    motorCycleSpaces.remove(v);
+	   // motorCycleSpaces.remove(v);
 	} else if (smallCarSpaces.contains(v)) {
 	    numSmallCars--;
-	    smallCarSpaces.remove(v);
+	   // smallCarSpaces.remove(v);
 	} else if (carSpaces.contains(v)) {
 	    numCars--;
-	    carSpaces.remove(v);
+	  //  carSpaces.remove(v);
 	}
 
     }
