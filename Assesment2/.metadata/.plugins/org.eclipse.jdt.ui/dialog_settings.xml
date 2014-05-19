@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
 	<item value="500" key="CallHierarchyViewPart.ratio3"/>
 	<item value="500" key="CallHierarchyViewPart.ratio1"/>
 	<item value="3" key="CallHierarchyViewPart.orientation"/>
+	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
+	<item value="3" key="TypeHierarchyViewPart.orientation"/>
 	<item value="1" key="SearchScopeActionGroup.search_scope_type"/>
 	<item value="2" key="CallHierarchyViewPart.field_mode"/>
+	<item value="false" key="TypeHierarchyViewPart.linkeditors"/>
 	<item value="0" key="CallHierarchyViewPart.call_mode"/>
 	<list key="SearchScopeActionGroup.working_set">
 	</list>
@@ -41,6 +45,8 @@
 		<item value="true" key="create_unimplemented"/>
 	</section>
 	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="BreadcrumbItemDropDown">
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.typehierarchy.QuickHierarchy">
 		<item value="350" key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_WIDTH"/>

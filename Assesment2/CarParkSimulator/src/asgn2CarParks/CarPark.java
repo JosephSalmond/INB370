@@ -47,6 +47,7 @@ public class CarPark {
     private int numMotorCycles;
     private int numSmallCars;
     private int numDissatisfied;
+    private int numSatisfied;
 
     private String status;
     private Vector<Vehicle> carSpaces = new Vector<Vehicle>();
@@ -83,31 +84,36 @@ public class CarPark {
 	    iter = carSpaces.iterator();
 	    while (iter.hasNext()) {
 		Vehicle v = iter.next();
-		if (v.getDepartureTime() == time) {
-		    this.unparkVehicle(v, time);
-		    past.add(v);
-		    iter.remove();
-		}
+		this.unparkVehicle(v, time);
+		past.add(v);
+		numSatisfied++;
+		iter.remove();
 	    }
 
 	    iter = smallCarSpaces.iterator();
 	    while (iter.hasNext()) {
 		Vehicle v = iter.next();
-		if (v.getDepartureTime() == time) {
-		    this.unparkVehicle(v, time);
-		    past.add(v);
-		    iter.remove();
-		}
+		this.unparkVehicle(v, time);
+		past.add(v);
+		numSatisfied++;
+		iter.remove();
 	    }
 
 	    iter = motorCycleSpaces.iterator();
 	    while (iter.hasNext()) {
 		Vehicle v = iter.next();
-		if (v.getDepartureTime() == time) {
-		    this.unparkVehicle(v, time);
-		    past.add(v);
-		    iter.remove();
-		}
+		this.unparkVehicle(v, time);
+		past.add(v);
+		numSatisfied++;
+		iter.remove();
+	    }
+
+	    iter = queue.iterator();
+	    while (iter.hasNext()) {
+		Vehicle v = iter.next();
+		v.exitQueuedState(time);
+		past.add(v);
+		iter.remove();
 	    }
 
 	} else {
@@ -118,6 +124,7 @@ public class CarPark {
 		    if (v.getDepartureTime() == time) {
 			this.unparkVehicle(v, time);
 			past.add(v);
+			numSatisfied++;
 			iter.remove();
 		    }
 		}
@@ -129,6 +136,7 @@ public class CarPark {
 		    if (v.getDepartureTime() == time) {
 			this.unparkVehicle(v, time);
 			past.add(v);
+			numSatisfied++;
 			iter.remove();
 		    }
 		}
@@ -140,6 +148,7 @@ public class CarPark {
 		    if (v.getDepartureTime() == time) {
 			this.unparkVehicle(v, time);
 			past.add(v);
+			numSatisfied++;
 			iter.remove();
 		    }
 		}
@@ -161,6 +170,7 @@ public class CarPark {
 	}
 
 	past.add(v);
+
 	// SimulationException - if vehicle is currently queued or parked
 
     }
@@ -168,6 +178,17 @@ public class CarPark {
     // Archive vehicles which have stayed in the queue too long
     public void archiveQueueFailures(int time) throws VehicleException {
 	// VehicleException - if one or more vehicles not in the correct state
+	
+	    Iterator<Vehicle> iter = queue.iterator();
+	    while (iter.hasNext()) {
+		Vehicle v = iter.next();
+		if (time - v.getArrivalTime() >= Constants.MAXIMUM_QUEUE_TIME) {
+		    v.exitQueuedState(time);
+		    past.add(v);
+		    iter.remove();
+		    //System.out.println("Q " + v.getVehID() + " " + time);
+		}
+	    }
 
     }
 
@@ -220,8 +241,31 @@ public class CarPark {
 
     // State dump intended for use in logging the final state of the carpark
     public String finalState() {
-
-	return "finalState: Finish HIM";
+	numDissatisfied = count - numSatisfied;
+	String str = this.count
+		+ "::"
+		+ "P:"
+		+ (this.carSpaces.size() + motorCycleSpaces.size() + smallCarSpaces
+			.size()) + "::" + "C:"
+		+ this.numCars
+		+ "::S:" // this change
+		+ this.numSmallCars + "::M:" + this.numMotorCycles + "::D:"
+		+ this.numDissatisfied + "::A:" + this.past.size() + "::Q:"
+		+ this.queue.size();
+	for (Vehicle v : this.queue) {
+	    if (v instanceof Car) {
+		if (((Car) v).isSmall()) {
+		    str += "S";
+		} else {
+		    str += "C";
+		}
+	    } else {
+		str += "M";
+	    }
+	}
+	str += this.status;
+	this.status = "";
+	return str + "\n";
     }
 
     // Simple getter for number of cars in the car park
@@ -240,6 +284,7 @@ public class CarPark {
 
     // Method used to provide the current status of the car park.
     public String getStatus(int time) {
+	numDissatisfied = count - numSatisfied;
 	String str = time
 		+ "::"
 		+ this.count
@@ -331,11 +376,7 @@ public class CarPark {
 	    }
 
 	}
-	for (Vehicle v : queue) {
-	    if (v.getArrivalTime() - time == Constants.MAXIMUM_QUEUE_TIME) {
-		v.exitQueuedState(time);
-	    }
-	}
+
 	// SimulationException - if no suitable spaces available when parking
 	// attempted
 	// VehicleException - if state is incorrect, or times violate
@@ -405,19 +446,26 @@ public class CarPark {
 	Vehicle newVehicle = null;
 	if (sim.newCarTrial()) {
 	    if (sim.smallCarTrial()) {
-		newVehicle = new Car("ID", time, true);// create small car
+		String id = "CS" + time;
+		newVehicle = new Car(id, time, true);// create small car
 	    } else {
-		newVehicle = new Car("ID", time, false);
+		String id = "C" + time;
+		newVehicle = new Car(id, time, false);
 	    }
 	} else if (sim.motorCycleTrial()) {
-	    newVehicle = new MotorCycle("ID", time);
+	    String id = "M" + time;
+	    newVehicle = new MotorCycle(id, time);
 	}
+
 	if (newVehicle != null && this.spacesAvailable(newVehicle)) {
 	    this.parkVehicle(newVehicle, time, sim.setDuration());
+	    count++;
 	} else if (newVehicle != null && !this.queueFull()) {
 	    this.enterQueue(newVehicle);
+	    count++;
 	} else if (newVehicle != null) {
 	    this.archiveNewVehicle(newVehicle);
+	    count++;
 	}
     }
 
@@ -436,13 +484,13 @@ public class CarPark {
 	v.exitParkedState(departureTime);
 	if (motorCycleSpaces.contains(v)) {
 	    numMotorCycles--;
-	   // motorCycleSpaces.remove(v);
+	    // motorCycleSpaces.remove(v);
 	} else if (smallCarSpaces.contains(v)) {
 	    numSmallCars--;
-	   // smallCarSpaces.remove(v);
+	    // smallCarSpaces.remove(v);
 	} else if (carSpaces.contains(v)) {
 	    numCars--;
-	  //  carSpaces.remove(v);
+	    // carSpaces.remove(v);
 	}
 
     }
