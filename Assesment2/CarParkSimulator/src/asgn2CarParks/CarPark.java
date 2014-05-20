@@ -49,6 +49,7 @@ public class CarPark {
     private int numDissatisfied;
     private int numSatisfied;
 
+    
     private String status;
     private Vector<Vehicle> carSpaces = new Vector<Vehicle>();
     private Vector<Vehicle> smallCarSpaces = new Vector<Vehicle>();

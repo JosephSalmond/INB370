@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 8 elements from project &apos;CarParkSimulator&apos;&#x0D;&#x0A;- Original project: &apos;CarParkSimulator&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     20140519_095254&#x0D;&#x0A;     20140519_095353&#x0D;&#x0A;     20140519_095526&#x0D;&#x0A;     20140520_161634&#x0D;&#x0A;     20140520_161713&#x0D;&#x0A;     20140520_162021&#x0D;&#x0A;     20140520_162110&#x0D;&#x0A;     20140520_162145" description="Delete elements" element1="20140520_161634" element2="20140520_162145" element3="20140520_162021" element4="20140519_095254" element5="20140520_161713" element6="20140519_095353" element7="20140520_162110" element8="20140519_095526" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="8" stamp="1400567667727" subPackages="false" version="1.0"/>
+</session>

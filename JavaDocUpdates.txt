@@ -1,0 +1,54 @@
+Updated javadoc - various classes: 
+
+Vehicle.enterParkedState(int parkingTime, int intendedDuration): 
+[See FAQ for explanation - change just "< 0" to "<= 0"]
+
+/**
+ * Transition vehicle to parked state (mutator)
+ * Parking starts on arrival or on exit from the queue, but time is set here
+ * @param parkingTime int time (minutes) at which the vehicle was able to park
+ * @param intendedDuration int time (minutes) for which the vehicle is intended to remain in the car park.
+ *  	  Note that the parkingTime + intendedDuration yields the departureTime
+ * @throws VehicleException if the vehicle is already in a parked or queued state, if parkingTime <= 0, 
+ *         or if intendedDuration is less than the minimum prescribed in asgnSimulators.Constants
+ */
+
+
+Vehicle.isSatisfied():
+[See FAQ for explanation - added line: Vehicles begin in a satisfied state, but this may change over time]
+
+/**
+ * Boolean status indicating whether customer is satisfied or not
+ * Satisfied if they park; dissatisfied if turned away, or queuing for too long
+ * Vehicles begin in a satisfied state, but this may change over time
+ * Note that calls to this method may not reflect final status 
+ * @return true if satisfied, false if never in parked state or if queuing time exceeds max allowable 
+ */
+
+
+CarPark.exitQueue(Vehicle v,int exitTime): 
+[Very minor change here - "parked or removed completely" -> "parked or archived"]
+
+/**
+ * Method to remove vehicle from the queue after which it will be parked or 
+ * archived. Includes transition through Vehicle.exitQueuedState.  
+ * @param v Vehicle to be removed from the queue 
+ * @param exitTime int time at which vehicle exits queue
+ * @throws SimulationException if vehicle is not in queue 
+ * @throws VehicleException if the vehicle is in an incorrect state or timing 
+ * constraints are violated
+ */
+	
+
+CarPark.setVehicleMsg(Vehicle v,String source, String target):
+[Starting state (N,Q,P,A) changed to (N,Q,P). Same for (N|Q|P|A) to (N|Q|P). No transition
+is possible from the archive state]
+
+/**
+ * Helper to set vehicle message for transitions 
+ * @param v Vehicle making a transition (uses S,C,M)
+ * @param source String holding starting state of vehicle (N,Q,P) 
+ * @param target String holding finishing state of vehicle (Q,P,A) 
+ * @return String containing transition in the form: |(S|C|M):(N|Q|P)>(Q|P|A)| 
+ */
+
