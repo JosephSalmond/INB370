@@ -64,7 +64,7 @@ public class Car extends Vehicle {
 
 	String str = "Vehicle vehID: " + vehID + endl + "Arrival Time: "
 		+ arrivalTime + endl + stringQueue + stringPark
-		+ stringSatisfied + stringSmall;
+		+ stringSatisfied;
 
 	return str;
     }

@@ -168,17 +168,17 @@ public abstract class Vehicle {
 	} else {
 	    stringPark = "Vehicle was not parked";
 	}
-
+	
 	String stringSatisfied;
-	if (satisfied) {
+	if(satisfied){
 	    stringSatisfied = "Customer was satisfied" + endl;
-	} else {
+	}else{
 	    stringSatisfied = "Customer was not satisfied" + endl;
 	}
+	
 
 	String str = "Vehicle vehID: " + vehID + endl + "Arrival Time: "
-		+ arrivalTime + endl + stringQueue + stringPark
-		+ stringSatisfied;
+		+ arrivalTime + endl + stringQueue + stringPark + stringSatisfied;
 
 	return str;
     }

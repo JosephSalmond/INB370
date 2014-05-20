@@ -83,7 +83,6 @@ public class SimulationRunner {
 	    this.log.logEntry(time, this.carPark);
 	}
 	System.out.println("THE END");
-	//this.carPark.toString();
 	this.log.finalise(this.carPark);
     }
 

@@ -50,7 +50,7 @@ public class CarPark {
     private int numSatisfied;
 
     
-    private String status;
+    private String status = "";
     private Vector<Vehicle> carSpaces = new Vector<Vehicle>();
     private Vector<Vehicle> smallCarSpaces = new Vector<Vehicle>();
     private Vector<Vehicle> motorCycleSpaces = new Vector<Vehicle>();
@@ -435,7 +435,12 @@ public class CarPark {
     // Overrides toString in class java.lang.Object
     @Override
     public String toString() {
-	return "CarPark";
+	String str ="\n";
+	for(Vehicle v : past){
+	    str += v.toString() + "\n";
+	}
+	System.out.print(str); // dump to console
+	return str;
     }
 
     // Method to try to create new vehicles
