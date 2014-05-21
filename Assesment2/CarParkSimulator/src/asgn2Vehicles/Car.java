@@ -45,7 +45,7 @@ public class Car extends Vehicle {
 	}
 
 	String stringSatisfied;
-	if (satisfied) {
+	if (this.isSatisfied()) {
 	    stringSatisfied = "Customer was satisfied" + endl;
 	} else {
 	    stringSatisfied = "Customer was not satisfied" + endl;

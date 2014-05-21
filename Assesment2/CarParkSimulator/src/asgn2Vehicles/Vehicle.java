@@ -8,7 +8,6 @@ public abstract class Vehicle {
 
     boolean parked;
     boolean queued;
-    boolean satisfied;
     boolean wasParked;
     boolean wasQueued;
 
@@ -29,7 +28,9 @@ public abstract class Vehicle {
 	this.vehID = vehID;
 	this.arrivalTime = arrivalTime;
 	this.departureTime = 0;
-	this.satisfied = false;
+	this.queueTime = 0;
+	this.parkingTime = 0;
+	this.intendedDuration = 0;
 	this.parked = false;
 	this.queued = false;
 	this.wasParked = false;
@@ -88,7 +89,6 @@ public abstract class Vehicle {
 
 	parked = false;
 	wasParked = true;
-	satisfied = true;
 	// VehicleException - if the vehicle is not in a parked state, is in a
 	// queued state or if the revised departureTime < parkingTime
 
@@ -144,6 +144,10 @@ public abstract class Vehicle {
     // Boolean status indicating whether customer is satisfied or not Satisfied
     // if they park
     public boolean isSatisfied() {
+	boolean satisfied = true;
+	if(!wasParked || queueTime >= Constants.MAXIMUM_QUEUE_TIME){
+	    satisfied = false;
+	} 
 	return satisfied;
     }
 
@@ -170,7 +174,7 @@ public abstract class Vehicle {
 	}
 
 	String stringSatisfied;
-	if (satisfied) {
+	if (this.isSatisfied()) {
 	    stringSatisfied = "Customer was satisfied" + endl;
 	} else {
 	    stringSatisfied = "Customer was not satisfied" + endl;

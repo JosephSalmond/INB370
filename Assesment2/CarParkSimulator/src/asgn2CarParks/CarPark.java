@@ -454,15 +454,24 @@ public class CarPark {
 	    if (sim.smallCarTrial()) {
 		String id = "CS" + time;
 		newVehicle = new Car(id, time, true);// create small car
+		createVehicle(time, sim, newVehicle);
 	    } else {
 		String id = "C" + time;
 		newVehicle = new Car(id, time, false);
+		createVehicle(time, sim, newVehicle);
 	    }
-	} else if (sim.motorCycleTrial()) {
+	} 
+	if (sim.motorCycleTrial()) {
 	    String id = "M" + time;
 	    newVehicle = new MotorCycle(id, time);
+	    createVehicle(time, sim, newVehicle);
 	}
 
+	
+    }
+
+    private void createVehicle(int time, Simulator sim, Vehicle newVehicle)
+	    throws SimulationException, VehicleException {
 	if (newVehicle != null && this.spacesAvailable(newVehicle)) {
 	    this.parkVehicle(newVehicle, time, sim.setDuration());
 	    count++;
