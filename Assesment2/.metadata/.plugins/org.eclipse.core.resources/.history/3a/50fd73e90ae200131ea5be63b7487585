@@ -24,7 +24,6 @@ import org.jfree.ui.RefineryUtilities;
 
 import asgn2Examples.RandomTimeSeries;
 
-@SuppressWarnings("serial")
 public class GUISimulator extends ApplicationFrame{
 /*
  *Add CLI args  if no args then default if 10 args process else throw error
@@ -50,7 +49,7 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 
 
  */
-    private static final String TITLE = "Z Car Park";
+    private static final String TITLE = "Random Car Park";
     int cars;
     int mc;
 	TimeSeriesCollection tsc = new TimeSeriesCollection(); 
@@ -60,8 +59,6 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 	TimeSeries numSmallCars = new TimeSeries("Current Small Cars"); // Grey
 	TimeSeries numMotorCycles = new TimeSeries("Current MotorCycles"); // DarkGrey
 	TimeSeries numInQueue = new TimeSeries("Current Queue"); // Yellow
-	TimeSeries numArchived= new TimeSeries("Number Archived"); // green
-	TimeSeries numDissatisfied = new TimeSeries("Number Disatisfied");
 	Calendar cal = GregorianCalendar.getInstance();
 	int time = 0;
 	Date timePoint;
@@ -88,28 +85,18 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 
 	// pull from getStatus each tick
 	//This is important - steal it shamelessly 
-	numToDate.add(new Minute(timePoint),mc);
-	numVehicles.add(new Minute(timePoint),mc);
-	numCars.add(new Minute(timePoint),mc);
-	numSmallCars.add(new Minute(timePoint),mc);
-	numMotorCycles.add(new Minute(timePoint),mc);
-	numInQueue.add(new Minute(timePoint),mc);
-	numArchived.add(new Minute(timePoint),mc);
-	numDissatisfied.add(new Minute(timePoint),mc);
+		mcTotal.add(new Minute(timePoint),mc);
+		carTotal.add(new Minute(timePoint),cars);
+		vehTotal.add(new Minute(timePoint),cars+mc);
 	}
 
 
 
     private TimeSeriesCollection chartForge() {
 	//Collection
-	tsc.addSeries(numToDate);
-	tsc.addSeries(numVehicles);
-	tsc.addSeries(numCars);
-	tsc.addSeries(numSmallCars);
-	tsc.addSeries(numMotorCycles);
-	tsc.addSeries(numInQueue);
-	tsc.addSeries(numArchived);
-	tsc.addSeries(numDissatisfied);
+	tsc.addSeries(vehTotal);
+	tsc.addSeries(carTotal);
+	tsc.addSeries(mcTotal);
 	return tsc;
     }
     

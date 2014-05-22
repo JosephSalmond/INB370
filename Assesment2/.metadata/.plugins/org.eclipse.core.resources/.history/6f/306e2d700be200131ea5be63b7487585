@@ -24,7 +24,6 @@ import org.jfree.ui.RefineryUtilities;
 
 import asgn2Examples.RandomTimeSeries;
 
-@SuppressWarnings("serial")
 public class GUISimulator extends ApplicationFrame{
 /*
  *Add CLI args  if no args then default if 10 args process else throw error
@@ -50,7 +49,7 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 
 
  */
-    private static final String TITLE = "Z Car Park";
+    private static final String TITLE = "Random Car Park";
     int cars;
     int mc;
 	TimeSeriesCollection tsc = new TimeSeriesCollection(); 
@@ -102,14 +101,14 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 
     private TimeSeriesCollection chartForge() {
 	//Collection
-	tsc.addSeries(numToDate);
-	tsc.addSeries(numVehicles);
-	tsc.addSeries(numCars);
-	tsc.addSeries(numSmallCars);
-	tsc.addSeries(numMotorCycles);
-	tsc.addSeries(numInQueue);
-	tsc.addSeries(numArchived);
-	tsc.addSeries(numDissatisfied);
+	tsc.addSeries();
+	tsc.addSeries();
+	tsc.addSeries();
+	tsc.addSeries();
+	tsc.addSeries();
+	tsc.addSeries();
+	tsc.addSeries();
+	tsc.addSeries();
 	return tsc;
     }
     

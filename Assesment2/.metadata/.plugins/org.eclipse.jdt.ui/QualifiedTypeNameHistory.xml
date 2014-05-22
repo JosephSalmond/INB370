@@ -3,6 +3,9 @@
 <fullyQualifiedTypeName name="asgn2CarParks.CarPark"/>
 <fullyQualifiedTypeName name="asgn2Vehicles.MotorCycle"/>
 <fullyQualifiedTypeName name="java.io.Console"/>
-<fullyQualifiedTypeName name="asgn2Simulators.Constants"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="asgn2Vehicles.Car"/>
+<fullyQualifiedTypeName name="asgn2Exceptions.VehicleException"/>
+<fullyQualifiedTypeName name="asgn2Exceptions.SimulationException"/>
+<fullyQualifiedTypeName name="asgn2Simulators.Constants"/>
 </qualifiedTypeNameHistroy>

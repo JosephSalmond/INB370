@@ -25,13 +25,13 @@ public class CarParkTests {
     private boolean testCarNotSmall = false;
     private int testIntendedDuration = 60;
     private int testParkingTime = 30;
-    Car testCar;
-    
+
+    Car testCar = new Car(testConstructorVehID, testConstructorArrivalTime,
+	    testCarNotSmall);
 
     @Before
     public void setUp() throws Exception {
 	testCarPark = new CarPark();
-	testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
     }
 
     @Before

@@ -50,7 +50,7 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 
 
  */
-    private static final String TITLE = "Z Car Park";
+    private static final String TITLE = "Random Car Park";
     int cars;
     int mc;
 	TimeSeriesCollection tsc = new TimeSeriesCollection(); 
