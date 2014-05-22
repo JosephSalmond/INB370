@@ -67,7 +67,7 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 	cal.set(2014,0,1,6,time);
 	timePoint = cal.getTime();
 	// run program
-	chartAddValues();
+	chartAddValues()k
 	
         final TimeSeriesCollection dataset = chartForge(); 
         JFreeChart chart = createChart(dataset);
@@ -77,6 +77,20 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
         
     }
     
+    
+    /**
+     * Private method creates the dataset. Lots of hack code in the 
+     * middle, but you should use the labelled code below  
+	 * @return collection of time series for the plot 
+	 */
+	private TimeSeriesCollection createTimeSeriesData() {
+		
+		
+		chartAddValues();
+		
+		return chartForge(); 
+	}
+
 
     private void chartAddValues() {
 

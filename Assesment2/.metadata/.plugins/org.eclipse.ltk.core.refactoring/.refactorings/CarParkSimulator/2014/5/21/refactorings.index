@@ -1,2 +1,4 @@
 1400567667727	Delete elements
 1400638205623	Extract method 'createVehicle'
+1400745268213	Extract method 'chartForge'
+1400745338249	Extract method 'chartAddValues'

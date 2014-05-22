@@ -50,52 +50,82 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 
  */
     private static final String TITLE = "Random Car Park";
-    int cars;
-    int mc;
-	TimeSeriesCollection tsc = new TimeSeriesCollection(); 
-	TimeSeries vehTotal = new TimeSeries("Total Vehicles");
-	TimeSeries carTotal = new TimeSeries("Total Cars"); 
-	TimeSeries mcTotal = new TimeSeries("MotorCycles");
-	Calendar cal = GregorianCalendar.getInstance();
-	int time = 0;
-	Date timePoint;
-	
+    
     public GUISimulator(final String title) {
         super(title);
-	cars = 0;
-	mc = 0; 
-	cal.set(2014,0,1,6,time);
-	timePoint = cal.getTime();
-	// run program
-	chartAddValues();
-	
-        final TimeSeriesCollection dataset = chartForge(); 
+        final TimeSeriesCollection dataset = createTimeSeriesData(); 
         JFreeChart chart = createChart(dataset);
         this.add(new ChartPanel(chart), BorderLayout.CENTER);
         JPanel btnPanel = new JPanel(new FlowLayout());
         this.add(btnPanel, BorderLayout.SOUTH);
-        
     }
     
-
-    private void chartAddValues() {
-
-	// pull from getStatus each tick
-	//This is important - steal it shamelessly 
-		mcTotal.add(new Minute(timePoint),mc);
-		carTotal.add(new Minute(timePoint),cars);
-		vehTotal.add(new Minute(timePoint),cars+mc);
+    
+    /**
+     * Private method creates the dataset. Lots of hack code in the 
+     * middle, but you should use the labelled code below  
+	 * @return collection of time series for the plot 
+	 */
+	private TimeSeriesCollection createTimeSeriesData() {
+		TimeSeriesCollection tsc = new TimeSeriesCollection(); 
+		TimeSeries vehTotal = new TimeSeries("Total Vehicles");
+		TimeSeries carTotal = new TimeSeries("Total Cars"); 
+		TimeSeries mcTotal = new TimeSeries("MotorCycles");
+		
+		//Base time, data set up - the calendar is needed for the time points
+		Calendar cal = GregorianCalendar.getInstance();
+		Random rng = new Random(250); 
+		
+		int cars = 0;
+		int mc = 0; 
+		
+		//Hack loop to make it interesting. Grows for half of it, then declines
+		for (int i=0; i<=18*60; i++) {
+			//These lines are important 
+			cal.set(2014,0,1,6,i);
+	        Date timePoint = cal.getTime();
+	        
+	        //HACK BEGINS
+	        if (i<9*60) {
+	        	if (randomSuccess(0.2,rng)) {
+	        		cars++; 
+	        	}
+	        	if (randomSuccess(0.1,rng)) {
+	        		mc++;
+	        	}
+	        } else if (i < 18*60) {
+	        	if (randomSuccess(0.15,rng)) {
+	        		cars++; 
+	        	} else if (randomSuccess(0.4,rng)) {
+	        		cars = Math.max(cars-1,0);
+	        	}
+	        	if (randomSuccess(0.05,rng)) {
+	        		mc++; 
+	        	} else if (randomSuccess(0.2,rng)) {
+	        		mc = Math.max(mc-1,0);
+	        	}
+	        } else {
+	        	cars=0; 
+	        	mc =0;
+	        }
+	        //HACK ENDS
+	        
+	        //This is important - steal it shamelessly 
+			mcTotal.add(new Minute(timePoint),mc);
+			carTotal.add(new Minute(timePoint),cars);
+			vehTotal.add(new Minute(timePoint),cars+mc);
+		}
+		
+		//Collection
+		tsc.addSeries(vehTotal);
+		tsc.addSeries(carTotal);
+		tsc.addSeries(mcTotal);
+		return tsc; 
 	}
-
-
-
-    private TimeSeriesCollection chartForge() {
-	//Collection
-	tsc.addSeries(vehTotal);
-	tsc.addSeries(carTotal);
-	tsc.addSeries(mcTotal);
-	return tsc;
-    }
+	private boolean randomSuccess(double successProb,Random rng) {
+		boolean result = rng.nextDouble() <= successProb;
+		return result;
+	}
     
     /**
      * Helper method to deliver the Chart - currently uses default colours and auto range 

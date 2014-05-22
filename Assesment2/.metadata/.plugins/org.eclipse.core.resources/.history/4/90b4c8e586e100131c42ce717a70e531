@@ -67,9 +67,8 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 	cal.set(2014,0,1,6,time);
 	timePoint = cal.getTime();
 	// run program
-	chartAddValues();
 	
-        final TimeSeriesCollection dataset = chartForge(); 
+        final TimeSeriesCollection dataset = createTimeSeriesData(); 
         JFreeChart chart = createChart(dataset);
         this.add(new ChartPanel(chart), BorderLayout.CENTER);
         JPanel btnPanel = new JPanel(new FlowLayout());
@@ -77,16 +76,30 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
         
     }
     
+    
+    /**
+     * Private method creates the dataset. Lots of hack code in the 
+     * middle, but you should use the labelled code below  
+	 * @return collection of time series for the plot 
+	 */
+	private TimeSeriesCollection createTimeSeriesData() {
+		
+		
+		chartAddValues();
+		
+		return chartForge(); 
+	}
+
 
     private void chartAddValues() {
 
-	// pull from getStatus each tick
+	
 	//This is important - steal it shamelessly 
 		mcTotal.add(new Minute(timePoint),mc);
 		carTotal.add(new Minute(timePoint),cars);
 		vehTotal.add(new Minute(timePoint),cars+mc);
 	}
-
+    }
 
 
     private TimeSeriesCollection chartForge() {
@@ -96,6 +109,10 @@ public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_T
 	tsc.addSeries(mcTotal);
 	return tsc;
     }
+	private boolean randomSuccess(double successProb,Random rng) {
+		boolean result = rng.nextDouble() <= successProb;
+		return result;
+	}
     
     /**
      * Helper method to deliver the Chart - currently uses default colours and auto range 
