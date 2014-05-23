@@ -43,9 +43,16 @@ public class Car extends Vehicle {
      */
     @Override
     public String toString() {
+
+	// For Compatibility purposes & readability
 	String endl = System.getProperty("line.separator");
 
 	String stringQueue;
+	String stringPark;
+	String stringSatisfied;
+	String stringSmall;
+
+	// Create Queue String
 	if (wasQueued) {
 	    stringQueue = "Exit ffrom Queue: " + queueTime + endl
 		    + " Queuing Time " + (queueTime - arrivalTime) + endl;
@@ -53,7 +60,7 @@ public class Car extends Vehicle {
 	    stringQueue = "Vehicle was not queued";
 	}
 
-	String stringPark;
+	// Create Parking String
 	if (wasParked) {
 	    stringPark = "Entry to Car Park: " + parkingTime + endl
 		    + "Exit from Car Park: " + departureTime + endl
@@ -62,14 +69,14 @@ public class Car extends Vehicle {
 	    stringPark = "Vehicle was not parked";
 	}
 
-	String stringSatisfied;
+	// Create Satisfaction String
 	if (this.isSatisfied()) {
 	    stringSatisfied = "Customer was satisfied" + endl;
 	} else {
 	    stringSatisfied = "Customer was not satisfied" + endl;
 	}
 
-	String stringSmall;
+	// Create Small String
 	if (this instanceof Car) {
 	    if (this.isSmall()) {
 		stringSmall = "Car can use small parking space" + endl;
@@ -80,6 +87,7 @@ public class Car extends Vehicle {
 	    stringSmall = "";
 	}
 
+	// Tie them all together
 	String str = "Vehicle vehID: " + vehID + endl + "Arrival Time: "
 		+ arrivalTime + endl + stringQueue + stringPark
 		+ stringSatisfied + stringSmall;

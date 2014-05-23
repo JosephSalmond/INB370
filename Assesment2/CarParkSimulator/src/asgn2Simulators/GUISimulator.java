@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -21,7 +20,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
-
 
 @SuppressWarnings("serial")
 public class GUISimulator extends ApplicationFrame {

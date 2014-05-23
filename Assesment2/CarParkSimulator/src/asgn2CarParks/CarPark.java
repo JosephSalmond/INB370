@@ -46,6 +46,7 @@ public class CarPark {
     private int numCars;
     private int numMotorCycles;
     private int numSmallCars;
+    // need to track properly
     private int numDissatisfied;
     private int numSatisfied;
 
@@ -57,6 +58,9 @@ public class CarPark {
     private Vector<Vehicle> past = new Vector<Vehicle>();
 
     // CarPark constructor sets the basic size parameters.
+    /**
+     * @author Joseph Salmond 8823928
+     */
     public CarPark() {
 	this.maxCarSpaces = Constants.DEFAULT_MAX_CAR_SPACES;
 	this.maxSmallCarSpaces = Constants.DEFAULT_MAX_SMALL_CAR_SPACES;
@@ -66,6 +70,13 @@ public class CarPark {
     }
 
     // CarPark constructor sets the basic size parameters.
+    /**
+     * @author Joseph Salmond 8823928
+     * @param maxCarSpaces
+     * @param maxSmallCarSpaces
+     * @param maxMotorCycleSpaces
+     * @param maxQueueSize
+     */
     public CarPark(int maxCarSpaces, int maxSmallCarSpaces,
 	    int maxMotorCycleSpaces, int maxQueueSize) {
 	this.maxCarSpaces = maxCarSpaces;
@@ -76,6 +87,13 @@ public class CarPark {
     }
 
     // Archives vehicles exiting the car park after a successful st
+    /**
+     * @author Joseph Salmond 8823928
+     * @param time
+     * @param force
+     * @throws VehicleException
+     * @throws SimulationException
+     */
     public void archiveDepartingVehicles(int time, boolean force)
 	    throws VehicleException, SimulationException {
 	Iterator<Vehicle> iter;
@@ -164,6 +182,11 @@ public class CarPark {
 
     // Method to archive new vehicles that don't get parked or queued and are
     // turned away
+    /**
+     * @author Joseph Salmond 8823928
+     * @param v
+     * @throws SimulationException
+     */
     public void archiveNewVehicle(Vehicle v) throws SimulationException {
 	if (v.isParked() || v.isQueued()) {
 	    throw new SimulationException("archiveNewVehicle: ");
@@ -176,6 +199,11 @@ public class CarPark {
     }
 
     // Archive vehicles which have stayed in the queue too long
+    /**
+     * @author Joseph Salmond 8823928
+     * @param time
+     * @throws VehicleException
+     */
     public void archiveQueueFailures(int time) throws VehicleException {
 	// VehicleException - if one or more vehicles not in the correct state
 
@@ -193,18 +221,32 @@ public class CarPark {
     }
 
     // Simple status showing whether carPark is empty
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean carParkEmpty() {
 	return (carSpaces.isEmpty() && smallCarSpaces.isEmpty() && motorCycleSpaces
 		.isEmpty());
     }
 
     // Simple status showing whether carPark is full
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean carParkFull() {
 	return (carSpaces.size() + smallCarSpaces.size() + motorCycleSpaces
 		.size()) == (maxCarSpaces + maxSmallCarSpaces + maxMotorCycleSpaces);
     }
 
     // Method to add vehicle successfully to the queue
+    /**
+     * @author Joseph Salmond 8823928
+     * @param v
+     * @throws SimulationException
+     * @throws VehicleException
+     */
     public void enterQueue(Vehicle v) throws SimulationException,
 	    VehicleException {
 	if (queue.size() == maxQueueSize) {
@@ -221,6 +263,13 @@ public class CarPark {
 
     // Method to remove vehicle from the queue after which it will be parked or
     // removed altogether.
+    /**
+     * @author Joseph Salmond 8823928
+     * @param v
+     * @param exitTime
+     * @throws SimulationException
+     * @throws VehicleException
+     */
     public void exitQueue(Vehicle v, int exitTime) throws SimulationException,
 	    VehicleException {
 	if (!queue.contains(v)) {
@@ -240,6 +289,10 @@ public class CarPark {
     }
 
     // State dump intended for use in logging the final state of the carpark
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public String finalState() {
 	numDissatisfied = count - numSatisfied;
 	String str = this.count
@@ -269,20 +322,37 @@ public class CarPark {
     }
 
     // Simple getter for number of cars in the car park
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int getNumCars() {
 	return numCars;
     }
 
     // Simple getter for number of motorcycles in the car park
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int getNumMotorCycles() {
 	return numMotorCycles;
     }
 
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int getNumSmallCars() {
 	return numSmallCars;
     }
 
     // Method used to provide the current status of the car park.
+    /**
+     * 
+     * @param time
+     * @return
+     */
     public String getStatus(int time) {
 	numDissatisfied = count - numSatisfied;
 	String str = time
@@ -327,11 +397,23 @@ public class CarPark {
     }
 
     // Simple status showing number of vehicles in the queue
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int numVehiclesInQueue() {
 	return this.queue.size();
     }
 
     // Method to add vehicle successfully to the car park store
+    /**
+     * @author Joseph Salmond 8823928
+     * @param v
+     * @param time
+     * @param intendedDuration
+     * @throws SimulationException
+     * @throws VehicleException
+     */
     public void parkVehicle(Vehicle v, int time, int intendedDuration)
 	    throws SimulationException, VehicleException {
 
@@ -363,6 +445,9 @@ public class CarPark {
     }
 
     // Silently process elements in the queue
+    /**
+     * @author Joseph Salmond 8823928
+     */
     public void processQueue(int time, Simulator sim) throws VehicleException,
 	    SimulationException {
 
@@ -384,11 +469,19 @@ public class CarPark {
     }
 
     // Simple status showing whether queue is empty
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean queueEmpty() {
 	return this.queue.isEmpty();
     }
 
     // Simple status showing whether queue is full
+    /**
+     * 
+     * @return
+     */
     public boolean queueFull() {
 	return (this.queue.size() == maxQueueSize);
     }
@@ -396,6 +489,11 @@ public class CarPark {
     // Method determines, given a vehicle of a particular type, whether there
     // are spaces available for that type in the car park under the parking
     // policy in the class header.
+    /**
+     * 
+     * @param v
+     * @return
+     */
     public boolean spacesAvailable(Vehicle v) {
 	space = spaceType.NONE;
 	boolean spaces = false;
@@ -407,9 +505,6 @@ public class CarPark {
 	    } else if (numSmallCars < maxSmallCarSpaces) {
 		spaces = true;
 		space = spaceType.SMALLCAR;
-	    } else if (numCars < maxCarSpaces) {
-		spaces = true;
-		space = spaceType.CAR;
 	    }
 	} else if (v.getClass() == Car.class) {
 	    if (((Car) v).isSmall()) {
@@ -420,11 +515,9 @@ public class CarPark {
 		    spaces = true;
 		    space = spaceType.CAR;
 		}
-
 	    } else {
 		spaces = (numCars < maxCarSpaces);
 		space = spaceType.CAR;
-
 	    }
 	}
 
@@ -432,6 +525,9 @@ public class CarPark {
     }
 
     // Overrides toString in class java.lang.Object
+    /**
+     * @author Joseph Salmond 8823928
+     */
     @Override
     public String toString() {
 	String str = "\n";
@@ -443,6 +539,13 @@ public class CarPark {
     }
 
     // Method to try to create new vehicles
+    /**
+     * @author Joseph Salmond 8823928
+     * @param time
+     * @param sim
+     * @throws VehicleException
+     * @throws SimulationException
+     */
     public void tryProcessNewVehicles(int time, Simulator sim)
 	    throws VehicleException, SimulationException {
 	// SimulationException - if no suitable spaces available when operation
@@ -468,6 +571,14 @@ public class CarPark {
 
     }
 
+    /**
+     * @author Joseph Salmond 8823928
+     * @param time
+     * @param sim
+     * @param newVehicle
+     * @throws SimulationException
+     * @throws VehicleException
+     */
     private void createVehicle(int time, Simulator sim, Vehicle newVehicle)
 	    throws SimulationException, VehicleException {
 	if (newVehicle != null && this.spacesAvailable(newVehicle)) {
@@ -483,6 +594,13 @@ public class CarPark {
     }
 
     // Method to remove vehicle from the carpark.
+    /**
+     * @author Joseph Salmond 8823928
+     * @param v
+     * @param departureTime
+     * @throws VehicleException
+     * @throws SimulationException
+     */
     public void unparkVehicle(Vehicle v, int departureTime)
 	    throws VehicleException, SimulationException {
 	if (!v.isParked()) {
