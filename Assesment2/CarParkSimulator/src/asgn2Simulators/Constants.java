@@ -25,7 +25,7 @@ public class Constants {
 
     // RNG and Probs
     public static final int DEFAULT_SEED = 100;
-    public static final double DEFAULT_CAR_PROB = 0.5;
+    public static final double DEFAULT_CAR_PROB = 1.0;
     public static final double DEFAULT_SMALL_CAR_PROB = 0.20;
     public static final double DEFAULT_MOTORCYCLE_PROB = 0.05;
     public static final double DEFAULT_INTENDED_STAY_MEAN = 120.0;
