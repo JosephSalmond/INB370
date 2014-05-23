@@ -19,7 +19,12 @@ public abstract class Vehicle {
 
     String vehID;
 
-    // Vehicle Constructor
+    /**
+     * @author Joseph Salmond 8823928 Constructor for Vehicle
+     * @param vehID
+     * @param arrivalTime
+     * @throws VehicleException
+     */
     public Vehicle(String vehID, int arrivalTime) throws VehicleException {
 	if (arrivalTime <= 0) {
 	    throw new VehicleException(
@@ -36,10 +41,15 @@ public abstract class Vehicle {
 	this.wasParked = false;
 	this.wasQueued = false;
 
-	// VehicleException - if arrivalTime is <= 0
     }
 
     // Transition vehicle to parked state
+    /**
+     * @author Joseph Salmond 8823928
+     * @param parkingTime
+     * @param intendedDuration
+     * @throws VehicleException
+     */
     public void enterParkedState(int parkingTime, int intendedDuration)
 	    throws VehicleException {
 
@@ -66,6 +76,10 @@ public abstract class Vehicle {
     }
 
     // Transition vehicle to queued state
+    /**
+     * @author Joseph Salmond 8823928
+     * @throws VehicleException
+     */
     public void enterQueuedState() throws VehicleException {
 
 	if (parked || queued) {
@@ -82,6 +96,11 @@ public abstract class Vehicle {
     }
 
     // Transition vehicle from parked state
+    /**
+     * @author Joseph Salmond 8823928
+     * @param departureTime
+     * @throws VehicleException
+     */
     public void exitParkedState(int departureTime) throws VehicleException {
 	if (!parked || queued || (departureTime < parkingTime)) {
 	    throw new VehicleException("exitParkedState: ");
@@ -95,6 +114,11 @@ public abstract class Vehicle {
     }
 
     // Transition vehicle from queued state
+    /**
+     * @author Joseph Salmond 8823928
+     * @param exitTime
+     * @throws VehicleException
+     */
     public void exitQueuedState(int exitTime) throws VehicleException {
 
 	if (parked || !queued) {
@@ -112,46 +136,77 @@ public abstract class Vehicle {
     }
 
     // Simple getter for the arrival time
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int getArrivalTime() {
 	return arrivalTime;
     }
 
     // Simple getter for the departure time from the car park
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int getDepartureTime() {
 	return departureTime;
     }
 
     // Simple getter for the parking time
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public int getParkingTime() {
 	return parkingTime;
     }
 
     // Simple getter for the vehicle ID
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public String getVehID() {
 	return vehID;
     }
 
     // Boolean status indicating whether vehicle is currently parked
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean isParked() {
 	return parked;
     }
 
     // Boolean status indicating whether vehicle is currently queued
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean isQueued() {
 	return queued;
     }
 
     // Boolean status indicating whether customer is satisfied or not Satisfied
     // if they park
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean isSatisfied() {
 	boolean satisfied = true;
-	if(!wasParked || queueTime >= Constants.MAXIMUM_QUEUE_TIME){
+	if (!wasParked || queueTime >= Constants.MAXIMUM_QUEUE_TIME) {
 	    satisfied = false;
-	} 
+	}
 	return satisfied;
     }
 
     // Overrides toString in class java.lang.Object
+    /**
+     * @author Joseph Salmond 8823928
+     */
     @Override
     public String toString() {
 	String endl = System.getProperty("line.separator");
@@ -188,11 +243,19 @@ public abstract class Vehicle {
     }
 
     // Boolean status indicating whether vehicle was ever parked
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean wasParked() {
 	return wasParked;
     }
 
     // Boolean status indicating whether vehicle was ever queued
+    /**
+     * @author Joseph Salmond 8823928
+     * @return
+     */
     public boolean wasQueued() {
 	return wasQueued;
     }

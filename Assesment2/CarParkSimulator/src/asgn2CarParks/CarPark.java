@@ -49,7 +49,6 @@ public class CarPark {
     private int numDissatisfied;
     private int numSatisfied;
 
-    
     private String status = "";
     private Vector<Vehicle> carSpaces = new Vector<Vehicle>();
     private Vector<Vehicle> smallCarSpaces = new Vector<Vehicle>();
@@ -179,17 +178,17 @@ public class CarPark {
     // Archive vehicles which have stayed in the queue too long
     public void archiveQueueFailures(int time) throws VehicleException {
 	// VehicleException - if one or more vehicles not in the correct state
-	
-	    Iterator<Vehicle> iter = queue.iterator();
-	    while (iter.hasNext()) {
-		Vehicle v = iter.next();
-		if (time - v.getArrivalTime() >= Constants.MAXIMUM_QUEUE_TIME) {
-		    v.exitQueuedState(time);
-		    past.add(v);
-		    iter.remove();
-		    //System.out.println("Q " + v.getVehID() + " " + time);
-		}
+
+	Iterator<Vehicle> iter = queue.iterator();
+	while (iter.hasNext()) {
+	    Vehicle v = iter.next();
+	    if (time - v.getArrivalTime() >= Constants.MAXIMUM_QUEUE_TIME) {
+		v.exitQueuedState(time);
+		past.add(v);
+		iter.remove();
+		// System.out.println("Q " + v.getVehID() + " " + time);
 	    }
+	}
 
     }
 
@@ -435,8 +434,8 @@ public class CarPark {
     // Overrides toString in class java.lang.Object
     @Override
     public String toString() {
-	String str ="\n";
-	for(Vehicle v : past){
+	String str = "\n";
+	for (Vehicle v : past) {
 	    str += v.toString() + "\n";
 	}
 	System.out.print(str); // dump to console
@@ -460,14 +459,13 @@ public class CarPark {
 		newVehicle = new Car(id, time, false);
 		createVehicle(time, sim, newVehicle);
 	    }
-	} 
+	}
 	if (sim.motorCycleTrial()) {
 	    String id = "M" + time;
 	    newVehicle = new MotorCycle(id, time);
 	    createVehicle(time, sim, newVehicle);
 	}
 
-	
     }
 
     private void createVehicle(int time, Simulator sim, Vehicle newVehicle)

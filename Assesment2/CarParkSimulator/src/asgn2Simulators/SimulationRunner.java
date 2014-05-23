@@ -83,7 +83,7 @@ public class SimulationRunner {
 	    this.log.logEntry(time, this.carPark);
 	}
 	System.out.println("THE END");
-	//this.carPark.toString();
+	// this.carPark.toString();
 	this.log.finalise(this.carPark);
     }
 
@@ -94,7 +94,8 @@ public class SimulationRunner {
      *            Arguments to the simulation
      */
     public static void main(String[] args) {
-	//int maxCarSpaces, int maxSmallCarSpaces,int maxMotorCycleSpaces, int maxQueueSize
+	// int maxCarSpaces, int maxSmallCarSpaces,int maxMotorCycleSpaces, int
+	// maxQueueSize
 	CarPark cp = new CarPark();
 	Simulator s = null;
 	Log l = null;
@@ -107,7 +108,7 @@ public class SimulationRunner {
 	}
 
 	// TODO: Implement Argument Processing
-	
+
 	// Run the simulation
 	SimulationRunner sr = new SimulationRunner(cp, s, l);
 	try {

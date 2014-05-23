@@ -26,12 +26,12 @@ public class CarParkTests {
     private int testIntendedDuration = 60;
     private int testParkingTime = 30;
     Car testCar;
-    
 
     @Before
     public void setUp() throws Exception {
 	testCarPark = new CarPark();
-	testCar = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
+	testCar = new Car(testConstructorVehID, testConstructorArrivalTime,
+		testCarNotSmall);
     }
 
     @Before

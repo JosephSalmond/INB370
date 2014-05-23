@@ -6,23 +6,36 @@ import asgn2Exceptions.VehicleException;
 public class Car extends Vehicle {
     boolean small;
 
+    /**
+     * @author Joseph Salmond 8823928 Constructs Car
+     * @param vehID
+     * @param arrivalTime
+     * @param small
+     * @throws VehicleException
+     */
     public Car(String vehID, int arrivalTime, boolean small)
 	    throws VehicleException {
 	super(vehID, arrivalTime);
+	if (arrivalTime <= 0) {
+	    throw new VehicleException("Car: Does Not Have A Engine");
+	}
 	this.small = small;
-	// TODO Auto-generated constructor stub
-	// small = indicator whether car is regarded as small or not
-	// VehicleException - if arrivalTime is <= 0
+
     }
 
-    // Boolean status indicating whether car is small enough for small car
-    // parking spaces
+    /**
+     * Boolean status indicating whether car is small car
+     * 
+     * @return Small :
+     */
     public boolean isSmall() {
 	return small;
     }
 
-    // Overrides toString in class Vehicle
-    // Overrides toString in class java.lang.Object
+    /**
+     * Overrides toString in class Vehicle Overrides toString in class
+     * java.lang.Object
+     */
     @Override
     public String toString() {
 	String endl = System.getProperty("line.separator");
