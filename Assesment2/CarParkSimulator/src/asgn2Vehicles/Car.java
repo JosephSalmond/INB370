@@ -7,7 +7,9 @@ public class Car extends Vehicle {
     boolean small;
 
     /**
-     * @author Joseph Salmond 8823928 Constructs Car
+     * Constructs Car
+     * 
+     * @author Joseph Salmond 8823928
      * @param vehID
      * @param arrivalTime
      * @param small
@@ -26,7 +28,8 @@ public class Car extends Vehicle {
     /**
      * Boolean status indicating whether car is small car
      * 
-     * @return Small :
+     * @author Joseph Salmond 8823928
+     * @return Small
      */
     public boolean isSmall() {
 	return small;
@@ -35,6 +38,8 @@ public class Car extends Vehicle {
     /**
      * Overrides toString in class Vehicle Overrides toString in class
      * java.lang.Object
+     * 
+     * @author Joseph Salmond 8823928
      */
     @Override
     public String toString() {

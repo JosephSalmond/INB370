@@ -20,7 +20,9 @@ public abstract class Vehicle {
     String vehID;
 
     /**
-     * @author Joseph Salmond 8823928 Constructor for Vehicle
+     * Constructor for Vehicle
+     * 
+     * @author Joseph Salmond 8823928
      * @param vehID
      * @param arrivalTime
      * @throws VehicleException
@@ -30,6 +32,7 @@ public abstract class Vehicle {
 	    throw new VehicleException(
 		    "Vehicle: Cannot arrive before you arrive");
 	}
+	// Set Starting Defaults
 	this.vehID = vehID;
 	this.arrivalTime = arrivalTime;
 	this.departureTime = 0;
@@ -40,11 +43,11 @@ public abstract class Vehicle {
 	this.queued = false;
 	this.wasParked = false;
 	this.wasQueued = false;
-
     }
 
-    // Transition vehicle to parked state
     /**
+     * Transition vehicle to parked state
+     * 
      * @author Joseph Salmond 8823928
      * @param parkingTime
      * @param intendedDuration
@@ -66,17 +69,14 @@ public abstract class Vehicle {
 	this.parkingTime = parkingTime;
 	this.intendedDuration = intendedDuration;
 	this.departureTime = parkingTime + intendedDuration;
+
 	parked = true;
 	wasParked = true;
-
-	// VehicleException - if the vehicle is already in a parked or queued
-	// state, if parkingTime < 0, or if intendedDuration is less than the
-	// minimum prescribed in asgnSimulators.Constraints
-
     }
 
-    // Transition vehicle to queued state
     /**
+     * Transition vehicle to queued state
+     * 
      * @author Joseph Salmond 8823928
      * @throws VehicleException
      */
@@ -84,19 +84,16 @@ public abstract class Vehicle {
 
 	if (parked || queued) {
 	    throw new VehicleException(
-		    "enterParkedState: cannot be in two places at once");
+		    "enterQueuedState: cannot be in two places at once");
 	}
 
 	queued = true;
 	wasQueued = true;
-
-	// VehicleException - if the vehicle is already in a queued or parked
-	// state
-
     }
 
-    // Transition vehicle from parked state
     /**
+     * Transition vehicle from parked state
+     * 
      * @author Joseph Salmond 8823928
      * @param departureTime
      * @throws VehicleException
@@ -107,36 +104,28 @@ public abstract class Vehicle {
 	}
 
 	parked = false;
-	wasParked = true;
-	// VehicleException - if the vehicle is not in a parked state, is in a
-	// queued state or if the revised departureTime < parkingTime
-
     }
 
-    // Transition vehicle from queued state
     /**
+     * Transition vehicle from queued state
+     * 
      * @author Joseph Salmond 8823928
      * @param exitTime
      * @throws VehicleException
      */
     public void exitQueuedState(int exitTime) throws VehicleException {
 
-	if (parked || !queued) {
-	    throw new VehicleException("exitQueuedState: ");
-	} else if (arrivalTime > exitTime) {
+	if (parked || !queued || (arrivalTime > exitTime)) {
 	    throw new VehicleException("exitQueuedState: ");
 	}
 
 	queued = false;
 	queueTime = exitTime;
-	// VehicleException - if the vehicle is in a parked state or not in a
-	// queued state, or if exitTime is not later than arrivalTime for this
-	// vehicle
-
     }
 
-    // Simple getter for the arrival time
     /**
+     * Simple getter for the arrival time
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -144,8 +133,9 @@ public abstract class Vehicle {
 	return arrivalTime;
     }
 
-    // Simple getter for the departure time from the car park
     /**
+     * Simple getter for the departure time from the car park
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -153,8 +143,9 @@ public abstract class Vehicle {
 	return departureTime;
     }
 
-    // Simple getter for the parking time
     /**
+     * Simple getter for the parking time
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -162,8 +153,9 @@ public abstract class Vehicle {
 	return parkingTime;
     }
 
-    // Simple getter for the vehicle ID
     /**
+     * Simple getter for the vehicle ID
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -171,8 +163,9 @@ public abstract class Vehicle {
 	return vehID;
     }
 
-    // Boolean status indicating whether vehicle is currently parked
     /**
+     * Boolean status indicating whether vehicle is currently parked
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -180,8 +173,9 @@ public abstract class Vehicle {
 	return parked;
     }
 
-    // Boolean status indicating whether vehicle is currently queued
     /**
+     * Boolean status indicating whether vehicle is currently queued
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -189,9 +183,9 @@ public abstract class Vehicle {
 	return queued;
     }
 
-    // Boolean status indicating whether customer is satisfied or not Satisfied
-    // if they park
     /**
+     * Boolean status indicating whether customer is satisfied
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -209,9 +203,15 @@ public abstract class Vehicle {
      */
     @Override
     public String toString() {
+
+	// For Compatibility purposes & readability
 	String endl = System.getProperty("line.separator");
 
 	String stringQueue;
+	String stringPark;
+	String stringSatisfied;
+
+	// Create Queue String
 	if (wasQueued) {
 	    stringQueue = "Exit ffrom Queue: " + queueTime + endl
 		    + " Queuing Time " + (queueTime - arrivalTime) + endl;
@@ -219,7 +219,7 @@ public abstract class Vehicle {
 	    stringQueue = "Vehicle was not queued";
 	}
 
-	String stringPark;
+	// Create Parking String
 	if (wasParked) {
 	    stringPark = "Entry to Car Park: " + parkingTime + endl
 		    + "Exit from Car Park: " + departureTime + endl
@@ -228,13 +228,14 @@ public abstract class Vehicle {
 	    stringPark = "Vehicle was not parked";
 	}
 
-	String stringSatisfied;
+	// Create Satisfaction String
 	if (this.isSatisfied()) {
 	    stringSatisfied = "Customer was satisfied" + endl;
 	} else {
 	    stringSatisfied = "Customer was not satisfied" + endl;
 	}
 
+	// Tie them all together
 	String str = "Vehicle vehID: " + vehID + endl + "Arrival Time: "
 		+ arrivalTime + endl + stringQueue + stringPark
 		+ stringSatisfied;
@@ -242,8 +243,9 @@ public abstract class Vehicle {
 	return str;
     }
 
-    // Boolean status indicating whether vehicle was ever parked
     /**
+     * Boolean status indicating whether vehicle was ever parked
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -251,8 +253,9 @@ public abstract class Vehicle {
 	return wasParked;
     }
 
-    // Boolean status indicating whether vehicle was ever queued
     /**
+     * Boolean status indicating whether vehicle was ever queued
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
