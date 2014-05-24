@@ -9,6 +9,7 @@ import asgn2CarParks.CarPark;
 import asgn2Exceptions.SimulationException;
 import asgn2Exceptions.VehicleException;
 import asgn2Simulators.Constants;
+import asgn2Simulators.Simulator;
 import asgn2Vehicles.Car;
 
 /** @author Pearl Gariano 8318522 */
@@ -34,14 +35,6 @@ public class CarParkTests {
 		testCarNotSmall);
     }
 
-    @Before
-    public void setUpWithParams() throws Exception {
-	testCarPark = new CarPark(Constants.DEFAULT_MAX_CAR_SPACES,
-		Constants.DEFAULT_MAX_SMALL_CAR_SPACES,
-		Constants.DEFAULT_MAX_MOTORCYCLE_SPACES,
-		Constants.DEFAULT_MAX_QUEUE_SIZE);
-
-    }
 
     // TESTS FOR ARCHIVE DEPARTING VEHICLES
     /*
@@ -95,10 +88,32 @@ public class CarParkTests {
     }
     
     //TESTS FOR CAR PARK EMPTY
+    @Test(timeout = 1000)
+    public void testCarParkEmptyTrue(){
+    	testCarPark = new CarPark();
+    	assertTrue(testCarPark.carParkEmpty());
+    }
     
-    
+    //@Test(timeout = 1000)
+    public void testCarParkEmptyFalse() throws VehicleException, SimulationException{
+    	Simulator sim = new Simulator();
+    	testCarPark.tryProcessNewVehicles(1, sim);
+    	assertFalse(testCarPark.carParkEmpty());
+    }
 
     //TESTS FOR CAR PARK FULL
+    
+    //@Test(timeout = 1000)
+    public void testCarParkFullTrue(){
+    	
+    }
+    
+    //...
+    @Test(timeout = 1000)
+    public void testCarParkFullFalse(){
+    	testCarPark = new CarPark();
+    	assertFalse(testCarPark.carParkFull());
+    }
     
     //TESTS FOR ENTER QUEUE
     
