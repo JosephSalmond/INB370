@@ -98,7 +98,6 @@ public class CarParkTests {
     public void testCarParkEmptyFalse() throws VehicleException, SimulationException{
     	Simulator sim = new Simulator();
     	testCarPark.tryProcessNewVehicles(testTime, sim);
-    	testCarPark.tryProcessNewVehicles(testTime, sim);
     	assertFalse(testCarPark.carParkEmpty());
     }
 
