@@ -13,8 +13,11 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="carParkEmp" key="selection"/>
 		<list key="findhistory">
+			<item value="carPArkEmp"/>
+			<item value="car"/>
+			<item value="class"/>
 			<item value="gwr"/>
 			<item value="100"/>
 			<item value="enterQueue"/>

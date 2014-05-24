@@ -192,6 +192,7 @@ public class CarPark {
     }
 
     /**
+     *  helper
      * @author Joseph Salmond 8823928
      * @param v
      */
@@ -604,6 +605,7 @@ public class CarPark {
     }
 
     /**
+     * helper method for tryProcessNewVehicles
      * @author Joseph Salmond 8823928
      * @param time
      * @param sim
@@ -670,6 +672,7 @@ public class CarPark {
     }
 
     /**
+     *  Helper method to get the string representation of Vehicle type
      * @author Joseph Salmond 8823928
      * @param v
      * @return

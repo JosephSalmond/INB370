@@ -60,13 +60,14 @@ public class SimulationRunner {
     public void runSimulation() throws VehicleException, SimulationException,
 	    IOException {
 	this.log.initialEntry(this.carPark, this.sim);
-	for (int time = 0; time <= Constants.CLOSING_TIME; time++) {
+	for (int time = 1; time <= Constants.CLOSING_TIME; time++) {
 	    // queue elements exceed max waiting time
 	    if (!this.carPark.queueEmpty()) {
 		this.carPark.archiveQueueFailures(time);
 	    }
 	    // vehicles whose time has expired
 	    if (!this.carPark.carParkEmpty()) {
+
 		// force exit at closing time, otherwise normal
 		boolean force = (time == Constants.CLOSING_TIME);
 		this.carPark.archiveDepartingVehicles(time, force);
