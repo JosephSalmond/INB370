@@ -1,6 +1,7 @@
 package asgn2Vehicles;
 
 import asgn2Exceptions.VehicleException;
+import asgn2Simulators.Constants;
 
 /** @author Joseph Salmond 8823928 */
 public class Car extends Vehicle {
@@ -44,6 +45,8 @@ public class Car extends Vehicle {
     @Override
     public String toString() {
 
+	int queueingTime = queueTime - arrivalTime;
+	
 	// For Compatibility purposes & readability
 	String endl = System.getProperty("line.separator");
 
@@ -54,19 +57,25 @@ public class Car extends Vehicle {
 
 	// Create Queue String
 	if (wasQueued) {
-	    stringQueue = "Exit ffrom Queue: " + queueTime + endl
-		    + " Queuing Time " + (queueTime - arrivalTime) + endl;
+	    stringQueue = "Exit from Queue: " + queueTime + endl
+		    + "Queuing Time: " + queueingTime + endl;
+	    
+	    if (queueingTime > Constants.MAXIMUM_QUEUE_TIME) {
+		stringQueue += "Exceeded maximum acceptable queuing time by: "
+			+ (queueingTime - Constants.MAXIMUM_QUEUE_TIME)
+			+ endl;
+	    }
 	} else {
-	    stringQueue = "Vehicle was not queued";
+	    stringQueue = "Vehicle was not queued" + endl;
 	}
 
 	// Create Parking String
 	if (wasParked) {
 	    stringPark = "Entry to Car Park: " + parkingTime + endl
 		    + "Exit from Car Park: " + departureTime + endl
-		    + "Parking Time: " + (departureTime - arrivalTime) + endl;
+		    + "Parking Time: " + (departureTime - parkingTime) + endl;
 	} else {
-	    stringPark = "Vehicle was not parked";
+	    stringPark = "Vehicle was not parked" + endl;
 	}
 
 	// Create Satisfaction String
@@ -79,7 +88,7 @@ public class Car extends Vehicle {
 	// Create Small String
 	if (this instanceof Car) {
 	    if (this.isSmall()) {
-		stringSmall = "Car can use small parking space" + endl;
+		stringSmall = "Car can use small car parking space" + endl;
 	    } else {
 		stringSmall = "Car cannot use small parking space" + endl;
 	    }

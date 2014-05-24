@@ -61,7 +61,7 @@ public abstract class Vehicle {
 		    "enterParkedState: cannot be in two places at once");
 	} else if (parkingTime <= 0) {
 	    throw new VehicleException("enterParkedState: Negitive Park");
-	} else if (intendedDuration < Constants.DEFAULT_INTENDED_STAY_SD) {
+	} else if (intendedDuration < Constants.MINIMUM_STAY) {
 	    throw new VehicleException(
 		    "enterParkedState: you need to stay longer");
 	}
@@ -102,7 +102,7 @@ public abstract class Vehicle {
 	if (!parked || queued || (departureTime < parkingTime)) {
 	    throw new VehicleException("exitParkedState: ");
 	}
-
+	this.departureTime = departureTime;
 	parked = false;
     }
 
@@ -190,11 +190,17 @@ public abstract class Vehicle {
      * @return
      */
     public boolean isSatisfied() {
-	boolean satisfied = true;
-	if (!wasParked || queueTime >= Constants.MAXIMUM_QUEUE_TIME) {
-	    satisfied = false;
+
+	if (wasParked) {
+	    return true;
 	}
-	return satisfied;
+	if (!wasParked) {
+	    return false;
+	}
+	if (queueTime >= Constants.MAXIMUM_QUEUE_TIME) {
+	    return false;
+	}
+	return false;
     }
 
     // Overrides toString in class java.lang.Object
@@ -204,19 +210,25 @@ public abstract class Vehicle {
     @Override
     public String toString() {
 
+	int queueingTime = queueTime - arrivalTime;
+
 	// For Compatibility purposes & readability
 	String endl = System.getProperty("line.separator");
-
 	String stringQueue;
 	String stringPark;
 	String stringSatisfied;
 
 	// Create Queue String
 	if (wasQueued) {
-	    stringQueue = "Exit ffrom Queue: " + queueTime + endl
-		    + " Queuing Time " + (queueTime - arrivalTime) + endl;
+	    stringQueue = "Exit from Queue: " + queueTime + endl
+		    + "Queuing Time: " + queueingTime + endl;
+
+	    if (queueingTime > Constants.MAXIMUM_QUEUE_TIME) {
+		stringQueue += "Exceeded maximum acceptable queuing time by: "
+			+ (queueingTime - Constants.MAXIMUM_QUEUE_TIME) + endl;
+	    }
 	} else {
-	    stringQueue = "Vehicle was not queued";
+	    stringQueue = "Vehicle was not queued" + endl;
 	}
 
 	// Create Parking String
@@ -225,7 +237,7 @@ public abstract class Vehicle {
 		    + "Exit from Car Park: " + departureTime + endl
 		    + "Parking Time: " + (departureTime - arrivalTime) + endl;
 	} else {
-	    stringPark = "Vehicle was not parked";
+	    stringPark = "Vehicle was not parked" + endl;
 	}
 
 	// Create Satisfaction String

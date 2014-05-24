@@ -60,7 +60,7 @@ public class SimulationRunner {
     public void runSimulation() throws VehicleException, SimulationException,
 	    IOException {
 	this.log.initialEntry(this.carPark, this.sim);
-	for (int time = 1; time <= Constants.CLOSING_TIME; time++) {
+	for (int time = 0; time <= Constants.CLOSING_TIME; time++) {
 	    // queue elements exceed max waiting time
 	    if (!this.carPark.queueEmpty()) {
 		this.carPark.archiveQueueFailures(time);
