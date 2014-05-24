@@ -18,7 +18,7 @@ public class CarParkTests {
 
     CarPark testCarPark;
 
-    static private int testTime = 30;
+    static private int testTime = 10;
     static private boolean testForce = true;
 
     private String testConstructorVehID = "123ABC";
@@ -94,23 +94,24 @@ public class CarParkTests {
     	assertTrue(testCarPark.carParkEmpty());
     }
     
-    //@Test(timeout = 1000)
+    @Test(timeout = 1000)
     public void testCarParkEmptyFalse() throws VehicleException, SimulationException{
     	Simulator sim = new Simulator();
-    	testCarPark.tryProcessNewVehicles(1, sim);
+    	testCarPark.tryProcessNewVehicles(testTime, sim);
+    	testCarPark.tryProcessNewVehicles(testTime, sim);
     	assertFalse(testCarPark.carParkEmpty());
     }
 
     //TESTS FOR CAR PARK FULL
     
     //@Test(timeout = 1000)
-    public void testCarParkFullTrue(){
-    	
+    public void testCarParkFullTrue()throws VehicleException, SimulationException{
+   
     }
     
     //...
     @Test(timeout = 1000)
-    public void testCarParkFullFalse(){
+    public void testCarParkFullFalse()throws VehicleException, SimulationException{
     	testCarPark = new CarPark();
     	assertFalse(testCarPark.carParkFull());
     }
