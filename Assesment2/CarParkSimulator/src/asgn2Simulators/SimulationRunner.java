@@ -95,8 +95,6 @@ public class SimulationRunner {
      *            Arguments to the simulation
      */
     public static void main(String[] args) {
-	// int maxCarSpaces, int maxSmallCarSpaces,int maxMotorCycleSpaces, int
-	// maxQueueSize
 	CarPark cp = new CarPark();
 	Simulator s = null;
 	Log l = null;

@@ -366,7 +366,7 @@ public class CarPark {
 		+ this.count
 		+ "::"
 		+ "P:"
-		+ (this.carSpaces.size() + motorCycleSpaces.size() + smallCarSpaces
+		+ (this.carSpaces.size() + this.motorCycleSpaces.size() + this.smallCarSpaces
 			.size()) + "::" + "C:"
 		+ (this.numCars + this.numSmallCars) + "::S:"
 		+ this.numSmallCars + "::M:" + this.numMotorCycles
