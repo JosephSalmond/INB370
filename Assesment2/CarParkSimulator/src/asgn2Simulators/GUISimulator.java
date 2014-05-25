@@ -3,21 +3,26 @@ package asgn2Simulators;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -37,7 +42,7 @@ import asgn2Exceptions.SimulationException;
 import asgn2Exceptions.VehicleException;
 
 @SuppressWarnings("serial")
-public class GUISimulator extends ApplicationFrame {
+public class GUISimulator extends ApplicationFrame implements ActionListener {
     private CarPark carPark;
     private Simulator sim;
     private Log log;
@@ -63,34 +68,85 @@ public class GUISimulator extends ApplicationFrame {
      * DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_TIME
      */
     private static final String TITLE = "Z Car Park";
+    private static GUISimulator demo;
+    private TimeSeriesCollection tsc = new TimeSeriesCollection();
+    private TimeSeries numToDate = new TimeSeries("Number To Date"); // black
+    private TimeSeries numVehicles = new TimeSeries("Total Vehicles"); // blue
+    private TimeSeries numCars = new TimeSeries("Current Cars"); // Cyan
+    private TimeSeries numSmallCars = new TimeSeries("Current Small Cars"); // Grey
+    private TimeSeries numMotorCycles = new TimeSeries("Current MotorCycles"); // DarkGrey
+    private TimeSeries numInQueue = new TimeSeries("Current Queue"); // Yellow
+    private TimeSeries numArchived = new TimeSeries("Number Archived"); // green
+    private TimeSeries numDissatisfied = new TimeSeries("Number Disatisfied"); // red
 
-    TimeSeriesCollection tsc = new TimeSeriesCollection();
-    TimeSeries numToDate = new TimeSeries("Number To Date"); // black
-    TimeSeries numVehicles = new TimeSeries("Total Vehicles"); // blue
-    TimeSeries numCars = new TimeSeries("Current Cars"); // Cyan
-    TimeSeries numSmallCars = new TimeSeries("Current Small Cars"); // Grey
-    TimeSeries numMotorCycles = new TimeSeries("Current MotorCycles"); // DarkGrey
-    TimeSeries numInQueue = new TimeSeries("Current Queue"); // Yellow
-    TimeSeries numArchived = new TimeSeries("Number Archived"); // green
-    TimeSeries numDissatisfied = new TimeSeries("Number Disatisfied"); // red
-    Calendar cal = GregorianCalendar.getInstance();
-    int time = 0;
-    Date timePoint;
-
-    public GUISimulator(final String title) throws NoSuchFieldException,
-	    SecurityException {
+    private Calendar cal = GregorianCalendar.getInstance();
+    private int time = 0;
+    
+    private JFrame mainFrame;
+    private JPanel mainPanel;
+    private JPanel subPanel;
+    private JTextArea textArea;
+    private JButton btnGo;
+    private JButton goToGraph;
+    private JScrollPane scrollPane;
+    
+    @SuppressWarnings("unused")
+    private Date timePoint;
+    
+    public GUISimulator(final String title, String[] args)
+	    throws NoSuchFieldException, SecurityException {
 	super(title);
-	mainSetup();
+	mainSetup(args);
 	cal.set(2014, 0, 1, 6, time);
 	timePoint = cal.getTime();
-	// run program
 
-	final TimeSeriesCollection dataset = chartForge();
-	JFreeChart chart = createChart(dataset);
-	this.add(new ChartPanel(chart), BorderLayout.CENTER);
-	JPanel btnPanel = new JPanel(new FlowLayout());
-	this.add(btnPanel, BorderLayout.SOUTH);
+	mainFrame = new JFrame("DUMP");
+	mainPanel = new JPanel();
+	subPanel = new JPanel();
+	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	mainFrame.add(mainPanel);
+	mainPanel.setLayout(new BorderLayout());
+	subPanel.setLayout(new GridBagLayout());
+	textArea = new JTextArea(50, 100);
+	scrollPane = new JScrollPane(textArea);
+	mainPanel.add(scrollPane, BorderLayout.CENTER);
+	mainPanel.add(subPanel, BorderLayout.WEST);
 
+	btnGo = new JButton("Start");
+	goToGraph = new JButton("Graph");
+	btnGo.addActionListener(new AbstractAction("add") {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		try {
+		    demo.runSimulation();
+		} catch (Exception e1) {
+		    e1.printStackTrace();
+		    System.exit(-1);
+		}
+	    }
+	});
+	goToGraph.addActionListener(new AbstractAction("add") {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		mainFrame.setVisible(false);
+		demo.setVisible(true);
+	    }
+	});
+
+	// add JLabel and JTextArea s
+	GridBagConstraints c = new GridBagConstraints();
+	c.fill = GridBagConstraints.HORIZONTAL;
+	c.gridx = 0;
+	c.gridy = 99;
+	subPanel.add(btnGo, c);
+	
+	c.gridx = 1;
+	c.gridy = 99;
+	subPanel.add(goToGraph, c);
+	
+	textArea.setEditable(false);
+	mainFrame.pack();
+	mainFrame.setVisible(true);
     }
 
     /**
@@ -137,13 +193,21 @@ public class GUISimulator extends ApplicationFrame {
 	}
 	System.out.println("THE END");
 	this.log.finalise(this.carPark);
+	doTheChartThings();
+    }
+
+    private void doTheChartThings() {
+	final TimeSeriesCollection dataset = chartForge();
+	JFreeChart chart = createChart(dataset);
+	this.add(new ChartPanel(chart), BorderLayout.CENTER);
+	JPanel btnPanel = new JPanel(new FlowLayout());
+	this.add(btnPanel, BorderLayout.SOUTH);
     }
 
     private void textOutput(int time) {
-	
+
 	String currString = carPark.getStatus(time);
-	
-	
+	textArea.append(currString);
 	int toDate = findValue(currString, (time + ":+(\\d+):+"));
 	int vehicleNum = findValue(currString, "P:+(\\d+):+");
 	int cars = findValue(currString, "C:+(\\d+):+");
@@ -153,13 +217,13 @@ public class GUISimulator extends ApplicationFrame {
 	int archive = findValue(currString, "A:+(\\d+):+");
 	int dissatisfied = findValue(currString, "D:+(\\d+):+");
 	// outputs to screen text
-	
+
 	// add to graph
-	chartAddValues(toDate, vehicleNum, cars, smallCars, motorCycles, numQueue, archive,
-		    dissatisfied, time);
+	chartAddValues(toDate, vehicleNum, cars, smallCars, motorCycles,
+		numQueue, archive, dissatisfied, time);
     }
 
-    private int findValue(String currString , String expression) {
+    private int findValue(String currString, String expression) {
 	Pattern r = Pattern.compile(expression);
 	Matcher m = r.matcher(currString);
 	m.find();
@@ -172,8 +236,6 @@ public class GUISimulator extends ApplicationFrame {
 	    int dissatisfied, int time) {
 	cal.set(2014, 0, 1, 6, time);
 	Date timePoint = cal.getTime();
-	// pull from getStatus each tick
-	// This is important - steal it shamelessly
 	numToDate.add(new Minute(timePoint), toDate);
 	numVehicles.add(new Minute(timePoint), vehicleNum);
 	numCars.add(new Minute(timePoint), cars);
@@ -185,7 +247,7 @@ public class GUISimulator extends ApplicationFrame {
     }
 
     private TimeSeriesCollection chartForge() {
-	// Collection
+	// With our powers combined
 	tsc.addSeries(numToDate);
 	tsc.addSeries(numVehicles);
 	tsc.addSeries(numCars);
@@ -194,6 +256,7 @@ public class GUISimulator extends ApplicationFrame {
 	tsc.addSeries(numInQueue);
 	tsc.addSeries(numArchived);
 	tsc.addSeries(numDissatisfied);
+
 	return tsc;
     }
 
@@ -213,20 +276,21 @@ public class GUISimulator extends ApplicationFrame {
 	domain.setAutoRange(true);
 	ValueAxis range = plot.getRangeAxis();
 	range.setAutoRange(true);
-	XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
-	
+	XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true,
+		false);
+
 	renderer.setAutoPopulateSeriesStroke(false);
-	renderer.setBaseStroke( new BasicStroke(2));
-	renderer.setSeriesPaint(0, Color.BLACK); 
-	renderer.setSeriesPaint(1, Color.BLUE); 
-	renderer.setSeriesPaint(2, Color.CYAN); 
-	renderer.setSeriesPaint(3, Color.LIGHT_GRAY); 
-	renderer.setSeriesPaint(4, Color.DARK_GRAY); 
-	renderer.setSeriesPaint(5, Color.YELLOW); 
-	renderer.setSeriesPaint(6, Color.GREEN); 
-	renderer.setSeriesPaint(7, Color.RED); 
-	plot.setRenderer(renderer); 
-	
+	renderer.setBaseStroke(new BasicStroke(2));
+	renderer.setSeriesPaint(0, Color.BLACK);
+	renderer.setSeriesPaint(1, Color.BLUE);
+	renderer.setSeriesPaint(2, Color.CYAN);
+	renderer.setSeriesPaint(3, Color.LIGHT_GRAY);
+	renderer.setSeriesPaint(4, Color.DARK_GRAY);
+	renderer.setSeriesPaint(5, Color.YELLOW);
+	renderer.setSeriesPaint(6, Color.GREEN);
+	renderer.setSeriesPaint(7, Color.RED);
+	plot.setRenderer(renderer);
+
 	return result;
     }
 
@@ -237,38 +301,34 @@ public class GUISimulator extends ApplicationFrame {
      *            ignored
      */
     public static void main(final String[] args) {
-	EventQueue.invokeLater(new Runnable() {
-	    @Override
-	    public void run() {
-		GUISimulator demo = null;
-		try {
-		    demo = new GUISimulator(TITLE);
-		} catch (NoSuchFieldException e1) {
+	if (args.length == 0 || args.length == 10) {
 
-		    e1.printStackTrace();
-		    System.exit(-1);
-		} catch (SecurityException e1) {
+	    EventQueue.invokeLater(new Runnable() {
+		@Override
+		public void run() {
+		    demo = null;
+		    try {
+			demo = new GUISimulator(TITLE, args);
+		    } catch (NoSuchFieldException e1) {
+			e1.printStackTrace();
+			System.exit(-1);
+		    } catch (SecurityException e1) {
+			e1.printStackTrace();
+			System.exit(-1);
+		    }
 
-		    e1.printStackTrace();
-		    System.exit(-1);
+		    demo.setMinimumSize(new Dimension(1024, 720));
+		    demo.pack();
+		    RefineryUtilities.centerFrameOnScreen(demo);
 		}
-
-		demo.pack();
-		RefineryUtilities.centerFrameOnScreen(demo);
-		demo.setVisible(true);
-		try {
-		    demo.runSimulation();
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    System.exit(-1);
-		}
-	    }
-
-	});
-
+	    });
+	} else {
+	    System.exit(404);
+	}
     }
 
-    private void mainSetup() throws NoSuchFieldException, SecurityException {
+    private void mainSetup(String[] args) throws NoSuchFieldException,
+	    SecurityException {
 	CarPark cp = null;
 	Simulator s = null;
 	Log l = null;
@@ -283,7 +343,6 @@ public class GUISimulator extends ApplicationFrame {
 	this.carPark = cp;
 	this.sim = s;
 	this.log = l;
-
     }
 
     /**
@@ -297,6 +356,12 @@ public class GUISimulator extends ApplicationFrame {
     private boolean newVehiclesAllowed(int time) {
 	boolean allowed = (time >= 1);
 	return allowed && (time <= (Constants.CLOSING_TIME - 60));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+	// TODO Auto-generated method stub
+
     }
 
 }
