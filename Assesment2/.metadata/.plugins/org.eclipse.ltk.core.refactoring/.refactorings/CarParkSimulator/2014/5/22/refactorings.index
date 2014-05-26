@@ -1,0 +1,11 @@
+1400986385082	Extract method 'mainSetup'
+1400993572893	Extract method 'findValue'
+1401008229189	Extract method 'doTheChartThings'
+1401011879794	Rename field 'frame'
+1401011893568	Rename field 'panel'
+1401011901735	Rename field 'MainPanel'
+1401015469267	Extract method 'RunTheThings'
+1401079366597	Extract method 'createConsoleOutput'
+1401084868222	Delete elements
+1401093684729	Extract method 'runTheLoop'
+1401100304223	Extract method 'disableThings'

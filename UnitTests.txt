@@ -1,0 +1,92 @@
+/* CarParkTests.java */
+	/*
+	 * Confirm that the API spec has not been violated through the
+	 * addition of public fields, constructors or methods that were
+	 * not requested
+	 */
+	@Test
+	public void NoExtraPublicMethods() {
+		//Extends Object, extras less toString() 
+		final int ExtraMethods = 21; 
+		final int NumObjectClassMethods = Array.getLength(Object.class.getMethods());
+		final int NumCarParkClassMethods = Array.getLength(CarPark.class.getMethods());
+		assertTrue("obj:"+NumObjectClassMethods+":cp:"+NumCarParkClassMethods,(NumObjectClassMethods+ExtraMethods)==NumCarParkClassMethods);
+	}
+	
+	@Test 
+	public void NoExtraPublicFields() {
+		//Same as Vehicle 
+		final int NumObjectClassFields = Array.getLength(Object.class.getFields());
+		final int NumCarParkClassFields = Array.getLength(CarPark.class.getFields());
+		assertTrue("obj:"+NumObjectClassFields+":cp:"+NumCarParkClassFields,(NumObjectClassFields)==NumCarParkClassFields);
+	}
+	
+	@Test 
+	public void NoExtraPublicConstructors() {
+		//One extra cons used. 
+		final int NumObjectClassConstructors = Array.getLength(Object.class.getConstructors());
+		final int NumCarParkClassConstructors = Array.getLength(CarPark.class.getConstructors());
+		assertTrue(":obj:"+NumObjectClassConstructors+":cp:"+NumCarParkClassConstructors,(NumObjectClassConstructors+1)==NumCarParkClassConstructors);
+	}
+	
+	
+/* CarTests.java */ 
+	/*
+	 * Confirm that the API spec has not been violated through the
+	 * addition of public fields, constructors or methods that were
+	 * not requested
+	 */
+	@Test
+	public void NoExtraPublicMethods() {
+		//Car Class implements Vehicle, adds isSmall() 
+		final int NumVehicleClassMethods = Array.getLength(Vehicle.class.getMethods());
+		final int NumCarClassMethods = Array.getLength(Car.class.getMethods());
+		assertTrue("veh:"+NumVehicleClassMethods+":car:"+NumCarClassMethods,(NumVehicleClassMethods+1)==NumCarClassMethods);
+	}
+	
+	@Test 
+	public void NoExtraPublicFields() {
+		//Same as Vehicle 
+		final int NumVehicleClassFields = Array.getLength(Vehicle.class.getFields());
+		final int NumCarClassFields = Array.getLength(Car.class.getFields());
+		assertTrue("veh:"+NumVehicleClassFields+":car:"+NumCarClassFields,(NumVehicleClassFields)==NumCarClassFields);
+	}
+	
+	@Test 
+	public void NoExtraPublicConstructors() {
+		//Same as Vehicle
+		final int NumVehicleClassConstructors = Array.getLength(Vehicle.class.getConstructors());
+		final int NumCarClassConstructors = Array.getLength(Car.class.getConstructors());
+		assertTrue(":veh:"+NumVehicleClassConstructors+":car:"+NumCarClassConstructors,(NumVehicleClassConstructors)==NumCarClassConstructors);
+	}
+	
+	/* MotorCycleTEsts */
+	/*
+	 * Confirm that the API spec has not been violated through the
+	 * addition of public fields, constructors or methods that were
+	 * not requested
+	 */
+	@Test
+	public void NoExtraPublicMethods() {
+		//MotorCycle Class implements Vehicle
+		final int NumVehicleClassMethods = Array.getLength(Vehicle.class.getMethods());
+		final int NumMotorCycleClassMethods = Array.getLength(MotorCycle.class.getMethods());
+		assertTrue("veh:"+NumVehicleClassMethods+":MotorCycle:"+NumMotorCycleClassMethods,(NumVehicleClassMethods)==NumMotorCycleClassMethods);
+	}
+	
+	@Test 
+	public void NoExtraPublicFields() {
+		//Same as Vehicle 
+		final int NumVehicleClassFields = Array.getLength(Vehicle.class.getFields());
+		final int NumMotorCycleClassFields = Array.getLength(MotorCycle.class.getFields());
+		assertTrue("veh:"+NumVehicleClassFields+":MotorCycle:"+NumMotorCycleClassFields,(NumVehicleClassFields)==NumMotorCycleClassFields);
+	}
+	
+	@Test 
+	public void NoExtraPublicConstructors() {
+		//Same as Vehicle
+		final int NumVehicleClassConstructors = Array.getLength(Vehicle.class.getConstructors());
+		final int NumMotorCycleClassConstructors = Array.getLength(MotorCycle.class.getConstructors());
+		assertTrue(":veh:"+NumVehicleClassConstructors+":mc:"+NumMotorCycleClassConstructors,(NumVehicleClassConstructors)==NumMotorCycleClassConstructors);
+	}
+
