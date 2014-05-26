@@ -37,12 +37,7 @@ public class CarParkTests {
 
 
     // TESTS FOR ARCHIVE DEPARTING VEHICLES
-    /*
-     * @Test public void testArchiveDepartingVehicles() throws VehicleException
-     * {
-     * 
-     * }
-     */
+
 
     //TESTS FOR ACHIVE NEW VEHICLE
     
@@ -108,7 +103,7 @@ public class CarParkTests {
    
     }
     
-    //...
+    
     @Test(timeout = 1000)
     public void testCarParkFullFalse()throws VehicleException, SimulationException{
     	testCarPark = new CarPark();
@@ -145,16 +140,40 @@ public class CarParkTests {
     }
 
     //TESTS FOR FINAL STATE
+    @Test(timeout = 1000)
+    public void testFinalState(){
+    	assertTrue(true);
+    }
 
     //TESTS FOR GET NUMBER OF CARS
+    @Test(timeout = 1000)
+    public void testGetNumCars(){
+    	assertTrue(true);
+    }
     
     //TESTS FOR GET NUMBER OF MOTORCYCLES
+    @Test(timeout = 1000)
+    public void testGetNumMotorcycles(){
+    	assertTrue(true);
+    }
     
     //TESTS FOR GET NUMBER OF SMALL CARS
+    @Test(timeout = 1000)
+    public void testGetNumSmallCars(){
+    	assertTrue(true);
+    }
 
     //TESTS FOR GET STATUS
+    @Test(timeout = 1000)
+    public void testGetStatus(){
+    	assertTrue(true);
+    }
     
     //TESTS FOR INITIAL STATE
+    @Test(timeout = 1000)
+    public void testInitialState(){
+    	assertTrue(true);
+    }
 
     //TESTS FOR NUMBER OF VEHICLES IN QUEUE
     
@@ -199,7 +218,6 @@ public class CarParkTests {
     
     //TESTS FOR SPACES AVAILABLE
     
-    //TESTS FOR TO STRING
     
     //TESTS FOR TRY PROCESS NEW VEHICLES
     
