@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -34,8 +33,11 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -52,7 +54,6 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     private static CarPark carPark;
     private Simulator sim;
     private Log log;
-    private boolean useArgs;
 
     /*
      * Add CLI args if no args then default if 10 args process else throw error
@@ -62,20 +63,15 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
      * maxSmallCarSpaces <= maxCarSpacescp check if validyou may deal with
      * invalid data by an error message via the text area or modal dialog
      * 
-     * Text Box non negitive 0 <-> 10000 public static final int
-     * DEFAULT_MAX_CAR_SPACES = 100; public static final int
-     * DEFAULT_MAX_SMALL_CAR_SPACES = 30; public static final int
-     * DEFAULT_MAX_MOTORCYCLE_SPACES = 20; public static final int
-     * DEFAULT_MAX_QUEUE_SIZE = 10; public static final int DEFAULT_SEED = 100;
-     * // 0 <-> Max_int - 1
      * 
      * Sliders public static final double DEFAULT_CAR_PROB = 1.0; public static
      * final double DEFAULT_SMALL_CAR_PROB = 0.20; public static final double
      * DEFAULT_MOTORCYCLE_PROB = 0.05; public static final double
      * DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_TIME
      */
-    private static final String TITLE = "Z Car Park";
+    private static final String TITLE = "Car Park Statistics";
     private static GUISimulator demo;
+    private static String[] args;
     private TimeSeriesCollection tsc = new TimeSeriesCollection();
     private TimeSeries numToDate = new TimeSeries("Number To Date"); // black
     private TimeSeries numVehicles = new TimeSeries("Total Vehicles"); // blue
@@ -88,6 +84,8 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
     private Calendar cal = GregorianCalendar.getInstance();
     private int time = 0;
+    int archive;
+    int dissatisfied;
 
     private JFrame mainFrame;
     private JPanel mainPanel;
@@ -97,7 +95,19 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     private JButton goToGraph;
     private JScrollPane scrollPane;
 
+    JTextField fieldMaxCarSpaces;
+    JTextField fieldMaxSmallCarSpaces;
+    JTextField fieldMaxMotorCycleSpaces;
+    JTextField fieldMaxQueueSize;
+    JTextField fieldRanSeed;
+    JTextField fieldStayMean;
+
+    JSlider staySdSlider;
+    JSlider motorCycleProbSlider;
+    JSlider smallCarProbSlider;
+    JSlider carProbSlider;
     JSlider timeSlider;
+
     JLabel labelCarProbNum;
     JLabel labelSmallProbNum;
     JLabel labelMotorCycleProbNum;
@@ -111,17 +121,11 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	    throws NoSuchFieldException, SecurityException {
 	super(title);
 
-	if (args.length == 10) {
-	    useArgs = true;
-	} else {
-	    useArgs = false;
-	}
-
-	mainSetup(args);
 	cal.set(2014, 0, 1, 6, time);
 	timePoint = cal.getTime();
 
-	mainFrame = new JFrame("DUMP");
+	// creates the console output window
+	mainFrame = new JFrame("Log of Carpark");
 	mainPanel = new JPanel();
 	subPanel = new JPanel();
 	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,59 +138,77 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	mainPanel.add(subPanel, BorderLayout.WEST);
 	subPanel.setPreferredSize(new Dimension(400, 0));
 
-	btnGo = new JButton("Start");
-	goToGraph = new JButton("Graph");
-	btnGo.addActionListener(new AbstractAction("add") {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		try {
-		    demo.runSimulation();
-		} catch (Exception e1) {
-		    e1.printStackTrace();
-		    System.exit(-1);
-		}
-	    }
-	});
-	goToGraph.addActionListener(new AbstractAction("add") {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		mainFrame.setVisible(false);
-		demo.setVisible(true);
-	    }
-	});
-
 	// add JLabel and JTextArea s
 
-	createConsoleOutput();
+	createConsoleOutput(args);
+
     }
 
-    private void createConsoleOutput() {
-	JLabel labelMaxCarSpaces = new JLabel("Max Car Spaces");
-	JTextField fieldMaxCarSpaces = new JTextField();
-	JLabel labelMaxSmallCarSpaces = new JLabel("Max Small Car Spaces");
-	JTextField fieldMaxSmallCarSpaces = new JTextField();
-	JLabel labelMaxMotorCycleSpaces = new JLabel("Max MotorCyccle Spaces");
-	JTextField fieldMaxMotorCycleSpaces = new JTextField();
-	JLabel labelMaxQueueSize = new JLabel("Max Queue Size");
-	JTextField fieldMaxQueueSize = new JTextField();
-	JLabel labelRanSeed = new JLabel("Randomiser Seed");
-	JTextField fieldRanSeed = new JTextField();
-	JLabel labelStayMean = new JLabel("Mean Stay Time");
-	JTextField fieldStayMean = new JTextField();
+    private void createConsoleOutput(String[] args) {
 
-	// default intended stay
-	labelCarProbNum = new JLabel(100 + "%");
-	labelSmallProbNum = new JLabel(20 + "%");
-	labelMotorCycleProbNum = new JLabel(10 + "%");
-	labelStaySdNum = new JLabel(33 + "%");
-	labelTimeNum = new JLabel(" " + 1);
+	// Create Labels and there text fields
+	JLabel labelMaxCarSpaces = new JLabel("Max Car Spaces");
+	fieldMaxCarSpaces = new JTextField();
+	JLabel labelMaxSmallCarSpaces = new JLabel("Max Small Car Spaces");
+	fieldMaxSmallCarSpaces = new JTextField();
+	JLabel labelMaxMotorCycleSpaces = new JLabel("Max MotorCyccle Spaces");
+	fieldMaxMotorCycleSpaces = new JTextField();
+	JLabel labelMaxQueueSize = new JLabel("Max Queue Size");
+	fieldMaxQueueSize = new JTextField();
+	JLabel labelRanSeed = new JLabel("Randomiser Seed");
+	fieldRanSeed = new JTextField();
+	JLabel labelStayMean = new JLabel("Mean Stay Time");
+	fieldStayMean = new JTextField();
 	JLabel spacerOne = new JLabel(" ");
 	JLabel spacerTwo = new JLabel(" ");
 	spacerOne.setPreferredSize(new Dimension(200, 0));
 	spacerTwo.setPreferredSize(new Dimension(200, 0));
 
+	// Create sliders
 	JLabel labelTime = new JLabel("Lines Per Second");
-	timeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
+	timeSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+	JLabel labelStaySd = new JLabel("Average Percent of Mean");
+	staySdSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+	JLabel labelMotorCycleProb = new JLabel("MotorCycle Probability");
+	motorCycleProbSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+	JLabel labelSmallProb = new JLabel("Small Car Probability");
+	smallCarProbSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+	JLabel labelCarProb = new JLabel("All Car Probablitity");
+	carProbSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+
+	// set defaults
+	if (args.length == 10) {
+	    // maxCarSpaces maxSmallCarSpaces maxMotorCycleSpaces maxQueueSize
+	    // seed carProb smallCarProb mcProb meanStay sdStay
+	    fieldMaxCarSpaces.setText(args[0]);
+	    fieldMaxSmallCarSpaces.setText(args[1]);
+	    fieldMaxMotorCycleSpaces.setText(args[2]);
+	    fieldMaxQueueSize.setText(args[3]);
+	    fieldRanSeed.setText(args[4]);
+	    carProbSlider.setValue(Integer.parseInt(args[5]));
+	    smallCarProbSlider.setValue(Integer.parseInt(args[6]));
+	    motorCycleProbSlider.setValue(Integer.parseInt(args[7]));
+	    staySdSlider.setValue(Integer.parseInt(args[8]));
+	    fieldStayMean.setText(args[9]);
+	} else {
+	    fieldMaxCarSpaces.setText("" + Constants.DEFAULT_MAX_CAR_SPACES);
+	    fieldMaxSmallCarSpaces.setText(""
+		    + Constants.DEFAULT_MAX_SMALL_CAR_SPACES);
+	    fieldMaxMotorCycleSpaces.setText(""
+		    + Constants.DEFAULT_MAX_MOTORCYCLE_SPACES);
+	    fieldMaxQueueSize.setText("" + Constants.DEFAULT_MAX_QUEUE_SIZE);
+	    fieldRanSeed.setText("" + Constants.DEFAULT_SEED);
+	    carProbSlider.setValue((int) (Constants.DEFAULT_CAR_PROB * 100));
+	    smallCarProbSlider
+		    .setValue((int) (Constants.DEFAULT_SMALL_CAR_PROB * 100));
+	    motorCycleProbSlider
+		    .setValue((int) (Constants.DEFAULT_MOTORCYCLE_PROB * 100));
+	    staySdSlider.setValue((int) (Constants.DEFAULT_INTENDED_STAY_SD
+		    / Constants.DEFAULT_INTENDED_STAY_MEAN * 100));
+	    fieldStayMean.setText("" + Constants.DEFAULT_INTENDED_STAY_MEAN);
+	}
+
+	// Create slider listeners
 	timeSlider.addChangeListener(new ChangeListener() {
 	    @Override
 	    public void stateChanged(ChangeEvent e) {
@@ -196,14 +218,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
 	    }
 	});
-	timeSlider.setValue(1);
-	timeSlider.setMajorTickSpacing(10);
-	timeSlider.setMinorTickSpacing(1);
-	timeSlider.setPaintTicks(true);
-	timeSlider.setPaintLabels(true);
 
-	JLabel labelCarProb = new JLabel("All Car Probablitity");
-	JSlider carProbSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
 	carProbSlider.addChangeListener(new ChangeListener() {
 	    @Override
 	    public void stateChanged(ChangeEvent e) {
@@ -213,14 +228,6 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
 	    }
 	});
-	carProbSlider.setValue(100);
-	carProbSlider.setMajorTickSpacing(10);
-	carProbSlider.setMinorTickSpacing(1);
-	carProbSlider.setPaintTicks(true);
-	carProbSlider.setPaintLabels(true);
-
-	JLabel labelSmallProb = new JLabel("Small Car Probability");
-	JSlider smallCarProbSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
 
 	smallCarProbSlider.addChangeListener(new ChangeListener() {
 	    @Override
@@ -231,15 +238,6 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
 	    }
 	});
-	smallCarProbSlider.setValue(20);
-	smallCarProbSlider.setMajorTickSpacing(10);
-	smallCarProbSlider.setMinorTickSpacing(1);
-	smallCarProbSlider.setPaintTicks(true);
-	smallCarProbSlider.setPaintLabels(true);
-
-	JLabel labelMotorCycleProb = new JLabel("Small Car Probability");
-	JSlider motorCycleProbSlider = new JSlider(JSlider.HORIZONTAL, 0, 100,
-		1);
 
 	motorCycleProbSlider.addChangeListener(new ChangeListener() {
 	    @Override
@@ -250,14 +248,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
 	    }
 	});
-	motorCycleProbSlider.setValue(10);
-	motorCycleProbSlider.setMajorTickSpacing(10);
-	motorCycleProbSlider.setMinorTickSpacing(1);
-	motorCycleProbSlider.setPaintTicks(true);
-	motorCycleProbSlider.setPaintLabels(true);
 
-	JLabel labelStaySd = new JLabel("Percent of Mean");
-	JSlider staySdSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
 	staySdSlider.addChangeListener(new ChangeListener() {
 	    @Override
 	    public void stateChanged(ChangeEvent e) {
@@ -267,15 +258,115 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
 	    }
 	});
-	staySdSlider.setValue(33);
+
+	// set initial values to labels
+	labelCarProbNum = new JLabel(carProbSlider.getValue() + "%");
+	labelSmallProbNum = new JLabel(smallCarProbSlider.getValue() + "%");
+	labelMotorCycleProbNum = new JLabel(motorCycleProbSlider.getValue()
+		+ "%");
+	labelStaySdNum = new JLabel(staySdSlider.getValue() + "%");
+	labelTimeNum = new JLabel(" " + 1);
+	timeSlider.setValue(1);
+
+	// do setup things to the sliders
+	timeSlider.setMajorTickSpacing(10);
+	timeSlider.setMinorTickSpacing(1);
+	timeSlider.setPaintTicks(true);
+
+	carProbSlider.setMajorTickSpacing(10);
+	carProbSlider.setMinorTickSpacing(1);
+	carProbSlider.setPaintTicks(true);
+
+	smallCarProbSlider.setMajorTickSpacing(10);
+	smallCarProbSlider.setMinorTickSpacing(1);
+	smallCarProbSlider.setPaintTicks(true);
+
+	motorCycleProbSlider.setMajorTickSpacing(10);
+	motorCycleProbSlider.setMinorTickSpacing(1);
+	motorCycleProbSlider.setPaintTicks(true);
+
 	staySdSlider.setMajorTickSpacing(10);
 	staySdSlider.setMinorTickSpacing(1);
 	staySdSlider.setPaintTicks(true);
-	staySdSlider.setPaintLabels(true);
+
+	// create the buttons
+	btnGo = new JButton("Start");
+	goToGraph = new JButton("Graph");
+	goToGraph.setEnabled(false);
+
+	// start button
+	btnGo.addActionListener(new AbstractAction("add") {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		int MaximumTextArea = 1080;
+		int MaxSlider = 100;
+		int fmcs = Integer.parseInt(fieldMaxCarSpaces.getText());
+		int fmscs = Integer.parseInt(fieldMaxSmallCarSpaces.getText());
+		int fmmcs = Integer.parseInt(fieldMaxMotorCycleSpaces.getText());
+		int fmqs = Integer.parseInt(fieldMaxQueueSize.getText());
+		int frs = Integer.parseInt(fieldRanSeed.getText());
+		int cp = carProbSlider.getValue();
+		int scp = smallCarProbSlider.getValue();
+		int mcp = motorCycleProbSlider.getValue();
+		int sss = staySdSlider.getValue();
+		int fsm = (int) Double.parseDouble(fieldStayMean.getText());
+
+		if ((fmcs >= 0 && fmcs <= MaximumTextArea)
+			&& (fmscs >= 0 && fmscs <= MaximumTextArea)
+			&& (fmmcs >= 0 && fmmcs <= MaximumTextArea)
+			&& (fmqs >= 0 && fmqs <= MaximumTextArea)
+			&& (frs >= 0 && frs <= MaximumTextArea)
+			&& (fsm >= 0 && fsm <= MaximumTextArea)
+			&& (cp >= 0 && cp <= MaximumTextArea)
+			&& (scp >= 0 && scp <= MaxSlider)
+			&& (mcp >= 0 && mcp <= MaxSlider)
+			&& (sss >= 0 && sss <= MaxSlider)) {
+
+		    int[] realARGS = { fmcs, fmscs, fmmcs, fmqs, frs, cp, scp,
+			    mcp, sss, fsm };
+
+		    disableThings();
+		    try {
+			mainSetup(realARGS);
+			demo.runSimulation();
+		    } catch (Exception e1) {
+			e1.printStackTrace();
+			System.exit(-1);
+		    }
+
+		} else {
+		    textArea.append("error: numbers are out of bounds MAX:1080");
+		}
+
+	    }
+
+	    private void disableThings() {
+		btnGo.setEnabled(false);
+		fieldMaxCarSpaces.setEnabled(false);
+		fieldMaxSmallCarSpaces.setEnabled(false);
+		fieldMaxMotorCycleSpaces.setEnabled(false);
+		fieldMaxQueueSize.setEnabled(false);
+		fieldRanSeed.setEnabled(false);
+		carProbSlider.setEnabled(false);
+		smallCarProbSlider.setEnabled(false);
+		motorCycleProbSlider.setEnabled(false);
+		staySdSlider.setEnabled(false);
+		fieldStayMean.setEnabled(false);
+	    }
+	});
+
+	// button to go to fraph
+	goToGraph.addActionListener(new AbstractAction("add") {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		mainFrame.setVisible(false);
+		demo.setVisible(true);
+	    }
+	});
 
 	Insets padding = new Insets(10, 0, 0, 0);
 	Insets noPadding = new Insets(0, 0, 0, 0);
-
+	// start of gui building
 	GridBagConstraints c = new GridBagConstraints();
 	c.fill = GridBagConstraints.HORIZONTAL;
 
@@ -303,7 +394,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	c.gridy = 1;
 	subPanel.add(timeSlider, c);
 
-	// add labels + textfields
+	// add labels + text fields
 	c.insets = new Insets(30, 0, 0, 0);
 	c.gridx = 0;
 	c.gridy = 2;
@@ -449,88 +540,60 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
      */
     public void runSimulation() throws VehicleException, SimulationException,
 	    IOException {
-
-	
 	final Thread SimulatorThread = new Thread(new Runnable() {
 	    public void run() {
 		try {
-		    log.initialEntry(GUISimulator.carPark, sim);
-		} catch (IOException e1) {
-		    // TODO Auto-generated catch block
-		    e1.printStackTrace();
+		    runTheLoop();
+		} catch (VehicleException | SimulationException
+			| InterruptedException | IOException e) {
+
+		    e.printStackTrace();
 		}
+	    }
+
+	    /**
+	     * this is here because Run() can't have the throws declaration
+	     * 
+	     * @Author JosephSalmond 8823928
+	     */
+	    private void runTheLoop() throws VehicleException,
+		    SimulationException, InterruptedException, IOException {
+		log.initialEntry(GUISimulator.carPark, sim);
 		for (int time = 0; time <= Constants.CLOSING_TIME; time++) {
 		    // queue elements exceed max waiting time
 		    if (!carPark.queueEmpty()) {
-			try {
-			    carPark.archiveQueueFailures(time);
-			} catch (VehicleException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
+			carPark.archiveQueueFailures(time);
 		    }
 		    // vehicles whose time has expired
 		    if (!carPark.carParkEmpty()) {
-
 			// force exit at closing time, otherwise normal
 			boolean force = (time == Constants.CLOSING_TIME);
-			try {
-			    carPark.archiveDepartingVehicles(time, force);
-			} catch (VehicleException | SimulationException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
+			carPark.archiveDepartingVehicles(time, force);
 		    }
 		    // attempt to clear the queue
 		    if (!carPark.carParkFull()) {
-			try {
-			    carPark.processQueue(time, sim);
-			} catch (VehicleException | SimulationException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
+			carPark.processQueue(time, sim);
 		    }
 		    // new vehicles from minute 1 until the last hour
 		    if (newVehiclesAllowed(time)) {
-			try {
-			    carPark.tryProcessNewVehicles(time, sim);
-			} catch (VehicleException | SimulationException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
+			carPark.tryProcessNewVehicles(time, sim);
 		    }
 		    // Log progress
-
-		    try {
-			log.logEntry(time, carPark);
-		    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		    }
+		    log.logEntry(time, carPark);
 		    textOutput(time);
 		    // read next line of log
-		    synchronized (Thread.currentThread()){
-		    try {
-			Thread.currentThread().wait(1000 / timeSlider.getValue());
-		    } catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		    }
+		    synchronized (Thread.currentThread()) {
+			Thread.currentThread().wait(
+				1000 / timeSlider.getValue());
 		    }
 		}
-		
-
 		System.out.println("THE END");
-		try {
-		    log.finalise(GUISimulator.carPark);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
+		log.finalise(GUISimulator.carPark);
 		doTheChartThings();
-		// set line graph active
-		// set bar graph active
+		goToGraph.setEnabled(true);
+
 	    }
+
 	});
 	SimulatorThread.start();
     }
@@ -538,25 +601,46 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     private void doTheChartThings() {
 	final TimeSeriesCollection dataset = chartForge();
 	JFreeChart chart = createChart(dataset);
-	this.add(new ChartPanel(chart), BorderLayout.CENTER);
-	JPanel btnPanel = new JPanel(new FlowLayout());
-	this.add(btnPanel, BorderLayout.SOUTH);
+	JFreeChart barChart = createChart(dissatisfied, archive);
+	this.add(new ChartPanel(barChart), BorderLayout.CENTER);
+	this.add(new ChartPanel(chart), BorderLayout.WEST);
+
     }
 
     private void textOutput(int time) {
 
 	String currString = carPark.getStatus(time);
-	textArea.append(currString);
-	textArea.setCaretPosition(textArea.getDocument().getLength());
+
+	// finds values
 	int toDate = findValue(currString, (time + ":+(\\d+):+"));
 	int vehicleNum = findValue(currString, "P:+(\\d+):+");
 	int cars = findValue(currString, "C:+(\\d+):+");
 	int smallCars = findValue(currString, "S:+(\\d+):+");
 	int motorCycles = findValue(currString, "M:+(\\d+):+");
 	int numQueue = findValue(currString, "Q:+(\\d+)");
-	int archive = findValue(currString, "A:+(\\d+):+");
-	int dissatisfied = findValue(currString, "D:+(\\d+):+");
+	archive = findValue(currString, "A:+(\\d+):+");
+	dissatisfied = findValue(currString, "D:+(\\d+):+");
+
 	// outputs to screen text
+	/*textArea.append("Minute: " + time + "\nCars to Date: " + toDate
+		+ "\nNumber of Vehicles Parked: " + vehicleNum
+		+ "\nTotal Cars Parked: " + cars
+		+ "\nNumber Small Cars Parked: " + smallCars
+		+ "\nNumber MotorCycles Parked: " + motorCycles
+		+ "\nNumber in Queue: " + numQueue
+		+ "\nNumber Customers Dissatisfied: " + dissatisfied
+		+ "\nNumber No Longer in Residance: " + archive + "\n\n");*/
+	
+	textArea.append("Minute: " + time + " | Cars to Date: " + toDate
+		+ " | Number of Vehicles Parked: " + vehicleNum
+		+ "\nTotal Cars Parked: " + cars
+		+ " | Number Small Cars Parked: " + smallCars
+		+ " | Number MotorCycles Parked: " + motorCycles
+		+ "\nNumber in Queue: " + numQueue
+		+ "  | Number Customers Dissatisfied: " + dissatisfied
+		+ "  | Number No Longer in Residance: " + archive + "\n\n");
+	
+	textArea.setCaretPosition(textArea.getDocument().getLength());
 
 	// add to graph
 	chartAddValues(toDate, vehicleNum, cars, smallCars, motorCycles,
@@ -576,7 +660,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	    int dissatisfied, int time) {
 	cal.set(2014, 0, 1, 6, time);
 	Date timePoint = cal.getTime();
-	
+
 	numToDate.add(new Minute(timePoint), toDate);
 	numVehicles.add(new Minute(timePoint), vehicleNum);
 	numCars.add(new Minute(timePoint), cars);
@@ -587,6 +671,12 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	numDissatisfied.add(new Minute(timePoint), dissatisfied);
     }
 
+    /**
+     * adds all the series into the collection
+     * 
+     * @author Joseph Salmond 8823928
+     * @return completed time series collection
+     */
     private TimeSeriesCollection chartForge() {
 	// With our powers combined
 	tsc.addSeries(numToDate);
@@ -610,8 +700,9 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
      * @returns chart to be added to panel
      */
     private JFreeChart createChart(final XYDataset dataset) {
-	final JFreeChart result = ChartFactory.createTimeSeriesChart(TITLE,
-		"hh:mm:ss", "Vehicles", dataset, true, true, false);
+	final JFreeChart result = ChartFactory.createTimeSeriesChart(
+		"Car Park Over Time", "hh:mm:ss", "Vehicles", dataset, true,
+		true, false);
 	final XYPlot plot = result.getXYPlot();
 	ValueAxis domain = plot.getDomainAxis();
 	domain.setAutoRange(true);
@@ -636,6 +727,30 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     }
 
     /**
+     * 
+     * @param dissatisfied
+     * @param archived
+     * @return
+     */
+    private JFreeChart createChart(int dissatisfiedNum, int archivedNum) {
+	// create dataset
+	final DefaultCategoryDataset chartDataSet = new DefaultCategoryDataset();
+	final String series1 = "Total Customers";
+	final String series2 = "Disatisfied Customers";
+	final String comp = "";
+	chartDataSet.addValue(archivedNum, series1, comp);
+	chartDataSet.addValue(dissatisfiedNum, series2, comp);
+	final CategoryDataset cDataSet = chartDataSet;
+
+	// create the chart...
+	final JFreeChart chart = ChartFactory.createBarChart("Customer Review",
+		"Comparison", "Number of Customers", cDataSet,
+		PlotOrientation.VERTICAL, true, false, false);
+
+	return chart;
+    }
+
+    /**
      * Simple main GUI runner
      * 
      * @param args
@@ -648,17 +763,14 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 		@Override
 		public void run() {
 		    demo = null;
+
 		    try {
 			demo = new GUISimulator(TITLE, args);
-		    } catch (NoSuchFieldException e1) {
-			e1.printStackTrace();
-			System.exit(-1);
-		    } catch (SecurityException e1) {
-			e1.printStackTrace();
-			System.exit(-1);
+		    } catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
 		    }
 
-		    demo.setMinimumSize(new Dimension(1024, 720));
+		    demo.setMinimumSize(new Dimension(1080, 720));
 		    demo.pack();
 		    RefineryUtilities.centerFrameOnScreen(demo);
 		}
@@ -668,18 +780,14 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	}
     }
 
-    private void mainSetup(String[] args) throws NoSuchFieldException,
+    private void mainSetup(int[] realARGS) throws NoSuchFieldException,
 	    SecurityException {
 	CarPark cp = null;
 	Simulator s = null;
 	Log l = null;
 
-	if (useArgs) {
-	    // new cp with args
-	} else {
-	    cp = new CarPark();
-	}
 	try {
+	    cp = new CarPark();
 	    s = new Simulator();
 	    l = new Log();
 	} catch (IOException | SimulationException e1) {
