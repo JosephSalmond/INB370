@@ -23,6 +23,7 @@ public class MotorCycleTests {
 
     private int testIntendedDuration = 60;
     private int testParkingTime = 30;
+    private int testDepartureTime = 60;
 
     private int testQueueExitTime = 25;
 
@@ -281,8 +282,15 @@ public class MotorCycleTests {
     }
 
     // write test for satisfied is true
+    @Test(timeout = 1000)
+    public void testIsSatisfiedTrue() throws VehicleException {
+    testMotorCycle = new MotorCycle(testConstructorVehID,
+    		testConstructorArrivalTime);
+    testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+    testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
+    assertTrue(testMotorCycle.isSatisfied());
+    }
 
-    // do we need tests for the to string method here?
 
     /* TESTS FOR WAS PARKED METHOD */
 

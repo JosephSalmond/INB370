@@ -69,9 +69,6 @@ public class CarTests {
 	assertTrue(testCar.isSmall());
     }
 
-    /* TESTS FOR TO STRING METHOD */
-
-    // write tests for to string method here?
 
     /* TESTS FOR ENTER PARKED STATE METHOD */
 
@@ -300,7 +297,14 @@ public class CarTests {
 	assertFalse(testCar.isSatisfied());
     }
 
-    // write test for satisfied is true
+    @Test(timeout = 1000)
+    public void testIsSatisfiedTrue() throws VehicleException {
+	testCar = new Car(testConstructorVehID, testConstructorArrivalTime,
+		testCarNotSmall);
+	testCar.enterParkedState(testParkingTime, testIntendedDuration);
+	testCar.exitParkedState(testParkingTime + testIntendedDuration);
+	assertTrue(testCar.isSatisfied());
+    }
 
     /* TESTS FOR WAS PARKED METHOD */
 
