@@ -144,9 +144,6 @@ public class CarPark {
 		while (iter.hasNext()) {
 		    Vehicle v = iter.next();
 		    if (v.getDepartureTime() == time) {
-			if (time == 362) {
-			    System.out.println(" ");
-			}
 			this.unparkVehicle(v, time);
 			past.add(v);
 			transitionVehicle(v);

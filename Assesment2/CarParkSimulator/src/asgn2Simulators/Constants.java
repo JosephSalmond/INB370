@@ -34,6 +34,6 @@ public class Constants {
     // Default Size parameters
     public static final int DEFAULT_MAX_CAR_SPACES = 100;
     public static final int DEFAULT_MAX_SMALL_CAR_SPACES = 30;
-    public static final int DEFAULT_MAX_MOTORCYCLE_SPACES = 30;
+    public static final int DEFAULT_MAX_MOTORCYCLE_SPACES = 20;
     public static final int DEFAULT_MAX_QUEUE_SIZE = 10;
 }

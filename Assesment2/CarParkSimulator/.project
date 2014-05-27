@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib</name>
+			<type>2</type>
+			<location>C:/Users/JEGO/Documents/QUT/2014 Semester 1/INB 370/Assesment 2/370Git/Assesment2/CarParkSimulator/lib</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -599,7 +599,6 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 				1000 / timeSlider.getValue());
 		    }
 		}
-		System.out.println("THE END");
 		log.finalise(GUISimulator.carPark);
 		doTheChartThings();
 		goToGraph.setEnabled(true);

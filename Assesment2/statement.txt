@@ -1,8 +1,11 @@
-Joseph Salmond
+Joseph Salmond 8823928  |  Pearl Gariano
 
+Joseph - Vehicle && Car && Motorcycle && CarPark && GUISimulator
+Pearl - Unit Tests
+Both - GUI design
 
-
-
+Main Methods -> GUISimulator
+Has Run.bat
 
 The name and student number of both partners.
 •  A statement of contribution from each partner and a note that you both agree with 
