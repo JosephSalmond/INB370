@@ -13,22 +13,11 @@ import asgn2Vehicles.MotorCycle;
 import asgn2Vehicles.Vehicle;
 
 /**
- * **USE, BUT YOU MAY NEED TO CHANGE THE VAR NAMES *** Method used to provide
- * the current status of the car park. Uses private status String set whenever a
- * transition occurs. Example follows (using high probability for car creation).
- * At time 262, we have 276 vehicles existing, 91 in car park (P), 84 cars in
- * car park (C), of which 14 are small (S), 7 MotorCycles in car park (M), 48
- * dissatisfied (D), 176 archived (A), queue of size 9 (CCCCCCCCC), and on this
- * iteration we have seen: car C go from Parked (P) to Archived (A), C go from
- * queued (Q) to Parked (P), and small car S arrive (new N) and go straight into
- * the car park<br>
- * 262::276::P:91::C:84::S:14::M:7::D:48::A:176::Q:9CCCCCCCCC|C:P>A||C:Q>P||S:N>
- * P|
+ * Car Park Class
  * 
- * @return String containing current state
+ * @author Joseph Salmond 8823928
+ * 
  */
-
-/** @author Joseph Salmond 8823928 */
 public class CarPark {
 
     private enum spaceType {
@@ -61,8 +50,9 @@ public class CarPark {
     private ArrayDeque<Vehicle> queue = new ArrayDeque<Vehicle>();
     private Vector<Vehicle> past = new Vector<Vehicle>();
 
-    // CarPark constructor sets the basic size parameters.
     /**
+     * CarPark constructor sets the basic size parameters.
+     * 
      * @author Joseph Salmond 8823928
      */
     public CarPark() {
@@ -73,8 +63,9 @@ public class CarPark {
 
     }
 
-    // CarPark constructor sets the basic size parameters.
     /**
+     * CarPark constructor sets the basic size parameters.
+     * 
      * @author Joseph Salmond 8823928
      * @param maxCarSpaces
      * @param maxSmallCarSpaces
@@ -90,8 +81,9 @@ public class CarPark {
 
     }
 
-    // Archives vehicles exiting the car park after a successful st
     /**
+     * Archives vehicles exiting the car park after a successful Stay
+     * 
      * @author Joseph Salmond 8823928
      * @param time
      * @param force
@@ -103,33 +95,26 @@ public class CarPark {
 	Iterator<Vehicle> iter;
 	if (force) {
 
-		iter = spaces.iterator();
-		while (iter.hasNext()) {
-		    Vehicle v = iter.next();
-			this.unparkVehicle(v, time);
-			past.add(v);
-			transitionVehicle(v);
-			iter.remove();
-		    }
-		
-	    
+	    iter = spaces.iterator();
+	    while (iter.hasNext()) {
+		Vehicle v = iter.next();
+		this.unparkVehicle(v, time);
+		past.add(v);
+		transitionVehicle(v);
+		iter.remove();
+	    }
+
 	    iter = smallCarSpaces.iterator();
 	    while (iter.hasNext()) {
-		@SuppressWarnings("unused")
-		Vehicle v = iter.next();
 		iter.remove();
 	    }
 	    iter = carSpaces.iterator();
 	    while (iter.hasNext()) {
-		@SuppressWarnings("unused")
-		Vehicle v = iter.next();
 		iter.remove();
 	    }
 
 	    iter = motorCycleSpaces.iterator();
 	    while (iter.hasNext()) {
-		@SuppressWarnings("unused")
-		Vehicle v = iter.next();
 		iter.remove();
 	    }
 
@@ -150,7 +135,7 @@ public class CarPark {
 		while (iter.hasNext()) {
 		    Vehicle v = iter.next();
 		    if (v.getDepartureTime() == time) {
-			if (time == 362){
+			if (time == 362) {
 			    System.out.println(" ");
 			}
 			this.unparkVehicle(v, time);
@@ -192,11 +177,6 @@ public class CarPark {
 	    }
 
 	}
-
-	// VehicleException - if vehicle to be archived is not in the correct
-	// state
-	// SimulationException - if one or more departing vehicles are not in
-	// the car park when operation applied
     }
 
     /**
@@ -209,9 +189,10 @@ public class CarPark {
 	transitions += "|" + vehicleString(v) + ":P>A|";
     }
 
-    // Method to archive new vehicles that don't get parked or queued and are
-    // turned away
     /**
+     * Method to archive new vehicles that don't get parked or queued and are
+     * turned away
+     * 
      * @author Joseph Salmond 8823928
      * @param v
      * @throws SimulationException
@@ -223,13 +204,11 @@ public class CarPark {
 
 	past.add(v);
 	numDissatisfied++;
-
-	// SimulationException - if vehicle is currently queued or parked
-
     }
 
-    // Archive vehicles which have stayed in the queue too long
     /**
+     * Archive vehicles which have stayed in the queue too long
+     * 
      * @author Joseph Salmond 8823928
      * @param time
      * @throws VehicleException
@@ -251,8 +230,9 @@ public class CarPark {
 
     }
 
-    // Simple status showing whether carPark is empty
     /**
+     * Simple status showing whether carPark is empty
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -260,8 +240,9 @@ public class CarPark {
 	return ((numCarSpaces + numMotorCycleSpaces) == 0);
     }
 
-    // Simple status showing whether carPark is full
     /**
+     * Simple status showing whether carPark is full
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -269,8 +250,9 @@ public class CarPark {
 	return (numCarSpaces + numMotorCycleSpaces) == (maxCarSpaces + maxMotorCycleSpaces);
     }
 
-    // Method to add vehicle successfully to the queue
     /**
+     * Method to add vehicle successfully to the queue
+     * 
      * @author Joseph Salmond 8823928
      * @param v
      * @throws SimulationException
@@ -280,19 +262,16 @@ public class CarPark {
 	    VehicleException {
 	if (queue.size() == maxQueueSize) {
 	    throw new SimulationException("enterQueue: Queue Full");
-	} else if (v.isParked() || v.isQueued()) {
-	    throw new VehicleException("enterQueue: ");
 	}
 	v.enterQueuedState();
 	queue.add(v);
 
-	// SimulationException - if queue is full
-	// VehicleException - if vehicle not in the correct state
     }
 
-    // Method to remove vehicle from the queue after which it will be parked or
-    // removed altogether.
     /**
+     * Method to remove vehicle from the queue after which it will be parked or
+     * removed altogether.
+     * 
      * @author Joseph Salmond 8823928
      * @param v
      * @param exitTime
@@ -310,26 +289,24 @@ public class CarPark {
 
 	v.exitQueuedState(exitTime);
 	queue.remove(v);
-	// SimulationException - if vehicle is not in car park or not in parked
-	// state
-	// VehicleException - if the vehicle is in a parked state or not in a
-	// queued state, or if exitTime is not later than arrivalTime for this
-	// vehicle
     }
 
-    // State dump intended for use in logging the final state of the carpark
     /**
+     * State dump intended for use in logging the final state of the carpark
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
     public String finalState() {
-	String str = "Vehicles Processed: count: " + count + ", logged: " + past.size() + "\nVehicle Record: \n";
+	String str = "Vehicles Processed: count: " + count + ", logged: "
+		+ past.size() + "\nVehicle Record: \n";
 	str += this.toString();
 	return str;
     }
 
-    // Simple getter for number of cars in the car park
     /**
+     * Simple getter for number of cars in the car park
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -337,8 +314,9 @@ public class CarPark {
 	return numCars;
     }
 
-    // Simple getter for number of motorcycles in the car park
     /**
+     * Simple getter for number of motorcycles in the car park
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -347,6 +325,8 @@ public class CarPark {
     }
 
     /**
+     * Simple getter for number of small cars in carpark
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -354,11 +334,14 @@ public class CarPark {
 	return numSmallCars;
     }
 
-    // Method used to provide the current status of the car park.
     /**
+     * creates string representation of the carpark
      * 
+     * @author Joseph Salmond 8823928
      * @param time
-     * @return
+     *            tick time
+     * @return the string representation of the state of the carpark at a
+     *         certain time
      */
     public String getStatus(int time) {
 	String str = time
@@ -369,9 +352,9 @@ public class CarPark {
 		+ (this.carSpaces.size() + this.motorCycleSpaces.size() + this.smallCarSpaces
 			.size()) + "::" + "C:"
 		+ (this.numCars + this.numSmallCars) + "::S:"
-		+ this.numSmallCars + "::M:" + this.numMotorCycles
-		+ "::D:" + this.numDissatisfied + "::A:" + this.past.size()
-		+ "::Q:" + this.queue.size();
+		+ this.numSmallCars + "::M:" + this.numMotorCycles + "::D:"
+		+ this.numDissatisfied + "::A:" + this.past.size() + "::Q:"
+		+ this.queue.size();
 	for (Vehicle v : this.queue) {
 	    if (v instanceof Car) {
 		if (((Car) v).isSmall()) {
@@ -390,9 +373,9 @@ public class CarPark {
     }
 
     /**
-     * SAME COMMENTS State dump intended for use in logging the initial state of
-     * the carpark. Mainly concerned with parameters.
+     * State dump intended for use in logging the initial state of the carpark.
      * 
+     * @Author Joseph Salmond 8823928
      * @return String containing dump of initial carpark state
      */
     public String initialState() {
@@ -411,8 +394,9 @@ public class CarPark {
 	return this.queue.size();
     }
 
-    // Method to add vehicle successfully to the car park store
     /**
+     * Method to add vehicle successfully to the car park store
+     * 
      * @author Joseph Salmond 8823928
      * @param v
      * @param time
@@ -454,19 +438,15 @@ public class CarPark {
 		numCars++;
 	    }
 	}
-	// SimulationException - if no suitable spaces are available for parking
-	// VehicleException - if vehicle not in the correct state
     }
 
-    // Silently process elements in the queue
     /**
+     * Silently process elements in the queue
+     * 
      * @author Joseph Salmond 8823928
      */
     public void processQueue(int time, Simulator sim) throws VehicleException,
 	    SimulationException {
-	if (time == 362){
-	    System.out.println(" ");
-	}
 	if (!this.queueEmpty()) {
 	    Vehicle v = queue.peekFirst();
 
@@ -480,14 +460,11 @@ public class CarPark {
 
 	}
 
-	// SimulationException - if no suitable spaces available when parking
-	// attempted
-	// VehicleException - if state is incorrect, or times violate
-	// constraints
     }
 
-    // Simple status showing whether queue is empty
     /**
+     * Simple status showing whether queue is empty
+     * 
      * @author Joseph Salmond 8823928
      * @return
      */
@@ -495,20 +472,16 @@ public class CarPark {
 	return this.queue.isEmpty();
     }
 
-    // Simple status showing whether queue is full
-    /**
-     * 
+    /**Simple status showing whether queue is full
+     * @Author Joseph Salmond 8823928
      * @return
      */
     public boolean queueFull() {
 	return (this.queue.size() == maxQueueSize);
     }
 
-    // Method determines, given a vehicle of a particular type, whether there
-    // are spaces available for that type in the car park under the parking
-    // policy in the class header.
-    /**
-     * 
+    /**Method determines, given a vehicle of a particular type, whether there are spaces available for that type in the car park under the parking policy in the class header.
+     * @Author Joseph Salmond 8823928
      * @param v
      * @return
      */
@@ -542,8 +515,9 @@ public class CarPark {
 	return spaces;
     }
 
-    // Overrides toString in class java.lang.Object
     /**
+     * Overrides toString in class java.lang.Object
+     * 
      * @author Joseph Salmond 8823928
      */
     @Override
@@ -552,12 +526,13 @@ public class CarPark {
 	for (Vehicle v : past) {
 	    str += v.toString() + "\n";
 	}
-	// System.out.print(str); // dump to console
+
 	return str;
     }
 
-    // Method to try to create new vehicles
     /**
+     * Method to try to create new vehicles
+     * 
      * @author Joseph Salmond 8823928
      * @param time
      * @param sim
@@ -566,9 +541,6 @@ public class CarPark {
      */
     public void tryProcessNewVehicles(int time, Simulator sim)
 	    throws VehicleException, SimulationException {
-	// SimulationException - if no suitable spaces available when operation
-	// attempted
-	// VehicleException - if vehicle creation violates constraints
 	Vehicle newVehicle = null;
 	if (sim.newCarTrial()) {
 	    if (sim.smallCarTrial()) {
@@ -619,8 +591,9 @@ public class CarPark {
 
     }
 
-    // Method to remove vehicle from the carpark.
     /**
+     * Method to remove vehicle from the carpark.
+     * 
      * @author Joseph Salmond 8823928
      * @param v
      * @param departureTime
@@ -634,13 +607,10 @@ public class CarPark {
 		    "unparkVehicle: cant leave the carpark when not parked");
 	} else if (v.isQueued()) {
 	    throw new VehicleException("unparkVehicle: Error Queued");
-	} else { // if
-		 // Violates timing constraints
 	}
 
 	v.exitParkedState(departureTime);
-	
-	
+
 	if (motorCycleSpaces.contains(v)) {
 	    numMotorCycleSpaces--;
 	} else if (smallCarSpaces.contains(v)) {
