@@ -19,8 +19,8 @@ public class CarParkTests {
 
     CarPark testCarPark;
 
-    static private int testTime = 10;
-    static private boolean testForce = true;
+    private int testTime = 10;
+    private boolean testForce = true;
 
     private String testVehID = "123ABC";
     private int testArrivalTime = 1;
@@ -283,18 +283,20 @@ public class CarParkTests {
     }
     
     //TESTS FOR PROCESS QUEUE
-    @Test(timeout = 1000, expected = SimulationException.class)
+    @Test(timeout = 1000)
     public void testProcessQueueNoSpacesAvailable() throws SimulationException, VehicleException {
-	// processQueue(int time, Simulator sim)
     	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
     	Simulator sim = new Simulator();
     	for(int i = 0; i < 10; i++){
     		Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
-    		testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    		testCarPark.parkVehicle(c, testDepartureTime, testIntendedDuration);
     	}
-    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
-    	testCarPark.enterQueue(c);
+    	for(int i = 0; i < testMaxQueueSize; i++){
+    		Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    		testCarPark.enterQueue(c);
+    	}
     	testCarPark.processQueue(testTime, sim);
+    	assertTrue(testCarPark.queueFull());
     }
 
     //TESTS FOR QUEUE EMPTY
