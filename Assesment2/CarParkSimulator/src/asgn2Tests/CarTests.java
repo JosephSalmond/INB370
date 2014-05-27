@@ -5,8 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import asgn2Exceptions.SimulationException;
 import asgn2Exceptions.VehicleException;
 import asgn2Vehicles.Car;
+import asgn2Vehicles.MotorCycle;
 import asgn2Simulators.Constants;
 
 /** @author Pearl Gariano 8318522 */
@@ -51,6 +53,15 @@ public class CarTests {
     public void testConstructorArrivalTime() throws VehicleException {
 	new Car(testConstructorVehID, testConstructorArrivalTime,
 		testCarNotSmall);
+    }
+    
+    /* TESTS FOR STATIC VARIABLES */
+    @Test(timeout = 1000)
+    public void testMotorcycleStaticVariables() throws SimulationException, VehicleException{
+    	Car testCar1 = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
+    	Car testCar2 = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
+    	testCar1.enterQueuedState();
+    	assertFalse(testCar2.isQueued());
     }
 
     /* TESTS FOR IS SMALL METHOD */

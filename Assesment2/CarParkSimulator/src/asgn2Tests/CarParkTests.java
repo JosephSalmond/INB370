@@ -46,6 +46,16 @@ public class CarParkTests {
     public void testCarParkParameters() throws SimulationException, VehicleException{
     	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
     }
+    
+    // TESTS FOR STATIC VARIABLES
+    @Test(timeout = 1000)
+    public void testCarParkStaticVariables() throws SimulationException, VehicleException{
+    	CarPark testCarPark1 = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	CarPark testCarPark2 = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	testCarPark1.parkVehicle(c, testTime, testIntendedDuration);
+    	assertTrue(testCarPark2.carParkEmpty());
+    }
 
     // TESTS FOR ARCHIVE DEPARTING VEHICLES
 
@@ -80,11 +90,6 @@ public class CarParkTests {
 	// archiveQueueFailures(int time)
     }
  
-    // @Test(timeout = 1000, expected = VehicleException.class)
-    public void testArchiveQueuesFailureViolatedTimeConstraint()
-	    throws SimulationException, VehicleException {
-	// throws ve if timing constraints are violated
-    }
     
     //@Test(timeout = 1000)
     public void testArchiveQueueFailures() throws VehicleException{
@@ -102,8 +107,8 @@ public class CarParkTests {
     
     @Test(timeout = 1000)
     public void testCarParkEmptyFalse() throws VehicleException, SimulationException{
-    	Simulator sim = new Simulator();
-    	testCarPark.tryProcessNewVehicles(testTime, sim);
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	testCarPark.parkVehicle(c, testTime, testIntendedDuration);
     	assertFalse(testCarPark.carParkEmpty());
     }
 
@@ -363,10 +368,8 @@ public class CarParkTests {
     public void testSpacesAvailableMotorcycleFalse() throws SimulationException, VehicleException{
     	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
     	for(int i = 0; i < 10; i++){
-    		//Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
     		Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
     		MotorCycle m = new MotorCycle(testVehID, testArrivalTime);
-    		//testCarPark.parkVehicle(c, testTime, testIntendedDuration);
     		testCarPark.parkVehicle(sc, testTime, testIntendedDuration);
     		testCarPark.parkVehicle(m, testTime, testIntendedDuration);
     	}
@@ -394,27 +397,19 @@ public class CarParkTests {
     //TESTS FOR UNPARK VEHICLE
     @Test(timeout = 1000, expected = VehicleException.class)
     public void testUnparkVehicleNotParked() throws VehicleException, SimulationException {
-	// unparkVehicle(Vehicle v, int departureTime)
     	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
     	Car testCar = new Car(testVehID, testArrivalTime, testCarNotSmall);
-    	testCarPark.unparkVehicle(testCar, testTime);
-    	
+    	testCarPark.unparkVehicle(testCar, testTime);  	
     }
 
-    //@Test(timeout = 1000, expected = VehicleException.class)
+    @Test(timeout = 1000, expected = VehicleException.class)
     public void testUnparkVehicleInQueue() throws VehicleException, SimulationException {
-
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Car testCar = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	testCar.enterQueuedState();
+    	testCarPark.unparkVehicle(testCar, testTime);
     }
 
-    //@Test(timeout = 1000, expected = VehicleException.class)
-    public void testUnparkVehicleViolatesTimingConstraints()
-	    throws VehicleException, SimulationException {
 
-    }
-
-    //@Test(timeout = 1000, expected = SimulationException.class)
-    public void testUnparkVehicleNotInCarPark() throws VehicleException, SimulationException {
-
-    }
 
 }
