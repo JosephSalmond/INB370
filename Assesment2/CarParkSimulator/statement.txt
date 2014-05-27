@@ -11,4 +11,8 @@ I, Pearl Gariano, agree that the above statement is true.
 
 Main Methods -> asgn2Simulators.GUISimulator
 Has Run.bat
-uses jcommon-1.0.21.jar && jfreechart-1.0.17.jar
+uses jcommon-1.0.21.jar && jfreechart-1.0.17.jar 
+
+
+our git management tool seemed to have mangled our branch names and switched the names of Dev and Master. 
+also somehow hour head sometimes went off in a strange direction.

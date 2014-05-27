@@ -1,3 +1,71 @@
+commit c607ed98d97f40134df4ad0a6effa4d6940702d2
+Merge: cd297c1 e149b33
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 23:01:56 2014 +1000
+
+    Merge remote-tracking branch 'origin/Dev' into TheMainBranch
+
+commit cd297c17cc69af6e0f84c86e12ef1ada9b3194cf
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 23:01:29 2014 +1000
+
+    Formatting and stuff
+
+commit 3cd3e3ba33a327f4e876702116da2f590447d6cc
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 23:00:18 2014 +1000
+
+    Finale GUITest Complete
+
+commit 72ded81636860c0c412ddc31dbc76168082c3e53
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 22:17:39 2014 +1000
+
+    statement done
+
+commit bc4362563aff34acbbab5f786d2c05473c6bb85b
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 22:08:00 2014 +1000
+
+    Scenarios 5 now + added to statement.txt
+
+commit 1cf57410a5a7b9623db517687c690e2b44e27fe4
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 21:58:17 2014 +1000
+
+    Scenarios (I did 4)
+
+commit 9e2799eee32e5c41f1bd926188e49d2d9f7780d4
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 21:38:27 2014 +1000
+
+    move things around
+
+commit 842a30c6a34f57befad359b818a6fbac491f2bdd
+Merge: cdf535a c92238d
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 21:11:03 2014 +1000
+
+    Merge branch 'TheMainBranch' of https://github.com/JosephSalmond/INB370 into TheMainBranch
+
+commit cdf535a81e28b85cad4633a8b7f3cdfdd6a15672
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 21:10:43 2014 +1000
+
+    Added statement.txt && Run.bat && SourceControl.log
+
+commit c92238dfab765c6661ab6fe6b46e6f87e9242714
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 20:54:46 2014 +1000
+
+    screenshots of text scenarios
+
+commit f4f3f42e317c1bd0a20e405f3531bfcc6325fa39
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 19:35:55 2014 +1000
+
+    things
+
 commit d05905b4ad2bc78c4f7229cb494223c888f44d26
 Author: Joseph <joseph.salmond@student.qut.edu.au>
 Date:   Tue May 27 18:31:18 2014 +1000
@@ -248,6 +316,12 @@ Author: PearlG <pearl.gariano@student.qut.edu.au>
 Date:   Wed May 21 13:19:56 2014 +1000
 
     Maaaaaster
+
+commit e149b3341b16465d9e3e45df2f42d15d3e5682e1
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Wed May 21 13:15:41 2014 +1000
+
+    Dev Branch
 
 commit 98534fbfac17b86e909a444613994cf460093969
 Author: Joseph <joseph.salmond@student.qut.edu.au>
