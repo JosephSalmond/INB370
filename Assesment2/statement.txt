@@ -1,0 +1,13 @@
+Joseph Salmond
+
+
+
+
+
+The name and student number of both partners.
+•  A statement of contribution from each partner and a note that you both agree with 
+what is written 
+•  Any known bugs or incomplete features in the program 
+•  A clear statement of the location of class which holds the main method for your GUI 
+and the instructions needed to run it, whether or not you have provided us with a 
+run.bat method (which of course you should – see below) 

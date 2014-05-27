@@ -1,0 +1,423 @@
+commit d05905b4ad2bc78c4f7229cb494223c888f44d26
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 18:31:18 2014 +1000
+
+    Gui && clistuffs
+
+commit ce613d7146607cc06d189faddf28fb8cf71f6b92
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 17:41:21 2014 +1000
+
+    some more tests
+
+commit 8db4203ae2206edb39448bffe3faf4de99035b5b
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 16:54:06 2014 +1000
+
+    archive queue failure
+
+commit 1bd11660ab401e68374e1b2885c4e6d074c4b2ba
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 16:47:32 2014 +1000
+
+    fixed carpark
+
+commit 2f2acd9df6f4ed4d5f4b14a0b8ee7c8131a4ef5c
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 16:04:09 2014 +1000
+
+    Fixed CarPark
+
+commit 45f99a5dac13edba5b2e13e0cd6adc964ea508e2
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 16:01:38 2014 +1000
+
+    changes
+
+commit 4b623a657c3fecc443d5a8b1021d1e47b8e6cef6
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 15:51:22 2014 +1000
+
+    commit
+
+commit 461c79da1285dbae95e376b3f2c58f5f489484d9
+Merge: 04ee561 b7fe8fa
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 15:37:44 2014 +1000
+
+    Merge branch 'TheMainBranch' of https://github.com/JosephSalmond/INB370 into TheMainBranch
+
+commit 04ee561c903750c9341df0f155d3e38b9a9ab59b
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 15:36:48 2014 +1000
+
+    updated carpark javadocs
+
+commit b7fe8faa9f7e447d74006420a2fe9b6c347f5faf
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 15:33:41 2014 +1000
+
+    a few more tests
+
+commit d33ce697b832cad524dd1ca2c5e8494ea3544d9e
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 15:10:03 2014 +1000
+
+    gui
+
+commit e557c297161d4a5e3d28533dcded1e45341a1e26
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 14:49:51 2014 +1000
+
+    commit
+
+commit e7736837d1a831263bc2a90d7e32358f142da8c6
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 13:26:16 2014 +1000
+
+    more tests
+
+commit e01b6e68f4b6af65e16ba061631875b3c0f47074
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 12:54:43 2014 +1000
+
+    ...
+
+commit b1cd171cf037384aca6168c095749b6ac0fe8c40
+Merge: d0c3bfb e682512
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 12:43:21 2014 +1000
+
+    Merge branch 'master' into HEAD
+
+commit e682512cc08dc5796011489761c28e9e7910fc12
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 12:26:01 2014 +1000
+
+    commit...
+
+commit 5c6cd9015deda808c3a53c885ff835bb1d580a74
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 12:12:13 2014 +1000
+
+    motorcycle is going into big car space...
+
+commit 5671b2d918eee082de4a2459bd343b4cc0c5c7b3
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 27 12:00:41 2014 +1000
+
+    more tests
+
+commit d0c3bfba9d3bd96449e99007d4428aff921e2466
+Merge: fbe451b 62f62c5
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 09:53:42 2014 +1000
+
+    Merge remote-tracking branch 'origin/master' into main
+
+commit fbe451b3353192babee2784f6dccfbfe0f7a2b15
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 27 09:52:03 2014 +1000
+
+    Pruning Branches
+
+commit 62f62c5977c7528d6c8c4346514dc48d6081708b
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Mon May 26 23:15:09 2014 +1000
+
+    commit...
+
+commit d15aa1c25de723bd370b45b5bc4b3aefa8d0f4a6
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Mon May 26 21:46:20 2014 +1000
+
+    Graphs we got graphs
+
+commit 940ad9241e86f27201bb66c0e5f4b505291cdc74
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Mon May 26 16:13:50 2014 +1000
+
+    Chart Things
+
+commit 8857572ff3225acc9711e7eb7c7965a3723126fb
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 25 21:51:18 2014 +1000
+
+    Text(mostly) + line graph working
+
+commit 32ca6ba7893e6c2da42ce50bf8415704846a6c52
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 25 15:22:38 2014 +1000
+
+    line graph working
+
+commit 78446c8d5cba4811dfe0cfd464b29105b49a2b67
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sat May 24 22:55:42 2014 +1000
+
+    tested against default logs
+
+commit 67314dcd1d6b3a69f9f4c02d1660780e2a289521
+Merge: d76ca47 6f44d00
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sat May 24 14:19:13 2014 +1000
+
+    Merge remote-tracking branch 'origin/master' into main
+
+commit d76ca47cf0b22ed29642f2bd5fbf11e66503ce01
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sat May 24 14:18:16 2014 +1000
+
+    DERP
+
+commit 6f44d00c74e1ee21055430d7c108e8fa1bb7ca43
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 24 14:16:01 2014 +1000
+
+    ...
+
+commit 71e7d2db5f12fbe9be703fd6a1e776a17172c79c
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 24 14:07:09 2014 +1000
+
+    commit...
+
+commit 0e7ff58a936989a6dea63b1ddc21a5812e192436
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 24 13:55:30 2014 +1000
+
+    commit
+
+commit 3e550e23a63e942aac61c2c58367a6ca89287a47
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 24 12:53:05 2014 +1000
+
+    @.@
+
+commit 1ab1b5e8ef335a1b0c0d69bdf12bc3f4ee7e0a8b
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Fri May 23 22:13:11 2014 +1000
+
+    CarPark now up to spec with revised Part1 && things fixed
+
+commit 058ef4b29ce93aad954707dcb197729076ef824b
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Fri May 23 21:10:50 2014 +1000
+
+    Javadoced methods in carpark
+
+commit 6401779127ad9605107bf39d3fe4d1c3cc89bda5
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Fri May 23 20:53:04 2014 +1000
+
+    Vehicle & subclasses JavaDocked & commented && compared against spec for
+    adherance
+
+commit d089ba4f8827731ad2e3ae9a2384e7e34fca1d86
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Fri May 23 16:33:28 2014 +1000
+
+    New Spec
+
+commit b219b9828578fa893d22efb9af275854e8722025
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Fri May 23 16:08:35 2014 +1000
+
+    Javadoc And minor fixes
+
+commit aa95ce8f83cbf5ffd1c814ce15efaa2be8b400d4
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Fri May 23 09:55:28 2014 +1000
+
+    Little Push
+
+commit 05c016357921ec648e0db2b30110e1d341170cd8
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Thu May 22 21:28:08 2014 +1000
+
+    started tests for car park
+
+commit 15c5f1050909e36490321fd0a0cbd0f4481873cd
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Thu May 22 18:51:43 2014 +1000
+
+    gui kinda
+
+commit 49af3bc59c51497ef7b6ab9d997267eb856e62d2
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Wed May 21 13:19:56 2014 +1000
+
+    Maaaaaster
+
+commit 98534fbfac17b86e909a444613994cf460093969
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Wed May 21 13:07:25 2014 +1000
+
+    Tweaked code and added Gui bas spec
+
+commit 8974f024a9219b4ac1314cd0c1b9c19ea7800689
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 20 20:49:52 2014 +1000
+
+    finished ToString()
+
+commit 17018dea877bcec3a173e9efd866ef3c1fb77b18
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue May 20 17:37:29 2014 +1000
+
+    toString for vehicle
+
+commit 825fe267da8a83bc08abc4e0f365bf0e09e6c446
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Mon May 19 10:01:43 2014 +1000
+
+    Moar Things Working
+
+commit fdb877b0cc397a8f3187771f51235321fb45173a
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 18 21:23:16 2014 +1000
+
+    Its Alive
+
+commit 48a9926852c22a0b72822f1c19ec8310cc8a850d
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sat May 17 16:11:04 2014 +1000
+
+    i accidently all the vectors
+
+commit 7e1cd668eff817599029febb09daa5dddf3154dc
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sat May 17 15:45:58 2014 +1000
+
+    added more to CarPark
+
+commit f54248abe5fe19e3e7cfbfbe58b086334e040559
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Wed May 14 17:49:57 2014 +1000
+
+    woops forgot to change car tests... all good now =)
+
+commit 9532d791da6283784a06d3cc940291b6a2b50b1f
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Wed May 14 17:45:23 2014 +1000
+
+    wasParked and wasQueued fixed to include present tense
+
+commit 144fb99ef94aded44784e25405c51792ee888e7a
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Wed May 14 16:36:50 2014 +1000
+
+    minor change
+
+commit aeb1ff0984d7f2b288817069148566bf2fe7eb9e
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Wed May 14 13:09:52 2014 +1000
+
+    Added code to CarPark
+    Fixed Tests
+
+commit a6c0c198590dcaefc10df653ca56b8fb589b0677
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 13 17:45:56 2014 +1000
+
+    added comment
+
+commit 948c074e61d6a85c0545d757372f781577c01066
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 13 17:45:13 2014 +1000
+
+    Car tests
+
+commit 42f669f142e8587b52f510f0a34e06636e9b8a33
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Tue May 13 17:07:46 2014 +1000
+
+    More tests =)
+
+commit 671d38e1b40f6c760e89aeda1e85b24f164b33eb
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Mon May 12 14:12:40 2014 +1000
+
+    Added Code For Vehicle
+    Refactored some tests
+
+commit 9bf4164b7ec410209fdd9014fbd9441e2c85ea92
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 10 21:15:00 2014 +1000
+
+    A few more tests
+
+commit 461dd280b6ec0ce58d98b5bd118e3d936ddc8510
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 10 20:07:34 2014 +1000
+
+    minor updates
+
+commit 966aa34bf14b74adb6c10acf4653cca4aa727f66
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 10 18:34:22 2014 +1000
+
+    derp
+
+commit 0ffa2beeb8aad92e1f6c8adc9d172a258b4785df
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 10 18:31:42 2014 +1000
+
+    Missed something... I fixed it XP
+
+commit e3cfda3ef05b701ade0ad40bfe7ba4f660a93212
+Author: PearlG <pearl.gariano@student.qut.edu.au>
+Date:   Sat May 10 18:29:51 2014 +1000
+
+    Started writing tests for CarTests
+
+commit 426a1146771b58de1aaa5272e12ea73594acf9d3
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 4 17:54:25 2014 +1000
+
+    Spelling XD
+
+commit 8c0ea59a02ddfdf6a978c53dc60a16321a778ac1
+Author: JosephSalmond <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 4 13:39:12 2014 +1000
+
+    Update Joseph.txt
+
+commit e011fff1f6d58048ba7db97a3326f133835c7d0c
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 4 13:30:01 2014 +1000
+
+    Finished Public Method Stubs for Project
+
+commit b2e7dd49ed8d8ed44f75c2665cceab35503f835d
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Sun May 4 12:34:57 2014 +1000
+
+    Classes and their Method Stubs Completed
+    Vehicle Abstract
+    Car
+    MotorCycle
+
+commit 50cddf6253d3d671925e1cad3c786a6f170e4a84
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Wed Apr 30 14:29:18 2014 +1000
+
+     
+
+commit a13ae9e0b49564a146d51268e735a5eb7ba6c2ed
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Wed Apr 30 14:25:07 2014 +1000
+
+    added needed .java files
+
+commit 1ecd18d380ab1e156f965e995f500b6abe660586
+Author: Joseph <joseph.salmond@student.qut.edu.au>
+Date:   Tue Apr 29 17:47:57 2014 +1000
+
+    Commit all the things
+
+commit 2ec8c341f90ba939a23e8ee9b51c331ad9f1e5cd
+Author: Joseph Salmond <joseph.salmond@student.qut.edu.au>
+Date:   Tue Apr 29 16:14:59 2014 +1000
+
+    0
