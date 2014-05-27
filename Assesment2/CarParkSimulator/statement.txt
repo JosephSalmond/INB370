@@ -1,7 +1,7 @@
 Joseph Salmond 8823928  |  Pearl Gariano 8318522
 
 Joseph - Vehicle && Car && Motorcycle && CarPark && GUISimulator
-Pearl - Unit Tests and Scenarios
+Pearl - Unit Tests and GUIScenarios
 Both - GUI design
 
 I Joseph Salmond agree that the above statement is True.
@@ -12,14 +12,3 @@ I, Pearl Gariano, agree that the above statement is true.
 Main Methods -> asgn2Simulators.GUISimulator
 Has Run.bat
 uses jcommon-1.0.21.jar && jfreechart-1.0.17.jar
-
-
-
-
-The name and student number of both partners.
-•  A statement of contribution from each partner and a note that you both agree with 
-what is written 
-•  Any known bugs or incomplete features in the program 
-•  A clear statement of the location of class which holds the main method for your GUI 
-and the instructions needed to run it, whether or not you have provided us with a 
-run.bat method (which of course you should – see below) 
