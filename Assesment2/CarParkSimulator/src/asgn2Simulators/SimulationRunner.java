@@ -95,18 +95,31 @@ public class SimulationRunner {
      *            Arguments to the simulation
      */
     public static void main(String[] args) {
-	CarPark cp = new CarPark();
+	CarPark cp = null;
 	Simulator s = null;
 	Log l = null;
-	try {
-	    s = new Simulator();
-	    l = new Log();
-	} catch (IOException | SimulationException e1) {
-	    e1.printStackTrace();
-	    System.exit(-1);
-	}
 
-	// TODO: Implement Argument Processing
+	if (args.length == 10) {
+
+	    try {
+		cp = parkCreator(args);
+		s = simCreator(args);
+		l = new Log();
+	    } catch (IOException | SimulationException e) {
+		e.printStackTrace();
+		System.exit(-1);
+	    }
+
+	} else {
+	    try {
+		cp = new CarPark();
+		s = new Simulator();
+		l = new Log();
+	    } catch (IOException | SimulationException e1) {
+		e1.printStackTrace();
+		System.exit(-1);
+	    }
+	}
 
 	// Run the simulation
 	SimulationRunner sr = new SimulationRunner(cp, s, l);
@@ -116,6 +129,16 @@ public class SimulationRunner {
 	    e.printStackTrace();
 	    System.exit(-1);
 	}
+    }
+    
+
+    private static CarPark parkCreator(String[] args) {
+	return new CarPark(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+    }
+
+    private static Simulator simCreator(String[] args)
+	    throws SimulationException {
+	return new Simulator(Integer.parseInt(args[4]),Double.parseDouble(args[8]),Double.parseDouble(args[9]),Double.parseDouble(args[5]),Double.parseDouble(args[6]),Double.parseDouble(args[7]));
     }
 
     /**

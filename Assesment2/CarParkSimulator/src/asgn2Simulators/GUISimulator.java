@@ -61,13 +61,8 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     private Simulator sim;
     private Log log;
 
-    /*
-     * Add CLI args if no args then default if 10 args process else throw error
-     * fill boxes with defaults || fill with 10 cli arfs
-     */
     private static final String TITLE = "Car Park Statistics";
     private static GUISimulator demo;
-    private static String[] args;
     private TimeSeriesCollection tsc = new TimeSeriesCollection();
     private TimeSeries numToDate = new TimeSeries("Number To Date"); // black
     private TimeSeries numVehicles = new TimeSeries("Total Vehicles"); // blue
