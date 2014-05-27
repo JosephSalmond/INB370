@@ -35,6 +35,15 @@ public class CarParkTests {
     private int testMaxSmallCarSpaces = 10;
     private int testMaxMotorCycleSpaces = 10;
     private int testMaxQueueSize = 5;
+    
+    private int testSeed = 1;
+    private double testMeanStay = 300.0;
+    private double testSdStay = 100.0;
+    private double testCarProb100 = 1.0;
+    private double testSmallCarProb100 = 1.0;
+    private double testMotorcycleProb100 = 1.0;
+    private double testZeroProb = 0.0;
+    
 
     @Before
     public void setUp() throws Exception {
@@ -59,14 +68,16 @@ public class CarParkTests {
     }
 
     // TESTS FOR ARCHIVE DEPARTING VEHICLES
+    
     @Test(timeout = 1000)
-    public void testArchiveDepartingVehicles() throws SimulationException, VehicleException{
+    public void testArchiveDepartingVehiclesForceTrue() throws SimulationException, VehicleException{
     	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
     	testCarPark.parkVehicle(c, testTime, testIntendedDuration);
     	int initialCars = testCarPark.getNumCars();
-    	testCarPark.archiveDepartingVehicles(testDepartureTime, testForce);
+    	int expectedDepartureTime = testTime + testIntendedDuration;
+    	testCarPark.archiveDepartingVehicles((expectedDepartureTime - 1), testForce);
     	int finalCars = testCarPark.getNumCars();
-    	assertTrue(initialCars != finalCars);	
+    	assertTrue(finalCars == initialCars -1);	
     }
 
 
@@ -390,21 +401,31 @@ public class CarParkTests {
     	assertFalse(testCarPark.spacesAvailable(m));
     }
     
-    
-    
-    
+     
     //TESTS FOR TRY PROCESS NEW VEHICLES
     
-    //@Test(timeout = 1000, expected = SimulationException.class)
-    public void testTryProcessNewVehiclesNoSpacesAvailable()
-	    throws SimulationException {
-	// tryProcessNewVehicles(int time, Simulator sim)
+    @Test(timeout = 1000)
+    public void testTryProcessNewVehiclesJustCars()
+	    throws SimulationException, VehicleException {
+    	Simulator sim = new Simulator(testSeed, testMeanStay, testSdStay, testCarProb100, testZeroProb, testZeroProb);
+    	testCarPark.tryProcessNewVehicles(testTime, sim);
+    	assertEquals(1, testCarPark.getNumCars());
     }
-
-    //@Test(timeout = 1000, expected = VehicleException.class)
-    public void testTryProcessNewVehiclesViolatedCreationConstraints()
-    		throws VehicleException {
-
+    
+    @Test(timeout = 1000)
+    public void testTryProcessNewVehiclesJustSmallCars()
+	    throws SimulationException, VehicleException {
+    	Simulator sim = new Simulator(testSeed, testMeanStay, testSdStay, testCarProb100, testSmallCarProb100, testZeroProb);
+    	testCarPark.tryProcessNewVehicles(testTime, sim);
+    	assertEquals(1, testCarPark.getNumSmallCars());
+    }
+    
+    @Test(timeout = 1000)
+    public void testTryProcessNewVehiclesJustMotorcycles()
+	    throws SimulationException, VehicleException {
+    	Simulator sim = new Simulator(testSeed, testMeanStay, testSdStay, testZeroProb, testZeroProb, testMotorcycleProb100);
+    	testCarPark.tryProcessNewVehicles(testTime, sim);
+    	assertEquals(1, testCarPark.getNumMotorCycles());
     }
 
     //TESTS FOR UNPARK VEHICLE
