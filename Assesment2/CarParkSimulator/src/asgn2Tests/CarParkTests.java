@@ -58,6 +58,16 @@ public class CarParkTests {
     }
 
     // TESTS FOR ARCHIVE DEPARTING VEHICLES
+    @Test(timeout = 1000)
+    public void testArchiveDepartingVehicles() throws SimulationException, VehicleException{
+    	CarPark testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	String testString = testCarPark.toString();
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	c.enterParkedState(testParkingTime, testIntendedDuration);
+    	c.exitParkedState(90);
+    	testCarPark.archiveDepartingVehicles(testTime, testForce);
+    	assertNotSame(testString, testCarPark.toString());	
+    }
 
 
     //TESTS FOR ACHIVE NEW VEHICLE
@@ -253,15 +263,13 @@ public class CarParkTests {
 		testCarPark.parkVehicle(sc, testTime, testIntendedDuration);
     }
     
-    //... this test should just be for sc and m
+   
     @Test(timeout = 1000, expected = SimulationException.class)
     public void testParkVehicleNoSuitableSpacesMotorcycle() throws SimulationException, VehicleException {
     	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
     	for(int i = 0; i < 10; i++){
-    		//Car c = new Car(testVehID, testArrivalTime, testCarSmall);
     		Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
     		MotorCycle m = new MotorCycle(testVehID, testArrivalTime);
-    		//testCarPark.parkVehicle(c, testTime, testIntendedDuration);
     		testCarPark.parkVehicle(sc, testTime, testIntendedDuration);
     		testCarPark.parkVehicle(m, testTime, testIntendedDuration);
     	}
