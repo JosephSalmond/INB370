@@ -49,6 +49,12 @@ import asgn2CarParks.CarPark;
 import asgn2Exceptions.SimulationException;
 import asgn2Exceptions.VehicleException;
 
+/**
+ * GUISimulator
+ * 
+ * @author Joseph Salmond 8823928
+ * 
+ */
 @SuppressWarnings("serial")
 public class GUISimulator extends ApplicationFrame implements ActionListener {
     private static CarPark carPark;
@@ -58,16 +64,6 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     /*
      * Add CLI args if no args then default if 10 args process else throw error
      * fill boxes with defaults || fill with 10 cli arfs
-     * 
-     * maxCarSpaces, maxMotorCycleSpaces, maxQueueSize >= 00 <=
-     * maxSmallCarSpaces <= maxCarSpacescp check if validyou may deal with
-     * invalid data by an error message via the text area or modal dialog
-     * 
-     * 
-     * Sliders public static final double DEFAULT_CAR_PROB = 1.0; public static
-     * final double DEFAULT_SMALL_CAR_PROB = 0.20; public static final double
-     * DEFAULT_MOTORCYCLE_PROB = 0.05; public static final double
-     * DEFAULT_INTENDED_STAY_MEAN = 120.0; //1 <-> CLOSING_TIME
      */
     private static final String TITLE = "Car Park Statistics";
     private static GUISimulator demo;
@@ -95,28 +91,38 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     private JButton goToGraph;
     private JScrollPane scrollPane;
 
-    JTextField fieldMaxCarSpaces;
-    JTextField fieldMaxSmallCarSpaces;
-    JTextField fieldMaxMotorCycleSpaces;
-    JTextField fieldMaxQueueSize;
-    JTextField fieldRanSeed;
-    JTextField fieldStayMean;
+    private JTextField fieldMaxCarSpaces;
+    private JTextField fieldMaxSmallCarSpaces;
+    private JTextField fieldMaxMotorCycleSpaces;
+    private JTextField fieldMaxQueueSize;
+    private JTextField fieldRanSeed;
+    private JTextField fieldStayMean;
 
-    JSlider staySdSlider;
-    JSlider motorCycleProbSlider;
-    JSlider smallCarProbSlider;
-    JSlider carProbSlider;
-    JSlider timeSlider;
+    private JSlider staySdSlider;
+    private JSlider motorCycleProbSlider;
+    private JSlider smallCarProbSlider;
+    private JSlider carProbSlider;
+    private JSlider timeSlider;
 
-    JLabel labelCarProbNum;
-    JLabel labelSmallProbNum;
-    JLabel labelMotorCycleProbNum;
-    JLabel labelStaySdNum;
-    JLabel labelTimeNum;
+    private JLabel labelCarProbNum;
+    private JLabel labelSmallProbNum;
+    private JLabel labelMotorCycleProbNum;
+    private JLabel labelStaySdNum;
+    private JLabel labelTimeNum;
 
     @SuppressWarnings("unused")
+    // is used
     private Date timePoint;
 
+    /**
+     * GUISimulator constructor
+     * 
+     * @author Joseph Salmond 8823928
+     * @param title
+     * @param args
+     * @throws NoSuchFieldException
+     * @throws SecurityException
+     */
     public GUISimulator(final String title, String[] args)
 	    throws NoSuchFieldException, SecurityException {
 	super(title);
@@ -144,6 +150,11 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
     }
 
+    /**
+     * @author Joseph Salmond 8823928
+     * @param args
+     *            Command Line Args
+     */
     private void createConsoleOutput(String[] args) {
 
 	// Create Labels and there text fields
@@ -305,11 +316,12 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 		int fmmcs = Integer.parseInt(fieldMaxMotorCycleSpaces.getText());
 		int fmqs = Integer.parseInt(fieldMaxQueueSize.getText());
 		int frs = Integer.parseInt(fieldRanSeed.getText());
-		int cp = carProbSlider.getValue();
-		int scp = smallCarProbSlider.getValue();
-		int mcp = motorCycleProbSlider.getValue();
-		int sss = staySdSlider.getValue();
-		int fsm = (int) Double.parseDouble(fieldStayMean.getText());
+		double cp = (double) carProbSlider.getValue() / 100;
+		double scp = (double) smallCarProbSlider.getValue() / 100;
+		double mcp = (double) motorCycleProbSlider.getValue() / 100;
+		double sss = (double) staySdSlider.getValue() / 100;
+		double fsm = (double) Double.parseDouble(fieldStayMean
+			.getText()) * sss;
 
 		if ((fmcs >= 0 && fmcs <= MaximumTextArea)
 			&& (fmscs >= 0 && fmscs <= MaximumTextArea)
@@ -320,26 +332,36 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 			&& (cp >= 0 && cp <= MaximumTextArea)
 			&& (scp >= 0 && scp <= MaxSlider)
 			&& (mcp >= 0 && mcp <= MaxSlider)
-			&& (sss >= 0 && sss <= MaxSlider)) {
+			&& (sss >= 0 && sss <= MaximumTextArea)) {
 
-		    int[] realARGS = { fmcs, fmscs, fmmcs, fmqs, frs, cp, scp,
-			    mcp, sss, fsm };
+		    if (fmcs >= fmscs) {
 
-		    disableThings();
-		    try {
-			mainSetup(realARGS);
-			demo.runSimulation();
-		    } catch (Exception e1) {
-			e1.printStackTrace();
-			System.exit(-1);
+			double[] realARGS = { fmcs, fmscs, fmmcs, fmqs, frs,
+				cp, scp, mcp, sss, fsm };
+
+			disableThings();
+			try {
+			    mainSetup(realARGS);
+			    demo.runSimulation();
+			} catch (Exception e1) {
+			    e1.printStackTrace();
+			    System.exit(-1);
+			}
+		    } else {
+			textArea.append("error: numbers are out of bounds MAX:1080");
 		    }
 
 		} else {
-		    textArea.append("error: numbers are out of bounds MAX:1080");
+		    textArea.append("error: numbers are out of bounds MIN:0 MAX:1080");
 		}
 
 	    }
 
+	    /**
+	     * disables components
+	     * 
+	     * @author Joseph Salmond 8823928
+	     */
 	    private void disableThings() {
 		btnGo.setEnabled(false);
 		fieldMaxCarSpaces.setEnabled(false);
@@ -364,9 +386,9 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	    }
 	});
 
+	// start of gui building
 	Insets padding = new Insets(10, 0, 0, 0);
 	Insets noPadding = new Insets(0, 0, 0, 0);
-	// start of gui building
 	GridBagConstraints c = new GridBagConstraints();
 	c.fill = GridBagConstraints.HORIZONTAL;
 
@@ -526,17 +548,12 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     }
 
     /**
-     * Method to run the simulation from start to finish. Exceptions are
-     * propagated upwards from Vehicle, Simulation and Log objects as necessary
+     * creates thread to run the simulation on
      * 
+     * @author Joseph Salmond 8823928
      * @throws VehicleException
-     *             if Vehicle creation or operation constraints violated
      * @throws SimulationException
-     *             if Simulation constraints are violated
      * @throws IOException
-     *             on logging failures
-     * @throws SecurityException
-     * @throws NoSuchFieldException
      */
     public void runSimulation() throws VehicleException, SimulationException,
 	    IOException {
@@ -598,6 +615,11 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	SimulatorThread.start();
     }
 
+    /**
+     * creates the graphs
+     * 
+     * @author Joseph Salmond 8823928
+     */
     private void doTheChartThings() {
 	final TimeSeriesCollection dataset = chartForge();
 	JFreeChart chart = createChart(dataset);
@@ -607,6 +629,13 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
     }
 
+    /**
+     * creates the text output
+     * 
+     * @author Joseph Salmond 8823928
+     * @param time
+     *            tick time
+     */
     private void textOutput(int time) {
 
 	String currString = carPark.getStatus(time);
@@ -622,24 +651,27 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	dissatisfied = findValue(currString, "D:+(\\d+):+");
 
 	// outputs to screen text
-	/*textArea.append("Minute: " + time + "\nCars to Date: " + toDate
+	textArea.append("Minute: " + time + "\nCars to Date: " + toDate
 		+ "\nNumber of Vehicles Parked: " + vehicleNum
 		+ "\nTotal Cars Parked: " + cars
 		+ "\nNumber Small Cars Parked: " + smallCars
 		+ "\nNumber MotorCycles Parked: " + motorCycles
 		+ "\nNumber in Queue: " + numQueue
 		+ "\nNumber Customers Dissatisfied: " + dissatisfied
-		+ "\nNumber No Longer in Residance: " + archive + "\n\n");*/
-	
-	textArea.append("Minute: " + time + " | Cars to Date: " + toDate
-		+ " | Number of Vehicles Parked: " + vehicleNum
-		+ "\nTotal Cars Parked: " + cars
-		+ " | Number Small Cars Parked: " + smallCars
-		+ " | Number MotorCycles Parked: " + motorCycles
-		+ "\nNumber in Queue: " + numQueue
-		+ "  | Number Customers Dissatisfied: " + dissatisfied
-		+ "  | Number No Longer in Residance: " + archive + "\n\n");
-	
+		+ "\nNumber No Longer in Residance: " + archive + "\n\n");
+
+	/*
+	 * other text output format
+	 * 
+	 * textArea.append("Minute: " + time + " | Cars to Date: " + toDate +
+	 * " | Number of Vehicles Parked: " + vehicleNum +
+	 * "\nTotal Cars Parked: " + cars + " | Number Small Cars Parked: " +
+	 * smallCars + " | Number MotorCycles Parked: " + motorCycles +
+	 * "\nNumber in Queue: " + numQueue +
+	 * "  | Number Customers Dissatisfied: " + dissatisfied +
+	 * "  | Number No Longer in Residance: " + archive + "\n\n");
+	 */
+
 	textArea.setCaretPosition(textArea.getDocument().getLength());
 
 	// add to graph
@@ -647,6 +679,14 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 		numQueue, archive, dissatisfied, time);
     }
 
+    /**
+     * uses REGEX to find values
+     * 
+     * @author Joseph Salmond 8823928
+     * @param currString
+     * @param expression
+     * @return
+     */
     private int findValue(String currString, String expression) {
 	Pattern r = Pattern.compile(expression);
 	Matcher m = r.matcher(currString);
@@ -655,6 +695,20 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	return Integer.parseInt(s);
     }
 
+    /**
+     * adds values to the Timeseries
+     * 
+     * @author Joseph Salmond 8823928
+     * @param toDate
+     * @param vehicleNum
+     * @param cars
+     * @param smallCars
+     * @param motorCycles
+     * @param numQueue
+     * @param archive
+     * @param dissatisfied
+     * @param time
+     */
     private void chartAddValues(int toDate, int vehicleNum, int cars,
 	    int smallCars, int motorCycles, int numQueue, int archive,
 	    int dissatisfied, int time) {
@@ -692,12 +746,11 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     }
 
     /**
-     * Helper method to deliver the Chart - currently uses default colours and
-     * auto range
+     * creates the line chart
      * 
+     * @author Joseph Salmond 8823928
      * @param dataset
-     *            TimeSeriesCollection for plotting
-     * @returns chart to be added to panel
+     * @return
      */
     private JFreeChart createChart(final XYDataset dataset) {
 	final JFreeChart result = ChartFactory.createTimeSeriesChart(
@@ -727,7 +780,9 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     }
 
     /**
+     * creates the bar graph
      * 
+     * @author Joseph Salmond 8823928
      * @param dissatisfied
      * @param archived
      * @return
@@ -753,6 +808,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
     /**
      * Simple main GUI runner
      * 
+     * @author Joseph Salmond 8823928
      * @param args
      *            ignored
      */
@@ -780,15 +836,24 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	}
     }
 
-    private void mainSetup(int[] realARGS) throws NoSuchFieldException,
+    /** main setup of the simulator
+     * @author Joseph Salmond 8823928
+     * @param realARGS
+     * @throws NoSuchFieldException
+     * @throws SecurityException
+     */
+    private void mainSetup(double[] realARGS) throws NoSuchFieldException,
 	    SecurityException {
+
 	CarPark cp = null;
 	Simulator s = null;
 	Log l = null;
 
 	try {
-	    cp = new CarPark();
-	    s = new Simulator();
+	    cp = new CarPark((int) realARGS[0], (int) realARGS[1],
+		    (int) realARGS[2], (int) realARGS[3]);
+	    s = new Simulator((int) realARGS[4], realARGS[8], realARGS[9],
+		    realARGS[5], realARGS[6], realARGS[7]);
 	    l = new Log();
 	} catch (IOException | SimulationException e1) {
 	    e1.printStackTrace();
@@ -801,7 +866,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
     /**
      * Helper method to determine if new vehicles are permitted
-     * 
+     *  @author James M. Hoagan
      * @param time
      *            int holding current simulation time
      * @return true if new vehicles permitted, false if not allowed due to
@@ -814,7 +879,7 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
+	// needed for compilation
 
     }
 
