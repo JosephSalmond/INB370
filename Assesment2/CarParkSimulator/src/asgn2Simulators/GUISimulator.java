@@ -830,7 +830,9 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 	}
     }
 
-    /** main setup of the simulator
+    /**
+     * main setup of the simulator
+     * 
      * @author Joseph Salmond 8823928
      * @param realARGS
      * @throws NoSuchFieldException
@@ -860,7 +862,8 @@ public class GUISimulator extends ApplicationFrame implements ActionListener {
 
     /**
      * Helper method to determine if new vehicles are permitted
-     *  @author James M. Hoagan
+     * 
+     * @author James M. Hoagan
      * @param time
      *            int holding current simulation time
      * @return true if new vehicles permitted, false if not allowed due to

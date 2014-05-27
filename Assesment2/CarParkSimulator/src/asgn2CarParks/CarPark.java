@@ -110,7 +110,7 @@ public class CarPark {
 		    iter.next();
 		    iter.remove();
 		}
-			}
+	    }
 	    if (!carSpaces.isEmpty()) {
 		iter = carSpaces.iterator();
 		while (iter.hasNext()) {

@@ -54,14 +54,17 @@ public class CarTests {
 	new Car(testConstructorVehID, testConstructorArrivalTime,
 		testCarNotSmall);
     }
-    
+
     /* TESTS FOR STATIC VARIABLES */
     @Test(timeout = 1000)
-    public void testMotorcycleStaticVariables() throws SimulationException, VehicleException{
-    	Car testCar1 = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
-    	Car testCar2 = new Car(testConstructorVehID, testConstructorArrivalTime, testCarNotSmall);
-    	testCar1.enterQueuedState();
-    	assertFalse(testCar2.isQueued());
+    public void testMotorcycleStaticVariables() throws SimulationException,
+	    VehicleException {
+	Car testCar1 = new Car(testConstructorVehID,
+		testConstructorArrivalTime, testCarNotSmall);
+	Car testCar2 = new Car(testConstructorVehID,
+		testConstructorArrivalTime, testCarNotSmall);
+	testCar1.enterQueuedState();
+	assertFalse(testCar2.isQueued());
     }
 
     /* TESTS FOR IS SMALL METHOD */
@@ -79,7 +82,6 @@ public class CarTests {
 		testCarSmall);
 	assertTrue(testCar.isSmall());
     }
-
 
     /* TESTS FOR ENTER PARKED STATE METHOD */
 

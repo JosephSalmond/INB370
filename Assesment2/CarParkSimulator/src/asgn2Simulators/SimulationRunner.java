@@ -128,15 +128,19 @@ public class SimulationRunner {
 	    System.exit(-1);
 	}
     }
-    
 
     private static CarPark parkCreator(String[] args) {
-	return new CarPark(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+	return new CarPark(Integer.parseInt(args[0]),
+		Integer.parseInt(args[1]), Integer.parseInt(args[2]),
+		Integer.parseInt(args[3]));
     }
 
     private static Simulator simCreator(String[] args)
 	    throws SimulationException {
-	return new Simulator(Integer.parseInt(args[4]),Double.parseDouble(args[8]),Double.parseDouble(args[9]),Double.parseDouble(args[5]),Double.parseDouble(args[6]),Double.parseDouble(args[7]));
+	return new Simulator(Integer.parseInt(args[4]),
+		Double.parseDouble(args[8]), Double.parseDouble(args[9]),
+		Double.parseDouble(args[5]), Double.parseDouble(args[6]),
+		Double.parseDouble(args[7]));
     }
 
     /**

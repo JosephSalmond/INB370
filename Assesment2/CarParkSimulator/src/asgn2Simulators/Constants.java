@@ -29,7 +29,8 @@ public class Constants {
     public static final double DEFAULT_SMALL_CAR_PROB = 0.2;
     public static final double DEFAULT_MOTORCYCLE_PROB = 0.1;
     public static final double DEFAULT_INTENDED_STAY_MEAN = 300.0;
-    public static final double DEFAULT_INTENDED_STAY_SD = 100.0;//0.33 * Constants.DEFAULT_INTENDED_STAY_MEAN;
+    public static final double DEFAULT_INTENDED_STAY_SD = 100.0;// 0.33 *
+								// Constants.DEFAULT_INTENDED_STAY_MEAN;
 
     // Default Size parameters
     public static final int DEFAULT_MAX_CAR_SPACES = 100;

@@ -46,7 +46,7 @@ public class Car extends Vehicle {
     public String toString() {
 
 	int queueingTime = queueTime - arrivalTime;
-	
+
 	// For Compatibility purposes & readability
 	String endl = System.getProperty("line.separator");
 
@@ -59,11 +59,10 @@ public class Car extends Vehicle {
 	if (wasQueued) {
 	    stringQueue = "Exit from Queue: " + queueTime + endl
 		    + "Queuing Time: " + queueingTime + endl;
-	    
+
 	    if (queueingTime > Constants.MAXIMUM_QUEUE_TIME) {
 		stringQueue += "Exceeded maximum acceptable queuing time by: "
-			+ (queueingTime - Constants.MAXIMUM_QUEUE_TIME)
-			+ endl;
+			+ (queueingTime - Constants.MAXIMUM_QUEUE_TIME) + endl;
 	    }
 	} else {
 	    stringQueue = "Vehicle was not queued" + endl;

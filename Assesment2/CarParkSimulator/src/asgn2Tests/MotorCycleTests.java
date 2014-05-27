@@ -51,14 +51,17 @@ public class MotorCycleTests {
     public void testArrivalTimeConstructor() throws VehicleException {
 	new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
     }
-    
+
     /* TESTS FOR STATIC VARIABLES */
     @Test(timeout = 1000)
-    public void testMotorcycleStaticVariables() throws SimulationException, VehicleException{
-    	MotorCycle testMotorcycle1 = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-    	MotorCycle testMotorcycle2 = new MotorCycle(testConstructorVehID, testConstructorArrivalTime);
-    	testMotorcycle1.enterQueuedState();
-    	assertFalse(testMotorcycle2.isQueued());
+    public void testMotorcycleStaticVariables() throws SimulationException,
+	    VehicleException {
+	MotorCycle testMotorcycle1 = new MotorCycle(testConstructorVehID,
+		testConstructorArrivalTime);
+	MotorCycle testMotorcycle2 = new MotorCycle(testConstructorVehID,
+		testConstructorArrivalTime);
+	testMotorcycle1.enterQueuedState();
+	assertFalse(testMotorcycle2.isQueued());
     }
 
     /* TESTS FOR ENTER PARKED STATE METHOD */
@@ -296,13 +299,12 @@ public class MotorCycleTests {
     // write test for satisfied is true
     @Test(timeout = 1000)
     public void testIsSatisfiedTrue() throws VehicleException {
-    testMotorCycle = new MotorCycle(testConstructorVehID,
-    		testConstructorArrivalTime);
-    testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
-    testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
-    assertTrue(testMotorCycle.isSatisfied());
+	testMotorCycle = new MotorCycle(testConstructorVehID,
+		testConstructorArrivalTime);
+	testMotorCycle.enterParkedState(testParkingTime, testIntendedDuration);
+	testMotorCycle.exitParkedState(testParkingTime + testIntendedDuration);
+	assertTrue(testMotorCycle.isSatisfied());
     }
-
 
     /* TESTS FOR WAS PARKED METHOD */
 
