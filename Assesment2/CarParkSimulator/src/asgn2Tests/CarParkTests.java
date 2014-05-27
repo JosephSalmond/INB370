@@ -28,6 +28,7 @@ public class CarParkTests {
     private boolean testCarSmall = true;
     private int testIntendedDuration = 60;
     private int testParkingTime = 30;
+    private int testDepartureTime = 60;
     Car testCar;
     
     private int testMaxCarSpaces = 20;
@@ -63,7 +64,7 @@ public class CarParkTests {
     	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
     	testCarPark.parkVehicle(c, testTime, testIntendedDuration);
     	int initialCars = testCarPark.getNumCars();
-    	testCarPark.archiveDepartingVehicles(testTime, testForce);
+    	testCarPark.archiveDepartingVehicles(testDepartureTime, testForce);
     	int finalCars = testCarPark.getNumCars();
     	assertTrue(initialCars != finalCars);	
     }
