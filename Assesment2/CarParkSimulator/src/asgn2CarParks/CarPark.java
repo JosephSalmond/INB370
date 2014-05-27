@@ -247,7 +247,7 @@ public class CarPark {
      * @return
      */
     public boolean carParkFull() {
-	return (numCarSpaces + numMotorCycleSpaces) == (maxCarSpaces + maxMotorCycleSpaces);
+	return (numCarSpaces + numSmallCarSpaces + numMotorCycleSpaces) == (maxCarSpaces + maxMotorCycleSpaces);
     }
 
     /**
