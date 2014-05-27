@@ -253,10 +253,10 @@ public class CarParkTests {
     public void testParkVehicleNoSuitableSpacesMotorcycle() throws SimulationException, VehicleException {
     	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
     	for(int i = 0; i < 10; i++){
-    		Car c = new Car(testVehID, testArrivalTime, testCarSmall);
+    		//Car c = new Car(testVehID, testArrivalTime, testCarSmall);
     		Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
     		MotorCycle m = new MotorCycle(testVehID, testArrivalTime);
-    		testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    		//testCarPark.parkVehicle(c, testTime, testIntendedDuration);
     		testCarPark.parkVehicle(sc, testTime, testIntendedDuration);
     		testCarPark.parkVehicle(m, testTime, testIntendedDuration);
     	}
@@ -314,6 +314,67 @@ public class CarParkTests {
     }
     
     //TESTS FOR SPACES AVAILABLE
+    @Test(timeout = 1000)
+    public void testSpacesAvailableCarTrue() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	assertTrue(testCarPark.spacesAvailable(c));
+    }
+    
+    @Test(timeout = 1000)
+    public void testSpacesAvailableCarFalse() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	for(int i = 0; i < 10; i++){
+    		Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    		testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    	}
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	assertFalse(testCarPark.spacesAvailable(c));
+    }
+    
+    @Test(timeout = 1000)
+    public void testSpacesAvailableSmallCarTrue() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
+    	assertTrue(testCarPark.spacesAvailable(sc));
+    }
+    
+    @Test(timeout = 1000)
+    public void testSpacesAvailableSmallCarFalse() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	for(int i = 0; i < 10; i++){
+    		Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    		Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
+    		testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    		testCarPark.parkVehicle(sc, testTime, testIntendedDuration);
+    	}
+    	Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
+    	assertFalse(testCarPark.spacesAvailable(sc));
+    }
+    
+    @Test(timeout = 1000)
+    public void testSpacesAvailableMotorcycleTrue() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	MotorCycle m = new MotorCycle(testVehID, testArrivalTime);
+    	assertTrue(testCarPark.spacesAvailable(m));
+    }
+    
+    @Test(timeout = 1000)
+    public void testSpacesAvailableMotorcycleFalse() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	for(int i = 0; i < 10; i++){
+    		//Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    		Car sc = new Car(testVehID, testArrivalTime, testCarSmall);
+    		MotorCycle m = new MotorCycle(testVehID, testArrivalTime);
+    		//testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    		testCarPark.parkVehicle(sc, testTime, testIntendedDuration);
+    		testCarPark.parkVehicle(m, testTime, testIntendedDuration);
+    	}
+    	MotorCycle m = new MotorCycle(testVehID, testArrivalTime);
+    	assertFalse(testCarPark.spacesAvailable(m));
+    }
+    
+    
     
     
     //TESTS FOR TRY PROCESS NEW VEHICLES
