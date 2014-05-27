@@ -1,7 +1,7 @@
 Joseph Salmond 8823928  |  Pearl Gariano 8318522
 
-Joseph - Vehicle && Car && Motorcycle && CarPark && GUISimulator
-Pearl - Unit Tests and GUIScenarios
+Joseph - Vehicle && Car && Motorcycle && CarPark && GUISimulator && Tweaked GUITests
+Pearl - Unit Tests and GUITests
 Both - GUI design
 
 I Joseph Salmond agree that the above statement is True.
