@@ -1,10 +1,11 @@
 Joseph Salmond 8823928  |  Pearl Gariano 8318522
 
 Joseph - Vehicle && Car && Motorcycle && CarPark && GUISimulator
-Pearl - Unit Tests
+Pearl - Unit Tests and Scenarios
 Both - GUI design
 
 I Joseph Salmond agree that the above statement is True.
+I, Pearl Gariano, agree that the above statement is true.
 
 
 
