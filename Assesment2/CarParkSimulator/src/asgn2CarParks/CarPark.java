@@ -94,38 +94,47 @@ public class CarPark {
 	    throws VehicleException, SimulationException {
 	Iterator<Vehicle> iter;
 	if (force) {
-
-	    iter = spaces.iterator();
-	    while (iter.hasNext()) {
-		Vehicle v = iter.next();
-		this.unparkVehicle(v, time);
-		past.add(v);
-		transitionVehicle(v);
-		iter.remove();
+	    if (!spaces.isEmpty()) {
+		iter = spaces.iterator();
+		while (iter.hasNext()) {
+		    Vehicle v = iter.next();
+		    this.unparkVehicle(v, time);
+		    past.add(v);
+		    transitionVehicle(v);
+		    iter.remove();
+		}
 	    }
-
-	    iter = smallCarSpaces.iterator();
-	    while (iter.hasNext()) {
-		iter.remove();
+	    if (!smallCarSpaces.isEmpty()) {
+		iter = smallCarSpaces.iterator();
+		while (iter.hasNext()) {
+		    iter.next();
+		    iter.remove();
+		}
 	    }
-	    iter = carSpaces.iterator();
-	    while (iter.hasNext()) {
-		iter.remove();
+	    if (!carSpaces.isEmpty()) {
+		iter = carSpaces.iterator();
+		while (iter.hasNext()) {
+		    iter.next();
+		    iter.remove();
+		}
 	    }
-
-	    iter = motorCycleSpaces.iterator();
-	    while (iter.hasNext()) {
-		iter.remove();
+	    if (!motorCycleSpaces.isEmpty()) {
+		iter = motorCycleSpaces.iterator();
+		while (iter.hasNext()) {
+		    iter.next();
+		    iter.remove();
+		}
 	    }
-
-	    iter = queue.iterator();
-	    while (iter.hasNext()) {
-		Vehicle v = iter.next();
-		v.exitQueuedState(time);
-		past.add(v);
-		iter.remove();
-		transitions += "|" + vehicleString(v) + ":Q>A|";
-		numDissatisfied++;
+	    if (!queue.isEmpty()) {
+		iter = queue.iterator();
+		while (iter.hasNext()) {
+		    Vehicle v = iter.next();
+		    v.exitQueuedState(time);
+		    past.add(v);
+		    iter.remove();
+		    transitions += "|" + vehicleString(v) + ":Q>A|";
+		    numDissatisfied++;
+		}
 	    }
 
 	} else {
@@ -472,7 +481,9 @@ public class CarPark {
 	return this.queue.isEmpty();
     }
 
-    /**Simple status showing whether queue is full
+    /**
+     * Simple status showing whether queue is full
+     * 
      * @Author Joseph Salmond 8823928
      * @return
      */
@@ -480,7 +491,11 @@ public class CarPark {
 	return (this.queue.size() == maxQueueSize);
     }
 
-    /**Method determines, given a vehicle of a particular type, whether there are spaces available for that type in the car park under the parking policy in the class header.
+    /**
+     * Method determines, given a vehicle of a particular type, whether there
+     * are spaces available for that type in the car park under the parking
+     * policy in the class header.
+     * 
      * @Author Joseph Salmond 8823928
      * @param v
      * @return
