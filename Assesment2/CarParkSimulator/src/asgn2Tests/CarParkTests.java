@@ -60,13 +60,12 @@ public class CarParkTests {
     // TESTS FOR ARCHIVE DEPARTING VEHICLES
     @Test(timeout = 1000)
     public void testArchiveDepartingVehicles() throws SimulationException, VehicleException{
-    	CarPark testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
-    	String testString = testCarPark.toString();
     	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
-    	c.enterParkedState(testParkingTime, testIntendedDuration);
-    	c.exitParkedState(90);
+    	testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    	int initialCars = testCarPark.getNumCars();
     	testCarPark.archiveDepartingVehicles(testTime, testForce);
-    	assertNotSame(testString, testCarPark.toString());	
+    	int finalCars = testCarPark.getNumCars();
+    	assertTrue(initialCars != finalCars);	
     }
 
 
@@ -93,19 +92,13 @@ public class CarParkTests {
 
     //TESTS FOR ACHIVE QUEUE FAILURES 
     
-    // @Test(timeout = 1000, expected = VehicleException.class)
-    public void testArchiveQueuesFailureNotCorrectState()
-	    throws SimulationException, VehicleException {
-	// throws ve if one or more vehicles not in correct state
-	// archiveQueueFailures(int time)
-    }
- 
-    
-    //@Test(timeout = 1000)
-    public void testArchiveQueueFailures() throws VehicleException{
-    	testCar.enterQueuedState();
-    	testCarPark.archiveQueueFailures(50);
-    	assertFalse(testCar.isQueued());
+    @Test(timeout = 1000)
+    public void testArchiveQueueFailures() throws SimulationException, VehicleException{
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	testCarPark.enterQueue(c);
+    	testCarPark.archiveQueueFailures(testTime);
+    		
     }
     
     //TESTS FOR CAR PARK EMPTY
