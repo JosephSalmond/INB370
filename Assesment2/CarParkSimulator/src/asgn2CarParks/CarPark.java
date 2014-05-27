@@ -161,6 +161,7 @@ public class CarPark {
 
 		}
 
+		
 	    }
 	    if (!smallCarSpaces.isEmpty()) {
 		iter = smallCarSpaces.iterator();

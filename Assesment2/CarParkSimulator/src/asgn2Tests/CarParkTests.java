@@ -30,7 +30,7 @@ public class CarParkTests {
     private int testParkingTime = 30;
     Car testCar;
     
-    private int testMaxCarSpaces = 10;
+    private int testMaxCarSpaces = 20;
     private int testMaxSmallCarSpaces = 10;
     private int testMaxMotorCycleSpaces = 10;
     private int testMaxQueueSize = 5;
