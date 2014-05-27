@@ -1,11 +1,19 @@
-Joseph Salmond 8823928  |  Pearl Gariano
+Joseph Salmond 8823928  |  Pearl Gariano 8318522
 
 Joseph - Vehicle && Car && Motorcycle && CarPark && GUISimulator
 Pearl - Unit Tests
 Both - GUI design
 
-Main Methods -> GUISimulator
+I Joseph Salmond agree that the above statement is True.
+
+
+
+Main Methods -> asgn2Simulators.GUISimulator
 Has Run.bat
+uses jcommon-1.0.21.jar && jfreechart-1.0.17.jar
+
+
+
 
 The name and student number of both partners.
 •  A statement of contribution from each partner and a note that you both agree with 
