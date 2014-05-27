@@ -392,9 +392,13 @@ public class CarParkTests {
     }
 
     //TESTS FOR UNPARK VEHICLE
-    //@Test(timeout = 1000, expected = VehicleException.class)
-    public void testUnparkVehicleNotParked() throws VehicleException {
+    @Test(timeout = 1000, expected = VehicleException.class)
+    public void testUnparkVehicleNotParked() throws VehicleException, SimulationException {
 	// unparkVehicle(Vehicle v, int departureTime)
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Car testCar = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	testCarPark.unparkVehicle(testCar, testTime);
+    	
     }
 
     //@Test(timeout = 1000, expected = VehicleException.class)
