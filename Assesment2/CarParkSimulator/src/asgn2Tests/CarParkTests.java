@@ -282,9 +282,18 @@ public class CarParkTests {
     }
     
     //TESTS FOR PROCESS QUEUE
-    //@Test(timeout = 1000, expected = SimulationException.class)
-    public void testProcessQueueNoSpacesAvailable() throws SimulationException {
+    @Test(timeout = 1000, expected = SimulationException.class)
+    public void testProcessQueueNoSpacesAvailable() throws SimulationException, VehicleException {
 	// processQueue(int time, Simulator sim)
+    	testCarPark = new CarPark(testMaxCarSpaces, testMaxSmallCarSpaces, testMaxMotorCycleSpaces, testMaxQueueSize);
+    	Simulator sim = new Simulator();
+    	for(int i = 0; i < 10; i++){
+    		Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    		testCarPark.parkVehicle(c, testTime, testIntendedDuration);
+    	}
+    	Car c = new Car(testVehID, testArrivalTime, testCarNotSmall);
+    	testCarPark.enterQueue(c);
+    	testCarPark.processQueue(testTime, sim);
     }
 
     //TESTS FOR QUEUE EMPTY
